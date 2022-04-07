@@ -30,33 +30,50 @@ class TokenDetailRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(vertical: 16.0),
-      child: Row(
-        children: [
-          Image.asset(
-            'assets/images/${ws.current.value?.address == from ? 'in' : 'out'}.png',
-            width: 20.0,
-          ),
-          const SizedBox(width: 12.0),
-          Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(Utils.ellipsisedHash(hash)),
-                  Image.asset(
-                    'assets/images/copy.png',
-                    width: 12.0,
-                  ),
-                ],
-              ),
-              Text(time),
-            ],
-          ),
-          const Expanded(child: SizedBox()),
-          Text('$amount $token'),
-        ],
+    return InkWell(
+      onTap: () => {
+        Get.toNamed(
+          Routes.TRANSACTION_DETAIL,
+          arguments: {
+            'from': from,
+            'to': to,
+            'hash': hash,
+            'time': time,
+            'amount': amount,
+            'token': token,
+          },
+        ),
+      },
+      onLongPress: () => {Utils.copyAndShow(hash)},
+      child: Container(
+        padding: const EdgeInsets.symmetric(vertical: 16.0),
+        child: Row(
+          children: [
+            Image.asset(
+              'assets/images/${ws.current.value?.address == from ? 'in' : 'out'}.png',
+              width: 20.0,
+            ),
+            const SizedBox(width: 12.0),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(Utils.ellipsisedHash(hash)),
+                    // Image.asset(
+                    //   'assets/images/copy.png',
+                    //   width: 12.0,
+                    // ),
+                  ],
+                ),
+                Text(time),
+              ],
+            ),
+            const Expanded(child: SizedBox()),
+            Text('$amount $token'),
+          ],
+        ),
       ),
     );
   }
@@ -85,7 +102,7 @@ class TokenDetailView extends GetView<TokenDetailController> {
                   ),
                   const SizedBox(width: 12.0),
                   Text(
-                    '${controller.token}',
+                    '${controller.token.toUpperCase()}',
                     style: const TextStyle(fontSize: 14.0),
                   )
                 ],

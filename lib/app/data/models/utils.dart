@@ -3,7 +3,9 @@ import 'dart:math';
 import 'package:crypt/crypt.dart';
 import 'package:bip39/bip39.dart' as bip39;
 import 'package:ed25519_hd_key/ed25519_hd_key.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:get/get.dart';
 import "package:hex/hex.dart";
 import 'package:convert/convert.dart';
 import 'package:web3dart/crypto.dart';
@@ -67,5 +69,10 @@ class Utils {
     final ea = EtherAmount.fromUnitAndValue(EtherUnit.wei, weiAmount);
     final result = ea.getValueInUnit(EtherUnit.ether);
     return result;
+  }
+
+  static void copyAndShow(String text) async {
+    await Clipboard.setData(ClipboardData(text: text));
+    Get.snackbar('Copied', 'Copied to clipboard');
   }
 }

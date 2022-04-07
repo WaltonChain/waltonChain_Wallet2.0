@@ -98,7 +98,7 @@ class TokenDetailView extends GetView<TokenDetailController> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     const Text('Balance'),
-                    Text(controller.balance.toStringAsFixed(4))
+                    Text(controller.balance.toStringAsFixed(2))
                   ],
                 ),
               ),

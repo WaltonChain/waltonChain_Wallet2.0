@@ -140,7 +140,7 @@ class AssetCard extends GetView<AssetsController> {
               subtitle: Row(
                 children: [
                   Obx(() => Text(
-                        controller.wtcBalance.value.toStringAsFixed(4),
+                        controller.wtcBalance.value.toStringAsFixed(2),
                         style: const TextStyle(
                             fontSize: 24.0, color: Colors.white),
                       )),
@@ -263,7 +263,7 @@ class WTCToken extends GetView<AssetsController> {
                       style: TextStyle(color: Colors.black87),
                     ),
                     Obx(() => Text(
-                        r'$' + controller.wtcPrice.toStringAsFixed(4),
+                        r'$' + controller.wtcPrice.toStringAsFixed(2),
                         style: const TextStyle(
                             fontSize: 12.0, color: Colors.black54))),
                   ],
@@ -274,10 +274,10 @@ class WTCToken extends GetView<AssetsController> {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Obx(() => Text(
-                      controller.wtcBalance.toStringAsFixed(4) + ' WTC',
+                      controller.wtcBalance.toStringAsFixed(2) + ' WTC',
                       style: const TextStyle(color: Colors.black87),
                     )),
-                Obx(() => Text(r'$' + controller.wtcAmount.toStringAsFixed(4),
+                Obx(() => Text(r'$' + controller.wtcAmount.toStringAsFixed(2),
                     style: const TextStyle(
                         fontSize: 12.0, color: Colors.black54))),
               ],
@@ -322,7 +322,7 @@ class WTAToken extends GetView<AssetsController> {
                     ),
                     Obx(() => Text(
                         r'$' +
-                            (controller.wtcPrice.value / 10).toStringAsFixed(4),
+                            (controller.wtcPrice.value / 10).toStringAsFixed(2),
                         style: const TextStyle(
                             fontSize: 12.0, color: Colors.black54))),
                   ],
@@ -333,10 +333,10 @@ class WTAToken extends GetView<AssetsController> {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Obx(() => Text(
-                      controller.wtaBalance.toStringAsFixed(4) + ' WTA',
+                      controller.wtaBalance.toStringAsFixed(2) + ' WTA',
                       style: const TextStyle(color: Colors.black87),
                     )),
-                Obx(() => Text(r'$' + controller.wtaAmount.toStringAsFixed(4),
+                Obx(() => Text(r'$' + controller.wtaAmount.toStringAsFixed(2),
                     style: const TextStyle(
                         fontSize: 12.0, color: Colors.black54))),
               ],

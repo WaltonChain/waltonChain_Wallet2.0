@@ -42,7 +42,7 @@ class SendView extends GetView<SendController> {
                   children: [
                     const Text('Amount'),
                     Obx(() => Text(
-                        '${controller.balance.toStringAsFixed(4)} ${controller.token.toUpperCase()}')),
+                        '${controller.balance.toStringAsFixed(2)} ${controller.token.toUpperCase()}')),
                   ],
                 ),
                 const SizedBox(height: 10.0),

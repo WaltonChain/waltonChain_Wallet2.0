@@ -27,8 +27,8 @@ class SwapCard extends GetView<SwapController> {
             const Text('Balance'),
             const SizedBox(width: 16.0),
             Obx(() => Text(controller.isWtcToWta.value
-                ? controller.wtcBalance.toStringAsFixed(4) + ' WTC'
-                : controller.wtaBalance.toStringAsFixed(4) + ' WTA')),
+                ? controller.wtcBalance.toStringAsFixed(2) + ' WTC'
+                : controller.wtaBalance.toStringAsFixed(2) + ' WTA')),
             const Expanded(child: SizedBox()),
             const Text('amount'),
           ],
@@ -36,7 +36,10 @@ class SwapCard extends GetView<SwapController> {
         const SizedBox(height: 16.0),
         Row(
           children: [
-            WtcIcon(onPressed: () {}),
+            Obx(() => WtcIcon(
+                  onPressed: () {},
+                  isWta: !controller.isWtcToWta.value,
+                )),
             const SizedBox(width: 32.0),
             Obx(() => Text(controller.isWtcToWta.value ? 'WTC' : 'WTA')),
             Expanded(
@@ -63,8 +66,8 @@ class SwapCard extends GetView<SwapController> {
             const Text('Balance'),
             const SizedBox(width: 16.0),
             Obx(() => Text(controller.isWtcToWta.value
-                ? controller.wtaBalance.toStringAsFixed(4) + ' WTA'
-                : controller.wtcBalance.toStringAsFixed(4) + ' WTC')),
+                ? controller.wtaBalance.toStringAsFixed(2) + ' WTA'
+                : controller.wtcBalance.toStringAsFixed(2) + ' WTC')),
             const Expanded(child: SizedBox()),
             const Text('amount'),
           ],
@@ -72,7 +75,10 @@ class SwapCard extends GetView<SwapController> {
         const SizedBox(height: 16.0),
         Row(
           children: [
-            WtcIcon(onPressed: () {}),
+            Obx(() => WtcIcon(
+                  onPressed: () {},
+                  isWta: controller.isWtcToWta.value,
+                )),
             const SizedBox(width: 32.0),
             Obx(() => Text(controller.isWtcToWta.value ? 'WTA' : 'WTC')),
             Expanded(
@@ -174,14 +180,14 @@ class StakingForm extends GetView<StakingController> {
               Column(children: [
                 const Text('TVL'),
                 Obx(() => Text(
-                      controller.tvl.value.toStringAsFixed(4),
+                      controller.tvl.value.toStringAsFixed(2),
                       style: const TextStyle(fontSize: 12.0),
                     ))
               ]),
               Column(children: [
                 const Text('APR'),
                 Obx(() => Text(
-                      '${controller.apr.value.toStringAsFixed(4)} %',
+                      '${controller.apr.value.toStringAsFixed(2)} %',
                       style: const TextStyle(fontSize: 12.0),
                     ))
               ]),
@@ -194,7 +200,7 @@ class StakingForm extends GetView<StakingController> {
             children: [
               const Text('Your Balance'),
               Obx(() =>
-                  Text(controller.balance.value.toStringAsFixed(4) + ' WTC')),
+                  Text(controller.balance.value.toStringAsFixed(2) + ' WTC')),
             ],
           ),
           const SizedBox(height: 16.0),
@@ -241,7 +247,7 @@ class StakingForm extends GetView<StakingController> {
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                 const Text('Reward'),
                 Obx(() =>
-                    Text('${controller.profit.value.toStringAsFixed(4)} WTA'))
+                    Text('${controller.profit.value.toStringAsFixed(2)} WTA'))
               ]),
               ElevatedButton(
                   onPressed: () {

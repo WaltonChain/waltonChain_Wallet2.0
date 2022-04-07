@@ -21,11 +21,11 @@ class StakingController extends GetxController {
   final hs = Get.find<HiveService>();
   final bs = Get.find<BlockchainService>();
 
-  var tvl = 0.0000.obs;
-  var apr = 0.0000.obs;
-  var balance = 0.0000.obs;
-  var staked = 0.0000.obs;
-  var profit = 0.0000.obs;
+  var tvl = 0.00.obs;
+  var apr = 0.00.obs;
+  var balance = 0.00.obs;
+  var staked = 0.00.obs;
+  var profit = 0.00.obs;
 
   @override
   void onInit() async {
@@ -59,7 +59,7 @@ class StakingController extends GetxController {
   clickStake() async {
     final valid = stakeFormKey.currentState?.validate();
     if (valid == true) {
-      final amount = double.tryParse(stakeInput.text) ?? 0.0000;
+      final amount = double.tryParse(stakeInput.text) ?? 0.00;
       EasyLoading.show(status: 'staking...');
       await bs.stake(wallet: ws.current.value!, amount: amount);
       EasyLoading.showSuccess('stake success');
@@ -69,7 +69,7 @@ class StakingController extends GetxController {
   clickWithdrawWtc() async {
     final valid = withdrawFormKey.currentState?.validate();
     if (valid == true) {
-      final amount = double.tryParse(stakeInput.text) ?? 0.0000;
+      final amount = double.tryParse(stakeInput.text) ?? 0.00;
       EasyLoading.show(status: 'withdrawing...');
       await bs.withdrawWtc(wallet: ws.current.value!, amount: amount);
       EasyLoading.showSuccess('withdraw success');

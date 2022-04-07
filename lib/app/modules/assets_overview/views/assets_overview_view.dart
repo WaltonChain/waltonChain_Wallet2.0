@@ -50,7 +50,7 @@ class AssetsOverviewView extends GetView<AssetsOverviewController> {
                           ],
                         ),
                         Obx(() => Text(controller.visible.value
-                            ? controller.totalBalance.value.toStringAsFixed(4)
+                            ? controller.totalBalance.value.toStringAsFixed(2)
                             : '****')),
                       ],
                     ),

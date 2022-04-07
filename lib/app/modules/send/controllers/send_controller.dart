@@ -14,7 +14,7 @@ class SendController extends GetxController {
   TextEditingController balanceInput = TextEditingController();
 
   final token = 'wtc'.obs;
-  final balance = 0.0000.obs;
+  final balance = 0.00.obs;
   final to = Get.arguments?['to'] ?? '';
 
   final ac = Get.find<AssetsController>();
@@ -35,7 +35,7 @@ class SendController extends GetxController {
       } else if (newToken == 'wta') {
         balance.value = ac.wtaBalance.value;
       } else {
-        balance.value = 0.0000;
+        balance.value = 0.00;
       }
     });
   }

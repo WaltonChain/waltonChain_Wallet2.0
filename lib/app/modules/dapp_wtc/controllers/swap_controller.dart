@@ -20,8 +20,8 @@ class SwapController extends GetxController
   final hs = Get.find<HiveService>();
   final bs = Get.find<BlockchainService>();
 
-  var wtcBalance = 0.0000.obs;
-  var wtaBalance = 0.0000.obs;
+  var wtcBalance = 0.00.obs;
+  var wtaBalance = 0.00.obs;
   final isWtcToWta = true.obs;
 
   GlobalKey<FormState> swapFormKey =
@@ -37,13 +37,13 @@ class SwapController extends GetxController
     wtaBalance.value = ac.wtaBalance.value;
 
     from.addListener(() {
-      final fromAmount = double.tryParse(from.text) ?? 0.0000;
+      final fromAmount = double.tryParse(from.text) ?? 0.00;
       if (isWtcToWta.value) {
-        // from.text = fromAmount.toStringAsFixed(4);
-        to.text = (fromAmount * 10).toStringAsFixed(4);
+        // from.text = fromAmount.toStringAsFixed(2);
+        to.text = (fromAmount * 10).toStringAsFixed(2);
       } else {
-        // from.text = fromAmount.toStringAsFixed(4);
-        to.text = (fromAmount / 10).toStringAsFixed(4);
+        // from.text = fromAmount.toStringAsFixed(2);
+        to.text = (fromAmount / 10).toStringAsFixed(2);
       }
     });
   }
@@ -72,7 +72,7 @@ class SwapController extends GetxController
     if (valid == true) {
       EasyLoading.show(status: 'swapping...');
       // final pk = hs.getPrivateKey(ws.current.value?.address ?? '');
-      final amount = double.tryParse(from.text) ?? 0.0000;
+      final amount = double.tryParse(from.text) ?? 0.00;
       if (isWtcToWta.value) {
         await bs.wtcToWta(wallet: ws.current.value!, amount: amount);
       } else {

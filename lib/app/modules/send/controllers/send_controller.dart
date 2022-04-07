@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:wtc_wallet_app/app/data/models/blockchain.dart';
 import 'package:wtc_wallet_app/app/data/models/transaction.dart';
 import 'package:wtc_wallet_app/app/modules/assets/controllers/assets_controller.dart';
+import 'package:wtc_wallet_app/app/services/blockchain_service.dart';
 import 'package:wtc_wallet_app/app/services/hive_service.dart';
 import 'package:wtc_wallet_app/app/services/wallet_service.dart';
 
@@ -20,6 +20,7 @@ class SendController extends GetxController {
   final ac = Get.find<AssetsController>();
   final ws = Get.find<WalletService>();
   final hs = Get.find<HiveService>();
+  final bs = Get.find<BlockchainService>();
 
   @override
   void onInit() {
@@ -59,13 +60,13 @@ class SendController extends GetxController {
     final valid = formKey.currentState?.validate();
     debugPrint('clickSend valid:($valid)');
     // final pk = await sss.getPrivateKey(ws.current.value?.address ?? '');
-    final pk = hs.getPrivateKey(ws.current.value?.address ?? '');
+    // final pk = hs.getPrivateKey(ws.current.value?.address ?? '');
     if (valid == true) {
       final amount = double.parse(balanceInput.text);
       EasyLoading.show(status: 'sending...');
       if (token.value == 'wtc') {
-        final hash =
-            await Blockchain.transferWTC(pk, addressInput.text, amount);
+        final hash = await bs.transferWTC(
+            wallet: ws.current.value!, to: addressInput.text, amount: amount);
         final time = DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now());
         final transaction = Transaction(
             from: ws.current.value?.address ?? '',
@@ -76,8 +77,8 @@ class SendController extends GetxController {
             token: 'wtc');
         hs.saveTransaction(transaction);
       } else if (token.value == 'wta') {
-        final hash =
-            await Blockchain.transferWTA(pk, addressInput.text, amount);
+        final hash = await bs.transferWTA(
+            wallet: ws.current.value!, to: addressInput.text, amount: amount);
         final time = DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now());
         final transaction = Transaction(
             from: ws.current.value?.address ?? '',

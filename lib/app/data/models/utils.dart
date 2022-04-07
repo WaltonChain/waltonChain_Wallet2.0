@@ -58,4 +58,14 @@ class Utils {
   static String ellipsisedHash(String hash) {
     return hash.substring(0, 6) + '...' + hash.substring(hash.length - 6);
   }
+
+  static int weiAmountFromDouble(double amount) {
+    return (amount * pow(10, 18)).toInt();
+  }
+
+  static double doubleFromWeiAmount(dynamic weiAmount) {
+    final ea = EtherAmount.fromUnitAndValue(EtherUnit.wei, weiAmount);
+    final result = ea.getValueInUnit(EtherUnit.ether);
+    return result;
+  }
 }

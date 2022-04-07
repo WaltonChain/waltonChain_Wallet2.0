@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 // import 'package:wtc_wallet_app/app/data/constants/blockchain.dart';
-import 'package:wtc_wallet_app/app/data/models/blockchain.dart';
 import 'package:wtc_wallet_app/app/routes/app_pages.dart';
+import 'package:wtc_wallet_app/app/services/blockchain_service.dart';
 import 'package:wtc_wallet_app/app/services/wallet_service.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 
@@ -15,6 +15,7 @@ class AssetsController extends GetxController {
   var wtaAmount = 0.0.obs;
 
   final wc = Get.find<WalletService>();
+  final bs = Get.find<BlockchainService>();
 
   @override
   void onInit() {
@@ -39,13 +40,11 @@ class AssetsController extends GetxController {
 
   getBalances(wallet) async {
     if (wallet != null) {
-      final address = wallet.address;
-
       EasyLoading.show(status: 'Loading...');
       var values = await Future.wait([
-        Blockchain.getWtcBalance(address),
-        Blockchain.getWtaBalance(address),
-        Blockchain.getWtcPrice(),
+        bs.getWtcBalance(wc.current.value!),
+        bs.getWtaBalance(wc.current.value!),
+        bs.getWtcPrice(),
       ]);
       EasyLoading.showSuccess('Loading Success');
 

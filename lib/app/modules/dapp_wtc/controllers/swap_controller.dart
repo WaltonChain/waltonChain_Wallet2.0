@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 // import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
-import 'package:wtc_wallet_app/app/data/models/blockchain.dart';
 import 'package:wtc_wallet_app/app/modules/assets/controllers/assets_controller.dart';
+import 'package:wtc_wallet_app/app/services/blockchain_service.dart';
 import 'package:wtc_wallet_app/app/services/hive_service.dart';
 import 'package:wtc_wallet_app/app/services/wallet_service.dart';
 
@@ -18,6 +18,7 @@ class SwapController extends GetxController
   final ac = Get.find<AssetsController>();
   final ws = Get.find<WalletService>();
   final hs = Get.find<HiveService>();
+  final bs = Get.find<BlockchainService>();
 
   var wtcBalance = 0.0000.obs;
   var wtaBalance = 0.0000.obs;
@@ -70,11 +71,12 @@ class SwapController extends GetxController
     final valid = swapFormKey.currentState?.validate();
     if (valid == true) {
       EasyLoading.show(status: 'swapping...');
-      final pk = hs.getPrivateKey(ws.current.value?.address ?? '');
+      // final pk = hs.getPrivateKey(ws.current.value?.address ?? '');
+      final amount = double.tryParse(from.text) ?? 0.0000;
       if (isWtcToWta.value) {
-        await Blockchain.wtcToWta(pk, from.text);
+        await bs.wtcToWta(wallet: ws.current.value!, amount: amount);
       } else {
-        await Blockchain.wtaToWtc(pk, from.text);
+        await bs.wtaToWtc(wallet: ws.current.value!, amount: amount);
       }
       EasyLoading.showSuccess('swapped');
     }

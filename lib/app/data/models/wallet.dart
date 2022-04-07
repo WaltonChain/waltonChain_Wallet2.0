@@ -1,4 +1,6 @@
 import 'package:hive/hive.dart';
+import 'package:web3dart/web3dart.dart';
+import 'package:wtc_wallet_app/app/data/models/utils.dart';
 
 part 'wallet.g.dart';
 
@@ -50,5 +52,16 @@ class Wallet {
         keyStore: $keyStore
       }
     ''';
+  }
+
+  getPrivateKey() {
+    final pk = Utils.privateKeyFromKeyStore(keyStore ?? '', pass);
+    return pk;
+  }
+
+  getCredentials() {
+    final pk = getPrivateKey();
+    final credentials = EthPrivateKey.fromHex(pk);
+    return credentials;
   }
 }

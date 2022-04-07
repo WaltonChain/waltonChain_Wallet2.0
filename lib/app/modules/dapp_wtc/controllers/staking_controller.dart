@@ -3,8 +3,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
-import 'package:wtc_wallet_app/app/data/models/blockchain.dart';
 import 'package:wtc_wallet_app/app/modules/assets/controllers/assets_controller.dart';
+import 'package:wtc_wallet_app/app/services/blockchain_service.dart';
 import 'package:wtc_wallet_app/app/services/hive_service.dart';
 import 'package:wtc_wallet_app/app/services/wallet_service.dart';
 
@@ -19,6 +19,7 @@ class StakingController extends GetxController {
   final ac = Get.find<AssetsController>();
   final ws = Get.find<WalletService>();
   final hs = Get.find<HiveService>();
+  final bs = Get.find<BlockchainService>();
 
   var tvl = 0.0000.obs;
   var apr = 0.0000.obs;
@@ -29,16 +30,13 @@ class StakingController extends GetxController {
   @override
   void onInit() async {
     super.onInit();
-    tvl.value = await Blockchain.getTvl(ac.wtcPrice.value);
-    apr.value = await Blockchain.getApr();
+    setTvlAndApr();
     balance.value = ac.wtcBalance.value;
-    staked.value = await Blockchain.getStaked(ws.current.value?.address ?? '');
-    profit.value =
-        await Blockchain.showRewards(ws.current.value?.address ?? '');
+    staked.value = await bs.getStaked(ws.current.value!);
+    profit.value = await bs.getRewarded(ws.current.value!);
 
     Timer.periodic(const Duration(seconds: 30), (timer) async {
-      profit.value =
-          await Blockchain.showRewards(ws.current.value?.address ?? '');
+      profit.value = await bs.getRewarded(ws.current.value!);
     });
   }
 
@@ -50,12 +48,20 @@ class StakingController extends GetxController {
   @override
   void onClose() {}
 
+  setTvlAndApr() async {
+    final totalSupply = await bs.getTotalSupply();
+    final t = totalSupply * ac.wtcPrice.value;
+    tvl.value = t;
+    final a = 2000 * 365 / totalSupply * 100;
+    apr.value = a;
+  }
+
   clickStake() async {
     final valid = stakeFormKey.currentState?.validate();
     if (valid == true) {
-      final pk = hs.getPrivateKey(ws.current.value?.address ?? '');
+      final amount = double.tryParse(stakeInput.text) ?? 0.0000;
       EasyLoading.show(status: 'staking...');
-      await Blockchain.stake(pk, stakeInput.text);
+      await bs.stake(wallet: ws.current.value!, amount: amount);
       EasyLoading.showSuccess('stake success');
     }
   }
@@ -63,17 +69,16 @@ class StakingController extends GetxController {
   clickWithdrawWtc() async {
     final valid = withdrawFormKey.currentState?.validate();
     if (valid == true) {
-      final pk = hs.getPrivateKey(ws.current.value?.address ?? '');
+      final amount = double.tryParse(stakeInput.text) ?? 0.0000;
       EasyLoading.show(status: 'withdrawing...');
-      await Blockchain.withdrawWtc(pk, withdrawInput.text);
+      await bs.withdrawWtc(wallet: ws.current.value!, amount: amount);
       EasyLoading.showSuccess('withdraw success');
     }
   }
 
   clickWithdrawProfit() async {
-    final pk = hs.getPrivateKey(ws.current.value?.address ?? '');
     EasyLoading.show(status: 'getting rewards...');
-    await Blockchain.getReward(pk);
+    await bs.getRewarded(ws.current.value!);
     EasyLoading.showSuccess('get rewards success');
   }
 }

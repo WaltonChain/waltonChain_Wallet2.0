@@ -30,7 +30,7 @@ class SwapCard extends GetView<SwapController> {
                 ? controller.wtcBalance.toStringAsFixed(2) + ' WTC'
                 : controller.wtaBalance.toStringAsFixed(2) + ' WTA')),
             const Expanded(child: SizedBox()),
-            const Text('amount'),
+            const Text('Amount'),
           ],
         ),
         const SizedBox(height: 16.0),
@@ -72,7 +72,7 @@ class SwapCard extends GetView<SwapController> {
                 ? controller.wtaBalance.toStringAsFixed(2) + ' WTA'
                 : controller.wtcBalance.toStringAsFixed(2) + ' WTC')),
             const Expanded(child: SizedBox()),
-            const Text('amount'),
+            const Text('Amount'),
           ],
         ),
         const SizedBox(height: 16.0),
@@ -256,7 +256,7 @@ class StakingForm extends GetView<StakingController> {
                   onPressed: () {
                     controller.clickWithdrawProfit();
                   },
-                  child: const Text('Get Reward')),
+                  child: const Text('Harvest')),
             ],
           )
         ],

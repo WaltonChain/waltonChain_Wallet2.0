@@ -19,11 +19,6 @@ class NaviRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // return ListTile(
-    //   leading: Icon(leading, size: 24.0),
-    //   title: Text(title, style: const TextStyle(fontSize: 16.0)),
-    //   trailing: const Icon(Icons.chevron_right, size: 24.0),
-    // );
     return GestureDetector(
       onTap: onTap,
       child: Container(
@@ -76,7 +71,7 @@ class MeView extends GetView<MeController> {
             NaviRow(
               onTap: () => Get.toNamed(Routes.MANAGE_WALLET),
               leading: 'assets/images/wallet.png',
-              title: 'Manage your wallet',
+              title: 'Manage Your Wallets',
             ),
             const SizedBox(
               height: 32.0,

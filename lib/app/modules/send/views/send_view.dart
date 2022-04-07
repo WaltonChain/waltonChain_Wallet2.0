@@ -60,7 +60,7 @@ class SendView extends GetView<SendController> {
                     },
                     child: Obx(() => Text(
                           controller.token.value == 'wtc' ? 'WTA' : 'WTC',
-                          style: const TextStyle(fontSize: 10.0),
+                          style: const TextStyle(fontSize: 16.0),
                         )),
                     style: ElevatedButton.styleFrom(
                         primary: const Color.fromRGBO(130, 0, 255, 1),
@@ -69,7 +69,7 @@ class SendView extends GetView<SendController> {
                         ),
                         minimumSize: Size.zero,
                         padding: const EdgeInsets.symmetric(
-                            vertical: 4.0, horizontal: 10.0)),
+                            vertical: 4.0, horizontal: 16.0)),
                   ),
                 ),
                 const Expanded(child: SizedBox()),

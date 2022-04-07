@@ -55,11 +55,14 @@ class SwapCard extends GetView<SwapController> {
           ],
         ),
         const SizedBox(height: 32.0),
-        IconButton(
-            onPressed: () {
-              controller.clickSwitch();
-            },
-            icon: Image.asset('assets/images/swap.png')),
+        RotatedBox(
+          quarterTurns: 1,
+          child: IconButton(
+              onPressed: () {
+                controller.clickSwitch();
+              },
+              icon: Image.asset('assets/images/swap.png')),
+        ),
         const SizedBox(height: 32.0),
         Row(
           children: [

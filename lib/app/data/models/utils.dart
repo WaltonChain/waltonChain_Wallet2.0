@@ -61,9 +61,13 @@ class Utils {
     return hash.substring(0, 6) + '...' + hash.substring(hash.length - 6);
   }
 
-  static int weiAmountFromDouble(double amount) {
-    return (amount * pow(10, 18)).toInt();
+  static BigInt bigIntFromDouble(double amount) {
+    return BigInt.from(amount * pow(10, 18));
   }
+
+  // static int weiAmountFromDouble(double amount) {
+  //   return amount * pow(10, 18);
+  // }
 
   static double doubleFromWeiAmount(dynamic weiAmount) {
     final ea = EtherAmount.fromUnitAndValue(EtherUnit.wei, weiAmount);

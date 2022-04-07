@@ -66,12 +66,12 @@ class ManageWalletView extends GetView<ManageWalletController> {
                                         TextButton(
                                           onPressed: () =>
                                               Get.toNamed(Routes.CREATE_WALLET),
-                                          child: const Text('创建钱包'),
+                                          child: const Text('Create Wallet'),
                                         ),
                                         TextButton(
                                             onPressed: () => Get.toNamed(
                                                 Routes.IMPORT_WALLET),
-                                            child: const Text('导入钱包')),
+                                            child: const Text('Import Wallet')),
                                       ],
                                     ),
                                   ),

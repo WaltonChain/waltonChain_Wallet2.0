@@ -70,15 +70,38 @@ class SwapController extends GetxController
   clickSwap() async {
     final valid = swapFormKey.currentState?.validate();
     if (valid == true) {
-      EasyLoading.show(status: 'swapping...');
-      // final pk = hs.getPrivateKey(ws.current.value?.address ?? '');
+      final wallet = ws.current.value!;
       final amount = double.tryParse(from.text) ?? 0.00;
       if (isWtcToWta.value) {
-        await bs.wtcToWta(wallet: ws.current.value!, amount: amount);
+        EasyLoading.show(status: 'swapping...');
+        await bs.wtcToWta(wallet: wallet, amount: amount);
+        EasyLoading.showSuccess('swapped');
       } else {
-        await bs.wtaToWtc(wallet: ws.current.value!, amount: amount);
+        EasyLoading.show(status: 'Checking Approve');
+        final needApprove = await bs.needApprove(wallet, amount);
+        EasyLoading.dismiss();
+
+        if (needApprove) {
+          Get.defaultDialog(
+            title: 'Approve',
+            content: const Text('Need Approve'),
+            onConfirm: () async {
+              EasyLoading.show(status: 'Approving...');
+              await bs.approveSwap(wallet: wallet, amount: amount);
+              EasyLoading.showSuccess('Approved');
+
+              EasyLoading.show(status: 'swapping...');
+              await bs.wtaToWtc(wallet: wallet, amount: amount);
+              EasyLoading.showSuccess('swapped');
+            },
+            onCancel: () {},
+          );
+        } else {
+          EasyLoading.show(status: 'swapping...');
+          await bs.wtaToWtc(wallet: wallet, amount: amount);
+          EasyLoading.showSuccess('swapped');
+        }
       }
-      EasyLoading.showSuccess('swapped');
     }
   }
 }

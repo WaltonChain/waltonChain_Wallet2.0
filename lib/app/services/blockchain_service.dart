@@ -61,19 +61,21 @@ class BlockchainService extends GetxService {
     required dynamic contract,
     required String functionName,
     List<dynamic> args = const [],
-    int weiAmount = 0,
+    BigInt? weiAmount,
   }) async {
     final ethFunction = contract.function(functionName);
     final result = await eth.sendTransaction(
       wallet.getCredentials(),
       Transaction.callContract(
-        contract: tokenContract,
+        contract: contract,
         function: ethFunction,
         parameters: args,
         from: EthereumAddress.fromHex(wallet.address ?? ''),
         gasPrice: EtherAmount.inWei(BigInt.one),
         maxGas: maxGas,
-        value: EtherAmount.fromUnitAndValue(EtherUnit.wei, weiAmount),
+        value: weiAmount == null
+            ? null
+            : EtherAmount.fromUnitAndValue(EtherUnit.wei, weiAmount),
       ),
       chainId: chainId,
     );
@@ -109,15 +111,18 @@ class BlockchainService extends GetxService {
       {required my_wallet.Wallet wallet,
       required String to,
       required double amount}) async {
-    final weiAmount = Utils.weiAmountFromDouble(amount);
+    final weiAmount = Utils.bigIntFromDouble(amount);
     final response = await eth.sendTransaction(
-        wallet.getCredentials(),
-        Transaction(
-          to: EthereumAddress.fromHex(to),
-          gasPrice: EtherAmount.inWei(BigInt.one),
-          maxGas: maxGas,
-          value: EtherAmount.fromUnitAndValue(EtherUnit.wei, weiAmount),
-        ));
+      wallet.getCredentials(),
+      Transaction(
+        to: EthereumAddress.fromHex(to),
+        gasPrice: EtherAmount.inWei(BigInt.one),
+        maxGas: maxGas,
+        value: EtherAmount.fromUnitAndValue(EtherUnit.wei, weiAmount),
+      ),
+      chainId: chainId,
+    );
+    // print('response:($response)');
     await eth.dispose();
     return response;
   }
@@ -127,12 +132,13 @@ class BlockchainService extends GetxService {
       required String to,
       required double amount}) async {
     final ea = EthereumAddress.fromHex(to);
-    final bigNum = BigInt.from(Utils.weiAmountFromDouble(amount));
+    final weiAmount = Utils.bigIntFromDouble(amount);
+
     final response = await submitByContract(
         wallet: wallet,
         contract: tokenContract,
         functionName: 'transfer',
-        args: [ea, bigNum]);
+        args: [ea, weiAmount]);
     return response;
   }
 
@@ -143,9 +149,11 @@ class BlockchainService extends GetxService {
         contract: tokenContract,
         functionName: 'allowance',
         args: [ea, wtcSwapEa]);
+    // print('needApprove response:($response)');
     final allowanceWei =
         EtherAmount.fromUnitAndValue(EtherUnit.wei, response[0]);
     final result = allowanceWei.getValueInUnit(EtherUnit.ether) < amount;
+    // print('needApprove result:($result)');
     return result;
   }
 
@@ -160,6 +168,7 @@ class BlockchainService extends GetxService {
         contract: tokenContract,
         functionName: 'approve',
         args: [wtcSwapEa, maxApproveWei]);
+    // print('approveSwap response:($response)');
     return response;
   }
 
@@ -167,11 +176,11 @@ class BlockchainService extends GetxService {
     required my_wallet.Wallet wallet,
     required double amount,
   }) async {
-    final weiAmount = Utils.weiAmountFromDouble(amount);
+    final weiAmount = Utils.bigIntFromDouble(amount);
     final response = await submitByContract(
       wallet: wallet,
       contract: swapContract,
-      functionName: 'wtcToWta',
+      functionName: 'WtcToWta',
       weiAmount: weiAmount,
     );
     return response;
@@ -181,14 +190,17 @@ class BlockchainService extends GetxService {
     required my_wallet.Wallet wallet,
     required double amount,
   }) async {
-    final weiAmount = Utils.weiAmountFromDouble(amount);
+    final weiAmount = Utils.bigIntFromDouble(amount);
     final weiBigInt =
         EtherAmount.fromUnitAndValue(EtherUnit.wei, weiAmount).getInWei;
+    // print(
+    //     'wtaToWtc before response, weiBigInt:($weiBigInt) weiAmount:($weiAmount)');
     final response = await submitByContract(
         wallet: wallet,
         contract: swapContract,
-        functionName: 'wtaToWtc',
+        functionName: 'WtaToWtc',
         args: [weiBigInt]);
+    // print('wtaToWtc after response:($response)');
     return response;
   }
 
@@ -234,7 +246,7 @@ class BlockchainService extends GetxService {
 
   Future<String> stake(
       {required my_wallet.Wallet wallet, required double amount}) async {
-    final weiAmount = Utils.weiAmountFromDouble(amount);
+    final weiAmount = Utils.bigIntFromDouble(amount);
     final response = await submitByContract(
       wallet: wallet,
       contract: stakeContract,
@@ -246,13 +258,14 @@ class BlockchainService extends GetxService {
 
   Future<String> withdrawWtc(
       {required my_wallet.Wallet wallet, required double amount}) async {
-    final weiAmount = Utils.weiAmountFromDouble(amount);
+    final weiAmount = Utils.bigIntFromDouble(amount);
     final response = await submitByContract(
       wallet: wallet,
       contract: stakeContract,
       functionName: 'withdraw',
-      args: [BigInt.from(weiAmount)],
+      args: [weiAmount],
     );
+    // print('withdrawWtc response:($response) weiAmount:($weiAmount)');
     return response;
   }
 

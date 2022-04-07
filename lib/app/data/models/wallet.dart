@@ -56,6 +56,7 @@ class Wallet {
 
   getPrivateKey() {
     final pk = Utils.privateKeyFromKeyStore(keyStore ?? '', pass);
+    // print('getPrivateKey:($pk)');
     return pk;
   }
 

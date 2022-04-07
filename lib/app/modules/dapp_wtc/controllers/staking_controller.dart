@@ -69,7 +69,7 @@ class StakingController extends GetxController {
   clickWithdrawWtc() async {
     final valid = withdrawFormKey.currentState?.validate();
     if (valid == true) {
-      final amount = double.tryParse(stakeInput.text) ?? 0.00;
+      final amount = double.tryParse(withdrawInput.text) ?? 0.00;
       EasyLoading.show(status: 'withdrawing...');
       await bs.withdrawWtc(wallet: ws.current.value!, amount: amount);
       EasyLoading.showSuccess('withdraw success');
@@ -77,8 +77,8 @@ class StakingController extends GetxController {
   }
 
   clickWithdrawProfit() async {
-    EasyLoading.show(status: 'getting rewards...');
-    await bs.getRewarded(ws.current.value!);
-    EasyLoading.showSuccess('get rewards success');
+    EasyLoading.show(status: 'Harvesting');
+    await bs.withdrawReward(ws.current.value!);
+    EasyLoading.showSuccess('Harvest Success');
   }
 }

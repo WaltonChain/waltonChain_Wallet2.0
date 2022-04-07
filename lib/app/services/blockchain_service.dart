@@ -84,7 +84,6 @@ class BlockchainService extends GetxService {
   Future<double> getWtcPrice() async {
     final response = await get(Uri.parse(wtcPriceUrl));
     final json = jsonDecode(response.body);
-    print('json:$json');
     final priceStr = json[0]['value'];
     final price = double.parse(priceStr);
     return price;

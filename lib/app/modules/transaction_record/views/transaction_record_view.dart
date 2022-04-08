@@ -46,7 +46,7 @@ class Record extends StatelessWidget {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(token),
+                Text(token.toUpperCase()),
                 Text(time),
               ],
             ),

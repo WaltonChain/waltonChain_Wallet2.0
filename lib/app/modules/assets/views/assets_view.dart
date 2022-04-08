@@ -359,7 +359,7 @@ class Tokens extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: const [
             Text(
-              'Total assets',
+              'Total Assets',
               style: TextStyle(
                   fontSize: 18.0,
                   color: Colors.black87,

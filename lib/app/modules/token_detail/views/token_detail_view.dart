@@ -71,7 +71,7 @@ class TokenDetailRow extends StatelessWidget {
               ],
             ),
             const Expanded(child: SizedBox()),
-            Text('$amount $token'),
+            Text('$amount ${token.toUpperCase()}'),
           ],
         ),
       ),

@@ -9,7 +9,7 @@ class SplashController extends GetxController {
   @override
   void onInit() async {
     super.onInit();
-    await tryOtaUpdate();
+    // await tryOtaUpdate();
   }
 
   @override

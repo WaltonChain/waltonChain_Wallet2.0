@@ -14,7 +14,7 @@ class TransactionDetailCard extends GetView<TransactionDetailController> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 343.0,
+      width: MediaQuery.of(context).size.width * 0.9,
       // height: 448.0,
       padding: const EdgeInsets.all(8.0),
       decoration: BoxDecoration(
@@ -22,14 +22,9 @@ class TransactionDetailCard extends GetView<TransactionDetailController> {
         borderRadius: BorderRadius.circular(8.0),
       ),
       child: Column(children: [
-        Positioned(
-          child: FractionalTranslation(
-            translation: const Offset(0, -0.5),
-            child: Image.asset(
-              'assets/images/successful.png',
-              width: 110,
-            ),
-          ),
+        Image.asset(
+          'assets/images/successful.png',
+          width: 110,
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -41,7 +36,7 @@ class TransactionDetailCard extends GetView<TransactionDetailController> {
         const SizedBox(height: 10.0),
         Row(
           children: const [
-            Text('发款方'),
+            Text('From:'),
           ],
         ),
         Row(
@@ -56,7 +51,7 @@ class TransactionDetailCard extends GetView<TransactionDetailController> {
         ),
         Row(
           children: const [
-            Text('收款方'),
+            Text('To:'),
           ],
         ),
         Row(
@@ -71,7 +66,7 @@ class TransactionDetailCard extends GetView<TransactionDetailController> {
         ),
         Row(
           children: const [
-            Text('哈希值'),
+            Text('Hash:'),
           ],
         ),
         Row(
@@ -89,12 +84,12 @@ class TransactionDetailCard extends GetView<TransactionDetailController> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const Text('交易时间', style: TextStyle(fontSize: 12.0)),
+            const Text('Transaction Time:', style: TextStyle(fontSize: 12.0)),
             Text(controller.time)
           ],
         ),
         const SizedBox(height: 20.0),
-        const Text('浏览器查询'),
+        const Text('To Browser'),
         Linkify(
           text:
               'https://waltonchain.pro/#/transactions?hash=${controller.hash}',

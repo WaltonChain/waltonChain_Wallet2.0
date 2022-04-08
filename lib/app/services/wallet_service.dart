@@ -52,14 +52,14 @@ class WalletService extends GetxService {
 
     if (wallets.isEmpty) {
       setIndex(-1);
-      Get.offNamed(Routes.CREATE_WALLET);
+      Get.offAllNamed(Routes.CREATE_WALLET);
     } else {
       if (index == selectedIndex.value) {
         setIndex(0);
       } else if (index < selectedIndex.value) {
         setIndex(selectedIndex.value - 1);
       }
-      Get.offNamed(Routes.MANAGE_WALLET);
+      Get.offAllNamed(Routes.MANAGE_WALLET);
     }
   }
 }

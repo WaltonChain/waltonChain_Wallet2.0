@@ -1,3 +1,4 @@
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:wtc_wallet_app/app/routes/app_pages.dart';
 import 'package:wtc_wallet_app/app/services/wallet_service.dart';
@@ -6,21 +7,16 @@ import 'package:ota_update/ota_update.dart';
 class SplashController extends GetxController {
   final wc = Get.find<WalletService>();
 
-  @override
-  void onInit() async {
-    super.onInit();
-    // await tryOtaUpdate();
-  }
+  // @override
+  // void onInit() {
+  //   super.onInit();
+  // }
 
   @override
-  void onReady() {
+  void onReady() async {
     super.onReady();
-
-    if (wc.wallets.isEmpty) {
-      Get.offNamed(Routes.CREATE_WALLET);
-    } else {
-      Get.offNamed(Routes.HOME);
-    }
+    await tryOtaUpdate();
+    toOtherPage();
   }
 
   @override
@@ -31,21 +27,36 @@ class SplashController extends GetxController {
       //LINK CONTAINS APK OF FLUTTER HELLO WORLD FROM FLUTTER SDK EXAMPLES
       OtaUpdate()
           .execute(
-        'http://monitor.kirinpool.cn/wtc_wallet_app.apk',
-        destinationFilename: 'wtc_wallet_app.apk',
+        'http://monitor.kirinpool.cn/wtc_wallet.apk',
+        destinationFilename: 'wtc_wallet.apk',
         //FOR NOW ANDROID ONLY - ABILITY TO VALIDATE CHECKSUM OF FILE:
-        sha256checksum:
-            'ac03e532a02db9cc52b7112adabd9948fba20ca25448a3ac70da8f8cc598981f',
+        // sha256checksum:
+        //     '5ec538944310049a9e0794ed856beccbff105cb17c299c8a42f2419ebf10238a',
       )
           .listen(
         (OtaEvent event) {
           // setState(() => currentEvent = event);
-          // debugPrint('tryOtaUpdate event:($event)');
+          // print('event.status:(${event.status}) event.value:(${event.value})');
+          if (event.status == OtaStatus.DOWNLOADING) {
+            EasyLoading.showProgress(double.parse(event.value ?? '0') / 100,
+                status: 'App Updating...');
+            if (double.parse(event.value ?? '0') == 100) {
+              EasyLoading.dismiss();
+            }
+          }
         },
       );
       // ignore: avoid_catches_without_on_clauses
     } catch (e) {
       // debugPrint('Failed to make OTA update. Details: $e');
+    }
+  }
+
+  void toOtherPage() {
+    if (wc.wallets.isEmpty) {
+      Get.offNamed(Routes.CREATE_WALLET);
+    } else {
+      Get.offNamed(Routes.HOME);
     }
   }
 }

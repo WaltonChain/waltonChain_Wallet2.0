@@ -57,28 +57,31 @@ class StakingController extends GetxController {
   }
 
   clickStake() async {
-    final valid = stakeFormKey.currentState?.validate();
-    if (valid == true) {
-      final amount = double.tryParse(stakeInput.text) ?? 0.00;
-      EasyLoading.show(status: 'staking...');
-      await bs.stake(wallet: ws.current.value!, amount: amount);
-      EasyLoading.showSuccess('stake success');
-    }
+    Get.snackbar('Comming Soon', "Can't available now");
+    // final valid = stakeFormKey.currentState?.validate();
+    // if (valid == true) {
+    //   final amount = double.tryParse(stakeInput.text) ?? 0.00;
+    //   EasyLoading.show(status: 'staking...');
+    //   await bs.stake(wallet: ws.current.value!, amount: amount);
+    //   EasyLoading.showSuccess('stake success');
+    // }
   }
 
   clickWithdrawWtc() async {
-    final valid = withdrawFormKey.currentState?.validate();
-    if (valid == true) {
-      final amount = double.tryParse(withdrawInput.text) ?? 0.00;
-      EasyLoading.show(status: 'withdrawing...');
-      await bs.withdrawWtc(wallet: ws.current.value!, amount: amount);
-      EasyLoading.showSuccess('withdraw success');
-    }
+    Get.snackbar('Comming Soon', "Can't available now");
+    // final valid = withdrawFormKey.currentState?.validate();
+    // if (valid == true) {
+    //   final amount = double.tryParse(withdrawInput.text) ?? 0.00;
+    //   EasyLoading.show(status: 'withdrawing...');
+    //   await bs.withdrawWtc(wallet: ws.current.value!, amount: amount);
+    //   EasyLoading.showSuccess('withdraw success');
+    // }
   }
 
   clickWithdrawProfit() async {
-    EasyLoading.show(status: 'Harvesting');
-    await bs.withdrawReward(ws.current.value!);
-    EasyLoading.showSuccess('Harvest Success');
+    Get.snackbar('Comming Soon', "Can't available now");
+    // EasyLoading.show(status: 'Harvesting');
+    // await bs.withdrawReward(ws.current.value!);
+    // EasyLoading.showSuccess('Harvest Success');
   }
 }

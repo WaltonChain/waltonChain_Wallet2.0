@@ -68,40 +68,41 @@ class SwapController extends GetxController
   }
 
   clickSwap() async {
-    final valid = swapFormKey.currentState?.validate();
-    if (valid == true) {
-      final wallet = ws.current.value!;
-      final amount = double.tryParse(from.text) ?? 0.00;
-      if (isWtcToWta.value) {
-        EasyLoading.show(status: 'swapping...');
-        await bs.wtcToWta(wallet: wallet, amount: amount);
-        EasyLoading.showSuccess('swapped');
-      } else {
-        EasyLoading.show(status: 'Checking Approve');
-        final needApprove = await bs.needApprove(wallet, amount);
-        EasyLoading.dismiss();
+    Get.snackbar('Comming Soon', "Can't available now");
+    // final valid = swapFormKey.currentState?.validate();
+    // if (valid == true) {
+    //   final wallet = ws.current.value!;
+    //   final amount = double.tryParse(from.text) ?? 0.00;
+    //   if (isWtcToWta.value) {
+    //     EasyLoading.show(status: 'swapping...');
+    //     await bs.wtcToWta(wallet: wallet, amount: amount);
+    //     EasyLoading.showSuccess('swapped');
+    //   } else {
+    //     EasyLoading.show(status: 'Checking Approve');
+    //     final needApprove = await bs.needApprove(wallet, amount);
+    //     EasyLoading.dismiss();
 
-        if (needApprove) {
-          Get.defaultDialog(
-            title: 'Approve',
-            content: const Text('Need Approve'),
-            onConfirm: () async {
-              EasyLoading.show(status: 'Approving...');
-              await bs.approveSwap(wallet: wallet, amount: amount);
-              EasyLoading.showSuccess('Approved');
+    //     if (needApprove) {
+    //       Get.defaultDialog(
+    //         title: 'Approve',
+    //         content: const Text('Need Approve'),
+    //         onConfirm: () async {
+    //           EasyLoading.show(status: 'Approving...');
+    //           await bs.approveSwap(wallet: wallet, amount: amount);
+    //           EasyLoading.showSuccess('Approved');
 
-              EasyLoading.show(status: 'swapping...');
-              await bs.wtaToWtc(wallet: wallet, amount: amount);
-              EasyLoading.showSuccess('swapped');
-            },
-            onCancel: () {},
-          );
-        } else {
-          EasyLoading.show(status: 'swapping...');
-          await bs.wtaToWtc(wallet: wallet, amount: amount);
-          EasyLoading.showSuccess('swapped');
-        }
-      }
-    }
+    //           EasyLoading.show(status: 'swapping...');
+    //           await bs.wtaToWtc(wallet: wallet, amount: amount);
+    //           EasyLoading.showSuccess('swapped');
+    //         },
+    //         onCancel: () {},
+    //       );
+    //     } else {
+    //       EasyLoading.show(status: 'swapping...');
+    //       await bs.wtaToWtc(wallet: wallet, amount: amount);
+    //       EasyLoading.showSuccess('swapped');
+    //     }
+    //   }
+    // }
   }
 }

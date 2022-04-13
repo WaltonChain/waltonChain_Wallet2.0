@@ -32,11 +32,9 @@ class SplashController extends GetxController {
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
     const url = 'https://wtaapp.waltonchain.org/latest';
     final res = await http.get(Uri.parse(url));
-    // print('res.body: ${res.body}');
     final latest = jsonDecode(res.body);
     final needUpdate =
         Utils.compareVersion(packageInfo.version, latest['version']);
-    // print('needUpdate: $needUpdate');
 
     if (needUpdate) {
       Get.defaultDialog(

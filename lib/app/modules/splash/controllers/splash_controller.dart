@@ -43,6 +43,7 @@ class SplashController extends GetxController {
           title: 'Found New Version',
           content: const Text('Please update to the latest version'),
           onCancel: () {
+            Get.back();
             toOtherPage();
           },
           onConfirm: () {

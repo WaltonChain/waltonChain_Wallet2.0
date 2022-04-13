@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
-import 'package:package_info_plus/package_info_plus.dart';
 import 'package:wtc_wallet_app/app/services/blockchain_service.dart';
 import 'package:wtc_wallet_app/app/services/hive_service.dart';
 import 'package:wtc_wallet_app/app/services/wallet_service.dart';
@@ -10,9 +9,6 @@ import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 
 class DenpendencyInjection {
   static Future<void> init() async {
-    PackageInfo packageInfo = await PackageInfo.fromPlatform();
-    print(
-        'packageInfo.version: ${packageInfo.version} buildNumber: ${packageInfo.buildNumber}');
     await dotenv.load(fileName: ".env");
 
     await Get.putAsync(() => HiveService().init());

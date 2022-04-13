@@ -36,7 +36,7 @@ class SplashController extends GetxController {
     final latest = jsonDecode(res.body);
     final needUpdate =
         Utils.compareVersion(packageInfo.version, latest['version']);
-    print('needUpdate: $needUpdate');
+    // print('needUpdate: $needUpdate');
 
     if (needUpdate) {
       Get.defaultDialog(

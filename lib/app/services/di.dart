@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:wtc_wallet_app/app/services/blockchain_service.dart';
 import 'package:wtc_wallet_app/app/services/hive_service.dart';
@@ -17,20 +18,19 @@ class DenpendencyInjection {
 
     await setInAppWebview();
 
-    // EasyLoading.instance
-    // ..displayDuration = const Duration(milliseconds: 2000)
-    // ..indicatorType = EasyLoadingIndicatorType.fadingCircle
-    // ..loadingStyle = EasyLoadingStyle.dark;
-    // ..indicatorSize = 45.0
-    // ..radius = 10.0
-    // ..progressColor = Colors.yellow
-    // ..backgroundColor = Colors.green
-    // ..indicatorColor = Colors.yellow
-    // ..textColor = Colors.yellow
-    // ..maskColor = Colors.blue.withOpacity(0.5)
-    // ..userInteractions = true
-    // ..dismissOnTap = false
-    // ..customAnimation = CustomAnimation();
+    EasyLoading.instance
+      ..displayDuration = const Duration(milliseconds: 2000)
+      ..indicatorType = EasyLoadingIndicatorType.wave
+      ..loadingStyle = EasyLoadingStyle.dark
+      ..indicatorSize = 45.0
+      ..radius = 10.0
+      // ..progressColor = Colors.yellow
+      // ..backgroundColor = Colors.green
+      // ..indicatorColor = Colors.yellow
+      // ..textColor = Colors.yellow
+      // ..maskColor = Colors.blue.withOpacity(0.5)
+      ..userInteractions = true
+      ..dismissOnTap = false;
   }
 
   static setInAppWebview() async {

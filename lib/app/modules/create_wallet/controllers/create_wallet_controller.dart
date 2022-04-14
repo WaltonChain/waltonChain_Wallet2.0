@@ -29,12 +29,13 @@ class CreateWalletController extends GetxController {
   // @override
   // void onReady() {
   //   super.onReady();
-  //   Utils.customDialog(
-  //       title: 'Test',
-  //       content: Text('content'),
-  //       onConfirm: () {
-  //         Get.back();
-  //       });
+  //   // Utils.customDialog(
+  //   //     title: 'Test',
+  //   //     content: Text('content'),
+  //   //     onConfirm: () {
+  //   //       Get.back();
+  //   //     });
+  //   // EasyLoading.show(status: 'loading');
   // }
 
   @override

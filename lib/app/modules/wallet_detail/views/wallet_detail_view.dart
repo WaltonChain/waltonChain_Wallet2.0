@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:wtc_wallet_app/app/component/back_bar.dart';
 import 'package:wtc_wallet_app/app/component/input_text.dart';
+import 'package:wtc_wallet_app/app/data/models/utils.dart';
 import 'package:wtc_wallet_app/app/data/models/validator.dart';
 import 'package:wtc_wallet_app/app/services/wallet_service.dart';
 
@@ -81,7 +82,7 @@ class WalletDetailView extends GetView<WalletDetailController> {
             ),
             InkWell(
               onTap: () {
-                Get.defaultDialog(
+                Utils.customDialog(
                   title: 'Password',
                   content: Column(
                     mainAxisSize: MainAxisSize.min,
@@ -94,11 +95,12 @@ class WalletDetailView extends GetView<WalletDetailController> {
                       ),
                     ],
                   ),
-                  backgroundColor: const Color.fromRGBO(248, 250, 251, 1),
                   onCancel: () {
+                    Get.back();
                     controller.pass.clear();
                   },
                   onConfirm: () {
+                    Get.back();
                     controller.clickDialogConfirm(wallet);
                   },
                 );
@@ -123,11 +125,11 @@ class WalletDetailView extends GetView<WalletDetailController> {
               padding: const EdgeInsets.all(8.0),
               child: ElevatedButton(
                 onPressed: () {
-                  Get.defaultDialog(
+                  Utils.customDialog(
                       title: 'Are you sure to delete this wallet?',
                       content: const Text(''),
-                      onCancel: () {},
                       onConfirm: () {
+                        Get.back();
                         // wc.del(wc.selectedIndex.value);
                         controller.confirmDelete(wallet);
                       });

@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:crypt/crypt.dart';
 import 'package:bip39/bip39.dart' as bip39;
 import 'package:ed25519_hd_key/ed25519_hd_key.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
@@ -89,5 +90,45 @@ class Utils {
       }
     }
     return false;
+  }
+
+  static void customDialog({
+    required String title,
+    required Widget content,
+    void Function()? onCancel,
+    required void Function()? onConfirm,
+    Color? backgroundColor,
+  }) {
+    Get.defaultDialog(
+      title: title,
+      titlePadding: const EdgeInsets.symmetric(vertical: 18.0),
+      contentPadding: EdgeInsets.zero,
+      content: content,
+      backgroundColor:
+          backgroundColor ?? const Color.fromRGBO(248, 250, 251, 1),
+      cancel: OutlinedButton(
+          onPressed: () {
+            if (onCancel == null) {
+              Get.back();
+            } else {
+              onCancel();
+            }
+          },
+          child: const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20.0),
+            child: Text('Cancel',
+                style: TextStyle(color: Color.fromRGBO(0, 0, 0, 0.2))),
+          )),
+      confirm: OutlinedButton(
+        onPressed: onConfirm,
+        child: const Padding(
+          padding: EdgeInsets.symmetric(horizontal: 20.0),
+          child: Text(
+            'Confirm',
+            style: TextStyle(color: Color.fromRGBO(130, 0, 255, 1)),
+          ),
+        ),
+      ),
+    );
   }
 }

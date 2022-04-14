@@ -36,7 +36,12 @@ class WalletDetailController extends GetxController {
       debugPrint('wallet detail view onConfirm pk:($pk)');
       pass.clear();
       Get.back();
-      Get.defaultDialog(title: 'privateKey', content: SelectableText(pk));
+      Utils.customDialog(
+          title: 'privateKey',
+          content: SelectableText(pk),
+          onConfirm: () {
+            Get.back();
+          });
     } else {
       pass.clear();
       Get.back();

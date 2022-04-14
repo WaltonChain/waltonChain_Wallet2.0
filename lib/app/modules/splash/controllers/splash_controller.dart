@@ -21,14 +21,14 @@ class SplashController extends GetxController {
   @override
   void onReady() async {
     super.onReady();
-    await tryOtaUpdate();
+    await checkVersion();
     // toOtherPage();
   }
 
   @override
   void onClose() {}
 
-  Future<void> tryOtaUpdate() async {
+  Future<void> checkVersion() async {
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
     const url = 'https://wtaapp.waltonchain.org/latest';
     dynamic latest;
@@ -42,7 +42,7 @@ class SplashController extends GetxController {
     }
 
     if (needUpdate) {
-      Get.defaultDialog(
+      Utils.customDialog(
           title: 'Found New Version',
           content: const Text('Please update to the latest version'),
           onCancel: () {
@@ -50,33 +50,8 @@ class SplashController extends GetxController {
             toOtherPage();
           },
           onConfirm: () {
-            try {
-              //LINK CONTAINS APK OF FLUTTER HELLO WORLD FROM FLUTTER SDK EXAMPLES
-              OtaUpdate()
-                  .execute(
-                latest['downloadUrl'],
-                destinationFilename: latest['fileName'],
-                //FOR NOW ANDROID ONLY - ABILITY TO VALIDATE CHECKSUM OF FILE:
-                sha256checksum: latest['sha256'],
-              )
-                  .listen(
-                (OtaEvent event) {
-                  // setState(() => currentEvent = event);
-                  // print('event.status:(${event.status}) event.value:(${event.value})');
-                  if (event.status == OtaStatus.DOWNLOADING) {
-                    EasyLoading.showProgress(
-                        double.parse(event.value ?? '0') / 100,
-                        status: 'App Updating...');
-                    if (double.parse(event.value ?? '0') == 100) {
-                      EasyLoading.dismiss();
-                    }
-                  }
-                },
-              );
-              // ignore: avoid_catches_without_on_clauses
-            } catch (e) {
-              // debugPrint('Failed to make OTA update. Details: $e');
-            }
+            Get.back();
+            otaUpdate(latest);
           });
     } else {
       toOtherPage();
@@ -88,6 +63,35 @@ class SplashController extends GetxController {
       Get.offNamed(Routes.CREATE_WALLET);
     } else {
       Get.offNamed(Routes.HOME);
+    }
+  }
+
+  void otaUpdate(dynamic latest) {
+    try {
+      //LINK CONTAINS APK OF FLUTTER HELLO WORLD FROM FLUTTER SDK EXAMPLES
+      OtaUpdate()
+          .execute(
+        latest['downloadUrl'],
+        destinationFilename: latest['fileName'],
+        //FOR NOW ANDROID ONLY - ABILITY TO VALIDATE CHECKSUM OF FILE:
+        sha256checksum: latest['sha256'],
+      )
+          .listen(
+        (OtaEvent event) {
+          // setState(() => currentEvent = event);
+          // print('event.status:(${event.status}) event.value:(${event.value})');
+          if (event.status == OtaStatus.DOWNLOADING) {
+            EasyLoading.showProgress(double.parse(event.value ?? '0') / 100,
+                status: 'App Updating...');
+            if (double.parse(event.value ?? '0') == 100) {
+              EasyLoading.dismiss();
+            }
+          }
+        },
+      );
+      // ignore: avoid_catches_without_on_clauses
+    } catch (e) {
+      // debugPrint('Failed to make OTA update. Details: $e');
     }
   }
 }

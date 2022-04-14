@@ -31,10 +31,15 @@ class SplashController extends GetxController {
   Future<void> tryOtaUpdate() async {
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
     const url = 'https://wtaapp.waltonchain.org/latest';
-    final res = await http.get(Uri.parse(url));
-    final latest = jsonDecode(res.body);
-    final needUpdate =
-        Utils.compareVersion(packageInfo.version, latest['version']);
+    dynamic latest;
+    var needUpdate = false;
+    try {
+      final res = await http.get(Uri.parse(url));
+      latest = jsonDecode(res.body);
+      needUpdate = Utils.compareVersion(packageInfo.version, latest['version']);
+    } catch (e) {
+      Get.snackbar('Error', 'Failed to get version info');
+    }
 
     if (needUpdate) {
       Get.defaultDialog(

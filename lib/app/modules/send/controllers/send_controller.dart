@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:wtc_wallet_app/app/data/models/transaction.dart';
 import 'package:wtc_wallet_app/app/modules/assets/controllers/assets_controller.dart';
+import 'package:wtc_wallet_app/app/routes/app_pages.dart';
 import 'package:wtc_wallet_app/app/services/blockchain_service.dart';
 import 'package:wtc_wallet_app/app/services/hive_service.dart';
 import 'package:wtc_wallet_app/app/services/wallet_service.dart';
@@ -94,5 +95,9 @@ class SendController extends GetxController {
     } else {
       Get.snackbar('validate false', 'please check your input');
     }
+  }
+
+  void clickScan() async {
+    Get.offNamed(Routes.CAMERA_SCAN);
   }
 }

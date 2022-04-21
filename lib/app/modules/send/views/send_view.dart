@@ -35,6 +35,12 @@ class SendView extends GetView<SendController> {
                   controller: controller.addressInput,
                   validator: Validator.address,
                   hintText: 'Address',
+                  suffixIcon: IconButton(
+                    icon: const Icon(Icons.qr_code),
+                    onPressed: () {
+                      controller.clickScan();
+                    },
+                  ),
                 ),
                 const SizedBox(height: 32.0),
                 Row(

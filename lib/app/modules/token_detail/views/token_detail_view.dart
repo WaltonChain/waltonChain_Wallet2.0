@@ -189,7 +189,7 @@ class TokenDetailView extends GetView<TokenDetailController> {
                       width: 130,
                       height: 48,
                       alignment: Alignment.center,
-                      child: const Text('transfer'),
+                      child: const Text('Transfer'),
                     ),
                     style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all(
@@ -203,7 +203,7 @@ class TokenDetailView extends GetView<TokenDetailController> {
                       width: 130,
                       height: 48,
                       alignment: Alignment.center,
-                      child: const Text('Collect'),
+                      child: const Text('Receive'),
                     ),
                     style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all(

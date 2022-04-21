@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:wtc_wallet_app/app/component/back_bar.dart';
+import 'package:wtc_wallet_app/app/component/full_width_button.dart';
 import 'package:wtc_wallet_app/app/services/wallet_service.dart';
 
 import '../controllers/receive_controller.dart';
@@ -36,7 +37,17 @@ class ReceiveView extends GetView<ReceiveController> {
                   const SizedBox(height: 32.0),
                   const Text('Wallet Address'),
                   const SizedBox(height: 8.0),
-                  Obx(() => Text(wc.current.value?.address ?? '')),
+                  Obx(() => Text(
+                        wc.current.value?.address ?? '',
+                        textAlign: TextAlign.center,
+                      )),
+                  const SizedBox(height: 8.0),
+                  FullWidthButton(
+                    text: 'Copy',
+                    onPressed: () {
+                      controller.clickCopy();
+                    },
+                  ),
                 ],
               ),
             ),

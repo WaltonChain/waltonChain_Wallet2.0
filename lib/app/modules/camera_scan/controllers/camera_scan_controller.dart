@@ -25,7 +25,7 @@ class CameraScanController extends GetxController {
 
   onCapture(String qrcode) {
     this.qrcode = qrcode;
-    print('onCapture: $qrcode');
+    // print('onCapture: $qrcode');
     if (qrcode.startsWith('0x') && qrcode.length == 42) {
       Get.offNamed(Routes.SEND, arguments: {'to': qrcode});
     } else {

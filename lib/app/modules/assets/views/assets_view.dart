@@ -140,7 +140,9 @@ class AssetCard extends GetView<AssetsController> {
               subtitle: Row(
                 children: [
                   Obx(() => Text(
-                        controller.wtcBalance.value.toStringAsFixed(2),
+                        (controller.wtcAmount.value +
+                                controller.wtaAmount.value)
+                            .toStringAsFixed(2),
                         style: const TextStyle(
                             fontSize: 24.0, color: Colors.white),
                       )),

@@ -37,21 +37,32 @@ class AssetsOverviewView extends GetView<AssetsOverviewController> {
                         Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            const Text(r'Total Balance($)'),
+                            const Text(
+                              r'Total Balance($)',
+                              style: TextStyle(
+                                  color: Colors.white, fontSize: 16.0),
+                            ),
                             const SizedBox(width: 16.0),
                             IconButton(
-                              icon: Obx(() => Icon(controller.visible.value
-                                  ? Icons.visibility
-                                  : Icons.visibility_off)),
+                              icon: Obx(() => Icon(
+                                    controller.visible.value
+                                        ? Icons.visibility
+                                        : Icons.visibility_off,
+                                    color: Colors.white,
+                                  )),
                               onPressed: () {
                                 controller.toggleVisible();
                               },
                             ),
                           ],
                         ),
-                        Obx(() => Text(controller.visible.value
-                            ? controller.totalBalance.value.toStringAsFixed(2)
-                            : '****')),
+                        Obx(() => Text(
+                            controller.visible.value
+                                ? controller.totalBalance.value
+                                    .toStringAsFixed(2)
+                                : '****',
+                            style: const TextStyle(
+                                color: Colors.white, fontSize: 32.0))),
                       ],
                     ),
                   ),

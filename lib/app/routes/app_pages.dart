@@ -26,6 +26,8 @@ import '../modules/send/bindings/send_binding.dart';
 import '../modules/send/views/send_view.dart';
 import '../modules/splash/bindings/splash_binding.dart';
 import '../modules/splash/views/splash_view.dart';
+import '../modules/staking/bindings/staking_binding.dart';
+import '../modules/staking/views/staking_view.dart';
 import '../modules/token_detail/bindings/token_detail_binding.dart';
 import '../modules/token_detail/views/token_detail_view.dart';
 import '../modules/transaction_detail/bindings/transaction_detail_binding.dart';
@@ -131,6 +133,11 @@ class AppPages {
       name: _Paths.TRANSACTION_DETAIL,
       page: () => const TransactionDetailView(),
       binding: TransactionDetailBinding(),
+    ),
+    GetPage(
+      name: _Paths.STAKING,
+      page: () => const StakingView(),
+      binding: StakingBinding(),
     ),
   ];
 }

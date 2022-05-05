@@ -1,8 +1,7 @@
 import 'package:get/get.dart';
 
-import 'package:wtc_wallet_app/app/modules/dapp_wtc/controllers/staking_controller.dart';
-
 import '../controllers/swap_controller.dart';
+import '../controllers/stake_controller.dart';
 
 class DappWtcBinding extends Bindings {
   @override
@@ -10,8 +9,8 @@ class DappWtcBinding extends Bindings {
     Get.lazyPut<SwapController>(
       () => SwapController(),
     );
-    Get.lazyPut<StakingController>(
-      () => StakingController(),
+    Get.lazyPut<StakeController>(
+      () => StakeController(),
     );
   }
 }

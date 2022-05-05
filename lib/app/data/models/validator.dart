@@ -89,4 +89,16 @@ class Validator {
       return null;
     }
   }
+
+  static String? stakeFactor(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'factor is empty';
+    } else if (double.tryParse(value).runtimeType != double) {
+      return 'factor should be number';
+    } else if (double.parse(value) <= 0) {
+      return 'factor should be greater than 0';
+    } else {
+      return null;
+    }
+  }
 }

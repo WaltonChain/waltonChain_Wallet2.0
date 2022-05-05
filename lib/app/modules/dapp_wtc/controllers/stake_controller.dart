@@ -8,7 +8,7 @@ import 'package:wtc_wallet_app/app/services/blockchain_service.dart';
 import 'package:wtc_wallet_app/app/services/hive_service.dart';
 import 'package:wtc_wallet_app/app/services/wallet_service.dart';
 
-class StakingController extends GetxController {
+class StakeController extends GetxController {
   GlobalKey<FormState> stakeFormKey =
       GlobalKey<FormState>(debugLabel: 'stakeForm');
   GlobalKey<FormState> withdrawFormKey =

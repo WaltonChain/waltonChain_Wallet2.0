@@ -7,7 +7,8 @@ import 'package:wtc_wallet_app/app/component/input_number.dart';
 // import 'package:wtc_wallet_app/app/component/staking_input.dart';
 import 'package:wtc_wallet_app/app/component/wtc_icon.dart';
 import 'package:wtc_wallet_app/app/data/models/validator.dart';
-import 'package:wtc_wallet_app/app/modules/dapp_wtc/controllers/staking_controller.dart';
+import 'package:wtc_wallet_app/app/modules/dapp_wtc/controllers/stake_controller.dart';
+import 'package:wtc_wallet_app/app/routes/app_pages.dart';
 
 import '../controllers/swap_controller.dart';
 
@@ -161,7 +162,7 @@ class SwapForm extends GetView<SwapController> {
   }
 }
 
-class StakingForm extends GetView<StakingController> {
+class StakingForm extends GetView<StakeController> {
   const StakingForm({Key? key}) : super(key: key);
 
   @override
@@ -316,7 +317,9 @@ class StakingEntry extends StatelessWidget {
                   ),
                   const SizedBox(height: 16.0),
                   FullWidthButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Get.toNamed(Routes.STAKING);
+                    },
                     text: 'Go Staking',
                   ),
                 ],

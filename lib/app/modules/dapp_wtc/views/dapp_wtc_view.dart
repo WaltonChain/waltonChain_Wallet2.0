@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:wtc_wallet_app/app/component/back_bar.dart';
+import 'package:wtc_wallet_app/app/component/full_width_button.dart';
 import 'package:wtc_wallet_app/app/component/input_number.dart';
 // import 'package:wtc_wallet_app/app/component/staking_input.dart';
 import 'package:wtc_wallet_app/app/component/wtc_icon.dart';
@@ -265,6 +266,67 @@ class StakingForm extends GetView<StakingController> {
   }
 }
 
+class StakingEntry extends StatelessWidget {
+  const StakingEntry({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(16.0),
+      child: ListView(
+        children: [
+          ListTile(
+            shape: RoundedRectangleBorder(
+                side: const BorderSide(color: Colors.black, width: 2),
+                borderRadius: BorderRadius.circular(4)),
+            title: const Text(
+              'WTA Staking',
+              style: TextStyle(fontSize: 24.0),
+            ),
+            subtitle:
+                const Text('May 15, 2022', style: TextStyle(fontSize: 14.0)),
+          ),
+          const SizedBox(height: 16.0),
+          const Text('Staking', style: TextStyle(fontSize: 18.0)),
+          const SizedBox(height: 16.0),
+          Container(
+              padding: const EdgeInsets.all(8.0),
+              decoration: BoxDecoration(
+                border: Border.all(color: Colors.black),
+              ),
+              child: Column(
+                // crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    'Release Per Day 20000.0 WTA',
+                    style: TextStyle(fontSize: 16.0),
+                  ),
+                  const Divider(
+                    thickness: 1.0,
+                    height: 16.0,
+                  ),
+                  const Text(
+                    'Personal Power 0.00 MH/S',
+                    style: TextStyle(fontSize: 16.0),
+                  ),
+                  const SizedBox(height: 16.0),
+                  const Text(
+                    'Total Power Online 2163644.60 MH/S',
+                    style: TextStyle(fontSize: 16.0),
+                  ),
+                  const SizedBox(height: 16.0),
+                  FullWidthButton(
+                    onPressed: () {},
+                    text: 'Go Staking',
+                  ),
+                ],
+              )),
+        ],
+      ),
+    );
+  }
+}
+
 class DappWtcView extends GetView<SwapController> {
   const DappWtcView({Key? key}) : super(key: key);
 
@@ -275,7 +337,7 @@ class DappWtcView extends GetView<SwapController> {
         body: Column(
           children: [
             const Padding(
-              padding: EdgeInsets.all(16.0),
+              padding: EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 0.0),
               child: BackBar(title: 'WTSwap'),
             ),
             Expanded(
@@ -290,13 +352,15 @@ class DappWtcView extends GetView<SwapController> {
                       tabs: controller.myTabs,
                       labelColor: Colors.black,
                       indicatorSize: TabBarIndicatorSize.label,
+                      labelStyle: const TextStyle(fontSize: 24.0),
                     ),
                     Expanded(
                       child: TabBarView(
                         controller: controller.tc,
                         children: const [
                           SwapForm(),
-                          StakingForm(),
+                          // StakingForm(),
+                          StakingEntry(),
                         ],
                       ),
                     ),

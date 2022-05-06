@@ -5,12 +5,17 @@ import 'package:wtc_wallet_app/app/component/back_bar.dart';
 import 'package:wtc_wallet_app/app/component/full_width_button.dart';
 import 'package:wtc_wallet_app/app/component/input_number.dart';
 import 'package:wtc_wallet_app/app/data/models/validator.dart';
+import 'package:wtc_wallet_app/app/modules/dapp_wtc/controllers/stake_controller.dart';
+import 'package:wtc_wallet_app/app/modules/dapp_wtc/controllers/swap_controller.dart';
 import 'package:wtc_wallet_app/app/routes/app_pages.dart';
 
 import '../controllers/staking_controller.dart';
 
 class StakingView extends GetView<StakingController> {
-  const StakingView({Key? key}) : super(key: key);
+  StakingView({Key? key}) : super(key: key);
+
+  final sc = Get.find<SwapController>();
+  final stc = Get.find<StakeController>();
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +49,7 @@ class StakingView extends GetView<StakingController> {
                             child: InputNumber(
                               controller: controller.stakingInput,
                               validator: (value) =>
-                                  Validator.amount(value, 99.99),
+                                  Validator.amount(value, sc.wtcBalance.value),
                               hintText: 'Amount',
                             ),
                           ),
@@ -58,6 +63,7 @@ class StakingView extends GetView<StakingController> {
                           Expanded(
                             flex: 1,
                             child: InputNumber(
+                              enabled: false,
                               controller: controller.factorInput,
                               validator: Validator.stakeFactor,
                               hintText: 'Factor',
@@ -67,9 +73,10 @@ class StakingView extends GetView<StakingController> {
                       ),
                     ),
                   ),
-                  const Padding(
-                    padding: EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 16.0),
-                    child: Text('Available: 99.99 WTC'),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 16.0),
+                    child: Text(
+                        'Available: ${sc.wtcBalance.toStringAsFixed(2)} WTC'),
                   ),
                   const SizedBox(height: 32),
                   Padding(
@@ -119,13 +126,13 @@ class StakingView extends GetView<StakingController> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text(
-                          '2022-05-05 Start Calculating Profit',
+                        Text(
+                          'Personal Power: ${stc.personalPower.value} PH/S',
                           style: TextStyle(fontSize: 16.0),
                         ),
                         const SizedBox(height: 16),
-                        const Text(
-                          'Total Power Online 2163644.60 MH/S',
+                        Text(
+                          'Total Power Online: ${stc.totalPower.value} PH/S',
                           style: TextStyle(fontSize: 16.0),
                         ),
                         const SizedBox(height: 32),

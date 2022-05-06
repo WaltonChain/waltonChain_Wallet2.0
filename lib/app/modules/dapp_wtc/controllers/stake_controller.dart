@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 // import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:wtc_wallet_app/app/modules/assets/controllers/assets_controller.dart';
@@ -27,13 +28,18 @@ class StakeController extends GetxController {
   var staked = 0.00.obs;
   var profit = 0.00.obs;
 
+  final personalPower = 0.00.obs;
+  final totalPower = 0.00.obs;
+
   @override
   void onInit() async {
     super.onInit();
-    setTvlAndApr();
+    // setTvlAndApr();
     balance.value = ac.wtcBalance.value;
-    staked.value = await bs.getStaked(ws.current.value!);
+    // staked.value = await bs.getStaked(ws.current.value!);
     profit.value = await bs.getRewarded(ws.current.value!);
+    personalPower.value = await bs.getPersonalPower(ws.current.value!);
+    totalPower.value = await bs.getTotalPower(ws.current.value!);
 
     Timer.periodic(const Duration(seconds: 30), (timer) async {
       profit.value = await bs.getRewarded(ws.current.value!);
@@ -48,13 +54,13 @@ class StakeController extends GetxController {
   @override
   void onClose() {}
 
-  setTvlAndApr() async {
-    final totalSupply = await bs.getTotalSupply();
-    final t = totalSupply * ac.wtcPrice.value;
-    tvl.value = t;
-    final a = 2000 * 365 / totalSupply * 100;
-    apr.value = a;
-  }
+  // setTvlAndApr() async {
+  //   final totalSupply = await bs.getTotalSupply();
+  //   final t = totalSupply * ac.wtcPrice.value;
+  //   tvl.value = t;
+  //   final a = 2000 * 365 / totalSupply * 100;
+  //   apr.value = a;
+  // }
 
   clickStake() async {
     Get.snackbar('Comming Soon', "Can't available now");
@@ -83,5 +89,11 @@ class StakeController extends GetxController {
     // EasyLoading.show(status: 'Harvesting');
     // await bs.withdrawReward(ws.current.value!);
     // EasyLoading.showSuccess('Harvest Success');
+  }
+
+  clickHarvest() async {
+    EasyLoading.show(status: 'Harvesting');
+    await bs.withdrawReward(ws.current.value!);
+    EasyLoading.showSuccess('Harvest Success');
   }
 }

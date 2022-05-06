@@ -267,7 +267,7 @@ class StakingForm extends GetView<StakeController> {
   }
 }
 
-class StakingEntry extends StatelessWidget {
+class StakingEntry extends GetView<StakeController> {
   const StakingEntry({Key? key}) : super(key: key);
 
   @override
@@ -291,39 +291,73 @@ class StakingEntry extends StatelessWidget {
           const Text('Staking', style: TextStyle(fontSize: 18.0)),
           const SizedBox(height: 16.0),
           Container(
-              padding: const EdgeInsets.all(8.0),
-              decoration: BoxDecoration(
-                border: Border.all(color: Colors.black),
-              ),
-              child: Column(
-                // crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text(
-                    'Release Per Day 20000.0 WTA',
-                    style: TextStyle(fontSize: 16.0),
-                  ),
-                  const Divider(
-                    thickness: 1.0,
-                    height: 16.0,
-                  ),
-                  const Text(
-                    'Personal Power 0.00 MH/S',
-                    style: TextStyle(fontSize: 16.0),
-                  ),
-                  const SizedBox(height: 16.0),
-                  const Text(
-                    'Total Power Online 2163644.60 MH/S',
-                    style: TextStyle(fontSize: 16.0),
-                  ),
-                  const SizedBox(height: 16.0),
-                  FullWidthButton(
-                    onPressed: () {
-                      Get.toNamed(Routes.STAKING);
-                    },
-                    text: 'Go Staking',
-                  ),
-                ],
-              )),
+            padding: const EdgeInsets.all(8.0),
+            decoration: BoxDecoration(
+              border: Border.all(color: Colors.black),
+            ),
+            child: Column(
+              // crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  'Release Per Day 20000.0 WTA',
+                  style: TextStyle(fontSize: 16.0),
+                ),
+                const Divider(
+                  thickness: 1.0,
+                  height: 16.0,
+                ),
+                Obx(() => Text(
+                      'Personal Power ${controller.personalPower} PH/S',
+                      style: const TextStyle(fontSize: 16.0),
+                    )),
+                const SizedBox(height: 16.0),
+                Obx(() => Text(
+                      'Total Power Online ${controller.totalPower} PH/S',
+                      style: const TextStyle(fontSize: 16.0),
+                    )),
+                const SizedBox(height: 16.0),
+                FullWidthButton(
+                  onPressed: () {
+                    Get.toNamed(Routes.STAKING);
+                  },
+                  text: 'Go Staking',
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 16.0),
+          const Text('Rewards', style: TextStyle(fontSize: 18.0)),
+          const SizedBox(height: 16.0),
+          Container(
+            padding: const EdgeInsets.all(8.0),
+            decoration: BoxDecoration(
+              border: Border.all(color: Colors.black),
+            ),
+            child: Column(
+              // crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  'Total Rewards',
+                  style: TextStyle(fontSize: 16.0),
+                ),
+                const Divider(
+                  thickness: 1.0,
+                  height: 16.0,
+                ),
+                Obx(() => Text(
+                      controller.profit.toStringAsFixed(2) + ' WTA',
+                      style: const TextStyle(fontSize: 16.0),
+                    )),
+                const SizedBox(height: 16.0),
+                FullWidthButton(
+                  onPressed: () {
+                    controller.clickHarvest();
+                  },
+                  text: 'Harvest',
+                ),
+              ],
+            ),
+          ),
         ],
       ),
     );

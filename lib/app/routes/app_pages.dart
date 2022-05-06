@@ -138,7 +138,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.STAKING,
-      page: () => const StakingView(),
+      page: () => StakingView(),
       binding: StakingBinding(),
     ),
     GetPage(

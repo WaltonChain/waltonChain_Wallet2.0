@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:math';
 
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -17,17 +18,22 @@ class BlockchainService extends GetxService {
   Future<BlockchainService> init() async {
     final futures = await Future.wait([
       loadContract(
-          name: 'tokenContract',
-          filePath: 'assets/files/tokenAbi.json',
-          address: wtcToken),
+        name: 'tokenContract',
+        filePath: 'assets/files/tokenAbi.json',
+        // address: wtaToken,
+        address: wtaTokenTest,
+      ),
       loadContract(
-          name: 'swapContract',
-          filePath: 'assets/files/swapAbi.json',
-          address: wtcSwap),
+        name: 'swapContract',
+        filePath: 'assets/files/swapAbi.json',
+        address: wtcSwap,
+      ),
       loadContract(
-          name: 'stakeContract',
-          filePath: 'assets/files/stakeAbi.json',
-          address: wtcStake),
+        name: 'stakeContract',
+        filePath: 'assets/files/stakeAbi.json',
+        // address: wtcStake,
+        address: wtcNewStake,
+      ),
     ]);
     tokenContract = futures[0];
     swapContract = futures[1];
@@ -204,14 +210,14 @@ class BlockchainService extends GetxService {
     return response;
   }
 
-  Future<double> getTotalSupply() async {
-    final response = await queryByContract(
-      contract: stakeContract,
-      functionName: 'totalSupply',
-    );
-    final totalSupply = Utils.doubleFromWeiAmount(response[0]);
-    return totalSupply;
-  }
+  // Future<double> getTotalSupply() async {
+  //   final response = await queryByContract(
+  //     contract: stakeContract,
+  //     functionName: 'totalSupply',
+  //   );
+  //   final totalSupply = Utils.doubleFromWeiAmount(response[0]);
+  //   return totalSupply;
+  // }
 
   // Future<double> getTvl(double wtcPrice) async {
   //   final response = await queryByContract(
@@ -233,16 +239,16 @@ class BlockchainService extends GetxService {
   //   return apr;
   // }
 
-  Future<double> getStaked(my_wallet.Wallet wallet) async {
-    final ea = EthereumAddress.fromHex(wallet.address ?? '');
-    final response = await queryByContract(
-      contract: stakeContract,
-      functionName: 'balanceOf',
-      args: [ea],
-    );
-    final staked = Utils.doubleFromWeiAmount(response[0]);
-    return staked;
-  }
+  // Future<double> getStaked(my_wallet.Wallet wallet) async {
+  //   final ea = EthereumAddress.fromHex(wallet.address ?? '');
+  //   final response = await queryByContract(
+  //     contract: stakeContract,
+  //     functionName: 'balanceOf',
+  //     args: [ea],
+  //   );
+  //   final staked = Utils.doubleFromWeiAmount(response[0]);
+  //   return staked;
+  // }
 
   Future<String> stake(
       {required my_wallet.Wallet wallet, required double amount}) async {
@@ -286,6 +292,46 @@ class BlockchainService extends GetxService {
       contract: stakeContract,
       functionName: 'getReward',
     );
+    // print('withdrawReward response:($response)');
+    return response;
+  }
+
+  Future<double> getPersonalPower(my_wallet.Wallet wallet) async {
+    final ea = EthereumAddress.fromHex(wallet.address ?? '');
+    final response = await queryByContract(
+      contract: stakeContract,
+      functionName: 'hashrateOf',
+      args: [ea],
+    );
+    final power = response[0] / BigInt.from(pow(10, 15));
+    return power;
+  }
+
+  Future<double> getTotalPower(my_wallet.Wallet wallet) async {
+    // final ea = EthereumAddress.fromHex(wallet.address ?? '');
+    final response = await queryByContract(
+      contract: stakeContract,
+      functionName: 'totalHashrate',
+      // args: [ea],
+    );
+    final power = response[0] / BigInt.from(pow(10, 15));
+    // print('getTotalPower power:($power)');
+    return power;
+  }
+
+  Future<String> newStake(
+      {required my_wallet.Wallet wallet,
+      required double amount,
+      required int periodIndex}) async {
+    final weiAmount = Utils.bigIntFromDouble(amount);
+    final response = await submitByContract(
+      wallet: wallet,
+      contract: stakeContract,
+      functionName: 'stake',
+      weiAmount: weiAmount,
+      args: [BigInt.from(periodIndex)],
+    );
+    // print('newStake response:($response)');
     return response;
   }
 }

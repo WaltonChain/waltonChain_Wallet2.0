@@ -6,11 +6,13 @@ class InputNumber extends StatelessWidget {
     required this.controller,
     required this.validator,
     this.hintText = '0',
+    this.enabled = true,
   }) : super(key: key);
 
   final TextEditingController? controller;
   final String? Function(String?)? validator;
   final String hintText;
+  final bool enabled;
 
   @override
   Widget build(BuildContext context) {
@@ -25,6 +27,7 @@ class InputNumber extends StatelessWidget {
         border: InputBorder.none,
         hintText: hintText,
       ),
+      enabled: enabled,
     );
   }
 }

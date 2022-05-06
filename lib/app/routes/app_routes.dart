@@ -23,6 +23,7 @@ abstract class Routes {
   static const CAMERA_SCAN = _Paths.CAMERA_SCAN;
   static const TRANSACTION_DETAIL = _Paths.TRANSACTION_DETAIL;
   static const STAKING = _Paths.STAKING;
+  static const STAKING_LIST = _Paths.STAKING_LIST;
 }
 
 abstract class _Paths {
@@ -45,4 +46,5 @@ abstract class _Paths {
   static const CAMERA_SCAN = '/camera-scan';
   static const TRANSACTION_DETAIL = '/transaction-detail';
   static const STAKING = '/staking';
+  static const STAKING_LIST = '/staking-list';
 }

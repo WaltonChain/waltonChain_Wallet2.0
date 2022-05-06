@@ -5,6 +5,7 @@ import 'package:wtc_wallet_app/app/component/back_bar.dart';
 import 'package:wtc_wallet_app/app/component/full_width_button.dart';
 import 'package:wtc_wallet_app/app/component/input_number.dart';
 import 'package:wtc_wallet_app/app/data/models/validator.dart';
+import 'package:wtc_wallet_app/app/routes/app_pages.dart';
 
 import '../controllers/staking_controller.dart';
 
@@ -44,6 +45,7 @@ class StakingView extends GetView<StakingController> {
                               controller: controller.stakingInput,
                               validator: (value) =>
                                   Validator.amount(value, 99.99),
+                              hintText: 'Amount',
                             ),
                           ),
                           const Padding(
@@ -58,6 +60,7 @@ class StakingView extends GetView<StakingController> {
                             child: InputNumber(
                               controller: controller.factorInput,
                               validator: Validator.stakeFactor,
+                              hintText: 'Factor',
                             ),
                           ),
                         ],
@@ -127,10 +130,19 @@ class StakingView extends GetView<StakingController> {
                         ),
                         const SizedBox(height: 32),
                         FullWidthButton(
-                            onPressed: () {
-                              controller.clickConfirm();
-                            },
-                            text: 'Confirm'),
+                          onPressed: () {
+                            controller.clickConfirm();
+                          },
+                          text: 'Confirm',
+                        ),
+                        const SizedBox(height: 16.0),
+                        FullWidthButton(
+                          onPressed: () {
+                            Get.toNamed(Routes.STAKING_LIST);
+                          },
+                          text: 'My Staking List',
+                          bgColor: Colors.blue,
+                        )
                       ],
                     ),
                   ),

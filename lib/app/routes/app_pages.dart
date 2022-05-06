@@ -28,6 +28,8 @@ import '../modules/splash/bindings/splash_binding.dart';
 import '../modules/splash/views/splash_view.dart';
 import '../modules/staking/bindings/staking_binding.dart';
 import '../modules/staking/views/staking_view.dart';
+import '../modules/staking_list/bindings/staking_list_binding.dart';
+import '../modules/staking_list/views/staking_list_view.dart';
 import '../modules/token_detail/bindings/token_detail_binding.dart';
 import '../modules/token_detail/views/token_detail_view.dart';
 import '../modules/transaction_detail/bindings/transaction_detail_binding.dart';
@@ -138,6 +140,11 @@ class AppPages {
       name: _Paths.STAKING,
       page: () => const StakingView(),
       binding: StakingBinding(),
+    ),
+    GetPage(
+      name: _Paths.STAKING_LIST,
+      page: () => const StakingListView(),
+      binding: StakingListBinding(),
     ),
   ];
 }

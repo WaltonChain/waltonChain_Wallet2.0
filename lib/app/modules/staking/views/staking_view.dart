@@ -128,12 +128,12 @@ class StakingView extends GetView<StakingController> {
                       children: [
                         Text(
                           'Personal Power: ${stc.personalPower.value} PH/S',
-                          style: TextStyle(fontSize: 16.0),
+                          style: const TextStyle(fontSize: 16.0),
                         ),
                         const SizedBox(height: 16),
                         Text(
                           'Total Power Online: ${stc.totalPower.value} PH/S',
-                          style: TextStyle(fontSize: 16.0),
+                          style: const TextStyle(fontSize: 16.0),
                         ),
                         const SizedBox(height: 32),
                         FullWidthButton(

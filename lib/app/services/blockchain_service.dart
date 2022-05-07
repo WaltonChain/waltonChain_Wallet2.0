@@ -334,4 +334,27 @@ class BlockchainService extends GetxService {
     // print('newStake response:($response)');
     return response;
   }
+
+  Future<List> getOrderIds(my_wallet.Wallet wallet) async {
+    final ea = EthereumAddress.fromHex(wallet.address ?? '');
+    final response = await queryByContract(
+      contract: stakeContract,
+      functionName: 'getUserIds',
+      args: [ea],
+    );
+    final orderIds = response[0];
+    // print('getOrderIds orderIds:($orderIds)');
+    return orderIds;
+  }
+
+  Future<List> getOrderDetail(dynamic orderId) async {
+    // final ea = EthereumAddress.fromHex(wallet.address ?? '');
+    final response = await queryByContract(
+      contract: stakeContract,
+      functionName: 'orderList',
+      args: [orderId],
+    );
+    // print('getorder response:($response)');
+    return response;
+  }
 }

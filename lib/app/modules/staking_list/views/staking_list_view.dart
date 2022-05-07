@@ -1,17 +1,27 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:wtc_wallet_app/app/component/back_bar.dart';
+import 'package:wtc_wallet_app/app/modules/staking/controllers/staking_controller.dart';
 
 import '../controllers/staking_list_controller.dart';
 
 class OrderCard extends StatelessWidget {
-  const OrderCard({Key? key, required this.order}) : super(key: key);
+  OrderCard({Key? key, required this.order}) : super(key: key);
 
-  final Map<String, dynamic> order;
+  final List order;
+  final stakingController = Get.find<StakingController>();
 
   @override
   Widget build(BuildContext context) {
+    final startTime = DateFormat('yyyy-MM-dd HH:mm:ss')
+        .format(DateTime.fromMillisecondsSinceEpoch(order[1].toInt() * 1000));
+    final status = order[2];
+    final periodIndex = order[3].toInt();
+    final period = stakingController.days[periodIndex];
+    final amount = order[5] / BigInt.from(1e18);
+
     return Container(
       margin: const EdgeInsets.all(8.0),
       padding: const EdgeInsets.all(16.0),
@@ -22,21 +32,23 @@ class OrderCard extends StatelessWidget {
         children: [
           Row(
             children: [
-              Text('Lock ${order['days']} days'),
-              const SizedBox(width: 20.0),
-              Text('${order['amount']} WTC'),
+              Text('Lock $period days'),
               const Expanded(child: SizedBox()),
-              const Text('Ended'),
+              Text(status ? 'Staking' : 'Withdrawed'),
             ],
           ),
           const SizedBox(height: 4.0),
           const Divider(),
           const SizedBox(height: 4.0),
           Row(
-            children: const [
-              Text('Total'),
-              SizedBox(width: 8.0),
-              Text('+ 4638.0347195 WTA')
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const SizedBox(width: 8.0),
+              Text(
+                '$amount',
+                style: const TextStyle(fontSize: 32.0),
+              ),
+              const Text('WTC')
             ],
           ),
           const SizedBox(height: 8.0),
@@ -47,10 +59,7 @@ class OrderCard extends StatelessWidget {
           const SizedBox(height: 8.0),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text('${order['startTime']} Start'),
-              Text('${order['days']} Days')
-            ],
+            children: [Text('$startTime Start'), Text('$period Days')],
           ),
         ],
       ),

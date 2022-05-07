@@ -277,6 +277,7 @@ class StakingEntry extends GetView<StakeController> {
       child: ListView(
         children: [
           ListTile(
+            tileColor: Colors.white,
             shape: RoundedRectangleBorder(
                 side: const BorderSide(color: Colors.black, width: 2),
                 borderRadius: BorderRadius.circular(4)),
@@ -294,6 +295,7 @@ class StakingEntry extends GetView<StakeController> {
             padding: const EdgeInsets.all(8.0),
             decoration: BoxDecoration(
               border: Border.all(color: Colors.black),
+              color: Colors.white,
             ),
             child: Column(
               // crossAxisAlignment: CrossAxisAlignment.start,
@@ -332,6 +334,7 @@ class StakingEntry extends GetView<StakeController> {
             padding: const EdgeInsets.all(8.0),
             decoration: BoxDecoration(
               border: Border.all(color: Colors.black),
+              color: Colors.white,
             ),
             child: Column(
               // crossAxisAlignment: CrossAxisAlignment.start,

@@ -18,12 +18,15 @@ class AssetsController extends GetxController {
   final bs = Get.find<BlockchainService>();
 
   @override
-  void onInit() {
+  void onInit() async {
     super.onInit();
     ever(wc.current, (wallet) async {
       await getBalances(wallet);
     });
     getBalances(wc.current.value);
+    // test
+    // final ids = await bs.getOrderIds(wc.current.value!);
+    // await bs.getOrderDetail(0);
   }
 
   // @override

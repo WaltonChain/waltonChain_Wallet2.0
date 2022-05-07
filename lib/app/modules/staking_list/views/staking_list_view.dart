@@ -21,6 +21,8 @@ class OrderCard extends StatelessWidget {
     final periodIndex = order[3].toInt();
     final period = stakingController.days[periodIndex];
     final amount = order[5] / BigInt.from(1e18);
+    final endTime = DateFormat('yyyy-MM-dd HH:mm:ss')
+        .format(DateTime.parse(startTime).add(Duration(days: period)));
 
     return Container(
       margin: const EdgeInsets.all(8.0),
@@ -59,7 +61,16 @@ class OrderCard extends StatelessWidget {
           const SizedBox(height: 8.0),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [Text('$startTime Start'), Text('$period Days')],
+            children: [
+              Text(
+                '$startTime Start',
+                style: const TextStyle(fontSize: 12.0),
+              ),
+              Text(
+                '$endTime End',
+                style: const TextStyle(fontSize: 12.0),
+              )
+            ],
           ),
         ],
       ),

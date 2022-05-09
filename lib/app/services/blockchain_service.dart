@@ -20,8 +20,8 @@ class BlockchainService extends GetxService {
       loadContract(
         name: 'tokenContract',
         filePath: 'assets/files/tokenAbi.json',
-        // address: wtaToken,
-        address: wtaTokenTest,
+        address: wtaToken,
+        // address: wtaTokenTest,
       ),
       loadContract(
         name: 'swapContract',

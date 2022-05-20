@@ -8,6 +8,7 @@ class WalletSheet extends StatelessWidget {
   WalletSheet({Key? key}) : super(key: key);
 
   final wc = Get.find<WalletService>();
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -78,18 +79,18 @@ class WalletSheet extends StatelessWidget {
                       ),
                     ),
                     Expanded(
-                      child: ListView.builder(
-                        itemCount: wc.wallets.length,
-                        itemBuilder: (context, index) {
-                          return WalletCard(
-                            onTap: () {
-                              wc.setIndex(index);
-                              Get.back();
+                      child: Obx(() => ListView.builder(
+                            itemCount: wc.wallets.length,
+                            itemBuilder: (context, index) {
+                              return WalletCard(
+                                onTap: () {
+                                  wc.setIndex(index);
+                                  Get.back();
+                                },
+                                wallet: wc.wallets[index],
+                              );
                             },
-                            wallet: wc.wallets[index],
-                          );
-                        },
-                      ),
+                          )),
                     ),
                   ],
                 ),

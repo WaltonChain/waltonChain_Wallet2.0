@@ -49,7 +49,7 @@ class ImportWalletController extends GetxController {
         keyStore: keyStore,
       );
 
-      wc.add(imported);
+      await wc.add(imported);
       Get.offNamed(Routes.HOME);
     }
   }

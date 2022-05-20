@@ -15,7 +15,7 @@ class AssetsView extends GetView<AssetsController> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const TopBar(),
+        TopBar(),
         Expanded(
           child: RefreshIndicator(
             onRefresh: controller.onRefresh,
@@ -38,8 +38,9 @@ class AssetsView extends GetView<AssetsController> {
 }
 
 class TopBar extends GetView<AssetsController> {
-  const TopBar({Key? key}) : super(key: key);
+  TopBar({Key? key}) : super(key: key);
 
+  final ws = Get.find<WalletService>();
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -64,7 +65,7 @@ class TopBar extends GetView<AssetsController> {
                 context: context,
                 // builder: (context) => const WalletSheet(),
                 builder: (context) {
-                  if (Get.find<WalletService>().wallets.isEmpty) {
+                  if (ws.wallets.isEmpty) {
                     return const AccountSheet();
                   } else {
                     return WalletSheet();

@@ -33,7 +33,7 @@ class WalletDetailController extends GetxController {
     if (inputHashed == hashed) {
       final ks = wallet.keyStore;
       final pk = Utils.privateKeyFromKeyStore(ks, hashed);
-      debugPrint('wallet detail view onConfirm pk:($pk)');
+      // debugPrint('wallet detail view onConfirm pk:($pk)');
       pass.clear();
       Get.back();
       Utils.customDialog(

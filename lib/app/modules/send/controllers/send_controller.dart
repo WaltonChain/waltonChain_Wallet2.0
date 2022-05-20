@@ -30,7 +30,6 @@ class SendController extends GetxController {
     addressInput.text = to;
 
     ever(token, (newToken) {
-      debugPrint('SendController newToken:($newToken)');
       if (newToken == 'wtc') {
         balance.value = ac.wtcBalance.value;
       } else if (newToken == 'wta') {
@@ -59,7 +58,6 @@ class SendController extends GetxController {
 
   clickSend() async {
     final valid = formKey.currentState?.validate();
-    debugPrint('clickSend valid:($valid)');
     // final pk = await sss.getPrivateKey(ws.current.value?.address ?? '');
     // final pk = hs.getPrivateKey(ws.current.value?.address ?? '');
     if (valid == true) {

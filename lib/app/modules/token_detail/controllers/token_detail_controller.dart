@@ -41,7 +41,6 @@ class TokenDetailController extends GetxController {
         .where(
             (tx) => tx?.token == token && (tx?.to == ws.current.value?.address))
         .toList();
-    debugPrint('showIn:$transactions');
   }
 
   showOut() {
@@ -50,6 +49,5 @@ class TokenDetailController extends GetxController {
         .where((tx) =>
             tx?.token == token && (tx?.from == ws.current.value?.address))
         .toList();
-    debugPrint('showOut:$transactions');
   }
 }

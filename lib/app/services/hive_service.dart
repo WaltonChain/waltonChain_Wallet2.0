@@ -9,7 +9,7 @@ class HiveService extends GetxService {
   Box? box;
 
   Future<HiveService> init() async {
-    debugPrint('HiveService init');
+    // debugPrint('HiveService init');
     await Hive.initFlutter();
 
     Hive.registerAdapter(WalletAdapter());
@@ -24,10 +24,10 @@ class HiveService extends GetxService {
     return wallets;
   }
 
-  void saveWallet(Wallet wallet) {
-    final wallets = getWallets();
-    wallets.add(wallet);
-    box?.put('wallets', wallets.toList());
+  saveWallet(Wallet wallet) async {
+    final ws = getWallets();
+    ws.add(wallet);
+    await box?.put('wallets', ws.toList());
   }
 
   void delWallet(Wallet wallet) {
@@ -41,8 +41,8 @@ class HiveService extends GetxService {
     return index;
   }
 
-  void saveSelectedIndex(int index) {
-    box?.put('selectedIndex', index);
+  saveSelectedIndex(int index) async {
+    await box?.put('selectedIndex', index);
   }
 
   getTransactions() {

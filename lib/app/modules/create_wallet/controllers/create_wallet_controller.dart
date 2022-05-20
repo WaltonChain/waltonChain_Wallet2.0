@@ -68,7 +68,7 @@ class CreateWalletController extends GetxController {
   clickCopy() async {
     await Clipboard.setData(ClipboardData(text: words.value));
 
-    wc.add(Wallet.fromJson({
+    await wc.add(Wallet.fromJson({
       'name': name.text,
       'pass': Utils.hash(pass.text),
       'address': address,

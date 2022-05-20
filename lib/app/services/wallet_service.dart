@@ -14,7 +14,6 @@ class WalletService extends GetxService {
   @override
   onInit() {
     super.onInit();
-    debugPrint('WalletService init');
     selectedIndex.value = hs.getSelectedIndex();
 
     if (selectedIndex.value != -1) {
@@ -29,19 +28,35 @@ class WalletService extends GetxService {
         current.value = wallets.elementAt(selectedIndex.value);
       }
     });
+
+    // ever(wallets, (callback) {
+    //   debugPrint('$wallets');
+    // });
+    print('selectedIndex: ${selectedIndex.value}');
+    ever(selectedIndex, (callback) {
+      debugPrint('$selectedIndex');
+    });
   }
 
-  setIndex(int index) {
+  setIndex(int index) async {
     selectedIndex.value = index;
-    hs.saveSelectedIndex(index);
+    await hs.saveSelectedIndex(index);
   }
 
-  add(Wallet wallet) {
+  add(Wallet wallet) async {
+    debugPrint('wallet service add func start');
+    print(
+        'before add wallet, wallets:($wallets) wallets.length:${wallets.length}');
     wallets.add(wallet);
-    hs.saveWallet(wallet);
+    print('after add wallet, wallets:($wallets)');
+    print('after add wallet 1 wallets.length:${wallets.length}');
+    await hs.saveWallet(wallet);
+    print('after add wallet 2 wallets.length:${wallets.length}');
 
     final index = wallets.length - 1;
-    setIndex(index);
+    print('after add wallet 3 wallets.length:${wallets.length}');
+    await setIndex(index);
+    print('after add wallet 4 wallets.length:${wallets.length}');
   }
 
   del(Wallet wallet) {

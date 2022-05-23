@@ -1,5 +1,5 @@
 name: wtc_wallet_app
-version: 1.1.7+1
+version: 1.1.8+1
 publish_to: none
 description: A new Flutter project.
 environment:

@@ -12,12 +12,12 @@ class WalletService extends GetxService {
   final hs = Get.find<HiveService>();
 
   @override
-  onInit() {
+  onInit() async {
     super.onInit();
     selectedIndex.value = hs.getSelectedIndex();
 
     if (selectedIndex.value != -1) {
-      wallets.value = hs.getWallets();
+      wallets.value = await hs.getWallets();
       current.value = wallets[selectedIndex.value];
     }
 
@@ -29,10 +29,9 @@ class WalletService extends GetxService {
       }
     });
 
-    // ever(wallets, (callback) {
-    //   debugPrint('$wallets');
-    // });
-    print('selectedIndex: ${selectedIndex.value}');
+    ever(wallets, (callback) {
+      hs.saveWallets(wallets.value);
+    });
     ever(selectedIndex, (callback) {
       debugPrint('$selectedIndex');
     });
@@ -45,18 +44,11 @@ class WalletService extends GetxService {
 
   add(Wallet wallet) async {
     debugPrint('wallet service add func start');
-    print(
-        'before add wallet, wallets:($wallets) wallets.length:${wallets.length}');
     wallets.add(wallet);
-    print('after add wallet, wallets:($wallets)');
-    print('after add wallet 1 wallets.length:${wallets.length}');
-    await hs.saveWallet(wallet);
-    print('after add wallet 2 wallets.length:${wallets.length}');
+    // await hs.saveWallet(wallet);
 
     final index = wallets.length - 1;
-    print('after add wallet 3 wallets.length:${wallets.length}');
     await setIndex(index);
-    print('after add wallet 4 wallets.length:${wallets.length}');
   }
 
   del(Wallet wallet) {

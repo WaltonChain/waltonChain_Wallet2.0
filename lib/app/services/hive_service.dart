@@ -1,4 +1,4 @@
-import 'package:flutter/foundation.dart';
+// import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:wtc_wallet_app/app/data/models/transaction.dart';
@@ -19,19 +19,24 @@ class HiveService extends GetxService {
     return this;
   }
 
-  getWallets() {
-    final wallets = box?.get('wallets') ?? [];
-    return wallets;
+  getWallets() async {
+    final ws = await box?.get('wallets') ?? [];
+    return ws;
   }
 
-  saveWallet(Wallet wallet) async {
-    final ws = getWallets();
-    ws.add(wallet);
-    await box?.put('wallets', ws.toList());
+  saveWallets(List<dynamic> ws) async {
+    // final ws = await getWallets();
+    // print('saveWallet 1 ws: $ws');
+    // await ws.add(wallet);
+    // print('saveWallet 2 ws: $ws');
+
+    // await box?.put('wallets', ws.toList());
+    await box?.put('wallets', ws);
+    // print('saveWallet 3 ws: ($ws) ws.toList(): ${ws.toList()}');
   }
 
-  void delWallet(Wallet wallet) {
-    final wallets = getWallets();
+  void delWallet(Wallet wallet) async {
+    final wallets = await getWallets();
     wallets.remove(wallet);
     box?.put('wallets', wallets.toList());
   }

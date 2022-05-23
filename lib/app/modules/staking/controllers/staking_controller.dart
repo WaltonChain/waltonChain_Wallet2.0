@@ -44,10 +44,10 @@ class StakingController extends GetxController {
     final valid = stakingFormKey.currentState?.validate();
     if (valid == true) {
       final amount = double.tryParse(stakingInput.text) ?? 0.00;
-      EasyLoading.show(status: 'withdrawing...');
+      EasyLoading.show(status: 'Staking...');
       await bs.newStake(
           wallet: ws.current.value!, amount: amount, periodIndex: index.value);
-      EasyLoading.showSuccess('withdraw success');
+      EasyLoading.showSuccess('Stake success');
       stakingInput.clear();
     }
   }

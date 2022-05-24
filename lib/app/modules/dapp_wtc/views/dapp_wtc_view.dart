@@ -354,7 +354,7 @@ class StakingEntry extends GetView<StakeController> {
                 const SizedBox(height: 16.0),
                 FullWidthButton(
                   onPressed: () {
-                    controller.clickHarvest();
+                    controller.clickHarvest(controller.profit.value);
                   },
                   text: 'Harvest',
                 ),

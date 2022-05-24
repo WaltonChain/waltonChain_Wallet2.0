@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
+import 'package:wtc_wallet_app/app/data/constants/blockchain.dart';
 import 'package:wtc_wallet_app/app/services/blockchain_service.dart';
 import 'package:wtc_wallet_app/app/services/wallet_service.dart';
 
@@ -49,6 +50,21 @@ class StakingController extends GetxController {
           wallet: ws.current.value!, amount: amount, periodIndex: index.value);
       EasyLoading.showSuccess('Stake success');
       stakingInput.clear();
+    }
+  }
+
+  Future<void> clickWithdrawWtc(BigInt id, double amount) async {
+    EasyLoading.show(status: 'Quering stake balance');
+    final stakeBalance = await bs.getWtcBalance(wtcStake15min);
+    EasyLoading.showSuccess('Query success');
+    debugPrint('stakeBalance:($stakeBalance)');
+
+    if (stakeBalance < amount) {
+      Get.snackbar('Fail', 'Stake pool balance is less than amount');
+    } else {
+      EasyLoading.show(status: 'Withdrawing');
+      await bs.withdrawWtc(wallet: ws.current.value!, id: id);
+      EasyLoading.showSuccess('Withdraw success');
     }
   }
 }

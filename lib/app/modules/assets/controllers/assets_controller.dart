@@ -45,8 +45,8 @@ class AssetsController extends GetxController {
     if (wallet != null) {
       EasyLoading.show(status: 'Loading...');
       var values = await Future.wait([
-        bs.getWtcBalance(wc.current.value!),
-        bs.getWtaBalance(wc.current.value!),
+        bs.getWtcBalance(wc.current.value?.address),
+        bs.getWtaBalance(wc.current.value?.address),
         bs.getWtcPrice(),
       ]);
       EasyLoading.showSuccess('Loading Success');

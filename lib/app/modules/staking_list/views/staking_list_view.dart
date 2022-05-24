@@ -15,6 +15,7 @@ class OrderCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final id = order[0];
     final startTime = DateFormat('yyyy-MM-dd HH:mm:ss')
         .format(DateTime.fromMillisecondsSinceEpoch(order[1].toInt() * 1000));
     final status = order[2];
@@ -43,14 +44,26 @@ class OrderCard extends StatelessWidget {
           const Divider(),
           const SizedBox(height: 4.0),
           Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const SizedBox(width: 8.0),
-              Text(
-                '$amount',
-                style: const TextStyle(fontSize: 32.0),
+              Row(
+                children: [
+                  Text(
+                    '$amount',
+                    style: const TextStyle(fontSize: 32.0),
+                  ),
+                  const Text('WTC'),
+                ],
               ),
-              const Text('WTC')
+              const SizedBox(width: 60.0),
+              ElevatedButton(
+                onPressed: () {
+                  stakingController.clickWithdrawWtc(id, amount);
+                },
+                child: const Text('Withdraw', style: TextStyle(fontSize: 12.0)),
+                style: ElevatedButton.styleFrom(
+                    primary: const Color.fromRGBO(130, 0, 255, 1)),
+              ),
             ],
           ),
           const SizedBox(height: 8.0),

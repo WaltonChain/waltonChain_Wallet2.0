@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:math';
 
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:web3dart/web3dart.dart';
@@ -31,7 +32,8 @@ class BlockchainService extends GetxService {
       loadContract(
         name: 'stakeContract',
         filePath: 'assets/files/stakeAbi.json',
-        address: wtcStake,
+        // address: wtcStake,
+        address: wtcStake15min,
       ),
     ]);
     tokenContract = futures[0];
@@ -96,15 +98,15 @@ class BlockchainService extends GetxService {
     return price;
   }
 
-  Future<double> getWtcBalance(my_wallet.Wallet wallet) async {
-    final ea = EthereumAddress.fromHex(wallet.address ?? '');
+  Future<double> getWtcBalance(String? address) async {
+    final ea = EthereumAddress.fromHex(address ?? '');
     final ethAmount = await eth.getBalance(ea);
     final ethBalance = ethAmount.getValueInUnit(EtherUnit.ether);
     return ethBalance;
   }
 
-  Future<double> getWtaBalance(my_wallet.Wallet wallet) async {
-    final ea = EthereumAddress.fromHex(wallet.address ?? '');
+  Future<double> getWtaBalance(String? address) async {
+    final ea = EthereumAddress.fromHex(address ?? '');
     final response = await queryByContract(
         contract: tokenContract, functionName: 'balanceOf', args: [ea]);
     final w = EtherAmount.fromUnitAndValue(EtherUnit.wei, response[0]);
@@ -262,15 +264,15 @@ class BlockchainService extends GetxService {
   }
 
   Future<String> withdrawWtc(
-      {required my_wallet.Wallet wallet, required double amount}) async {
-    final weiAmount = Utils.bigIntFromDouble(amount);
+      {required my_wallet.Wallet wallet, required BigInt id}) async {
+    // final weiAmount = Utils.bigIntFromDouble(amount);
     final response = await submitByContract(
       wallet: wallet,
       contract: stakeContract,
       functionName: 'withdraw',
-      args: [weiAmount],
+      args: [id],
     );
-    // print('withdrawWtc response:($response) weiAmount:($weiAmount)');
+    debugPrint('withdrawWtc response:($response) id:($id)');
     return response;
   }
 

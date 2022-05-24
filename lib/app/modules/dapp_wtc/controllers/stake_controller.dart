@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 // import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
+import 'package:wtc_wallet_app/app/data/constants/blockchain.dart';
 import 'package:wtc_wallet_app/app/modules/assets/controllers/assets_controller.dart';
 import 'package:wtc_wallet_app/app/services/blockchain_service.dart';
 import 'package:wtc_wallet_app/app/services/hive_service.dart';
@@ -91,9 +92,18 @@ class StakeController extends GetxController {
     // EasyLoading.showSuccess('Harvest Success');
   }
 
-  clickHarvest() async {
-    EasyLoading.show(status: 'Harvesting');
-    await bs.withdrawReward(ws.current.value!);
-    EasyLoading.showSuccess('Harvest Success');
+  clickHarvest(double rewards) async {
+    EasyLoading.show(status: 'Quering wta balance');
+    final wtaBalance = await bs.getWtaBalance(wtcStake15min);
+    EasyLoading.showSuccess('Query success');
+    debugPrint('wtaBalance:($wtaBalance)');
+
+    if (wtaBalance < rewards) {
+      Get.snackbar('Fail', 'wta balance is less than total rewards');
+    } else {
+      EasyLoading.show(status: 'Harvesting');
+      await bs.withdrawReward(ws.current.value!);
+      EasyLoading.showSuccess('Harvest Success');
+    }
   }
 }

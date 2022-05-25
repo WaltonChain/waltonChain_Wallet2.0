@@ -81,16 +81,18 @@ class Utils {
     Get.snackbar('Copied', 'Copied to clipboard');
   }
 
-  static bool compareVersion(String currentVersion, String latestVersion) {
-    for (var i = 0; i < 3; i++) {
-      final a = int.parse(currentVersion.split('.')[i]);
-      final b = int.parse(latestVersion.split('.')[i]);
-      if (a < b) {
-        return true;
-      }
-    }
-    return false;
-  }
+  // static bool compareVersion(String currentVersion, String latestVersion) {
+  //   for (var i = 0; i < 3; i++) {
+  //     final a = int.parse(currentVersion.split('.')[i]);
+  //     final b = int.parse(latestVersion.split('.')[i]);
+  //     if (a < b) {
+  //       return true;
+  //     } else {
+
+  //     }
+  //   }
+  //   return false;
+  // }
 
   static void customDialog({
     required String title,

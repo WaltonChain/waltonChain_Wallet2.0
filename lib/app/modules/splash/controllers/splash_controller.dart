@@ -9,6 +9,7 @@ import 'package:wtc_wallet_app/app/routes/app_pages.dart';
 import 'package:wtc_wallet_app/app/services/wallet_service.dart';
 import 'package:ota_update/ota_update.dart';
 import 'package:http/http.dart' as http;
+import 'package:version/version.dart';
 
 class SplashController extends GetxController {
   final wc = Get.find<WalletService>();
@@ -36,7 +37,9 @@ class SplashController extends GetxController {
     try {
       final res = await http.get(Uri.parse(url));
       latest = jsonDecode(res.body);
-      needUpdate = Utils.compareVersion(packageInfo.version, latest['version']);
+      Version cv = Version.parse(packageInfo.version);
+      Version lv = Version.parse(latest['version']);
+      needUpdate = lv > cv;
     } catch (e) {
       Get.snackbar('Error', 'Failed to get version info');
     }

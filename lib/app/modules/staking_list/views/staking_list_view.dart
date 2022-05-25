@@ -24,6 +24,7 @@ class OrderCard extends StatelessWidget {
     final amount = order[5] / BigInt.from(1e18);
     final endTime = DateFormat('yyyy-MM-dd HH:mm:ss')
         .format(DateTime.parse(startTime).add(Duration(days: period)));
+    final disable = DateTime.parse(endTime).isAfter(DateTime.now());
 
     return Container(
       margin: const EdgeInsets.all(8.0),
@@ -58,11 +59,15 @@ class OrderCard extends StatelessWidget {
               const SizedBox(width: 60.0),
               ElevatedButton(
                 onPressed: () {
-                  stakingController.clickWithdrawWtc(id, amount);
+                  if (!disable) {
+                    stakingController.clickWithdrawWtc(id, amount);
+                  }
                 },
                 child: const Text('Withdraw', style: TextStyle(fontSize: 12.0)),
                 style: ElevatedButton.styleFrom(
-                    primary: const Color.fromRGBO(130, 0, 255, 1)),
+                    primary: disable
+                        ? Colors.grey
+                        : const Color.fromRGBO(130, 0, 255, 1)),
               ),
             ],
           ),

@@ -32,8 +32,9 @@ class BlockchainService extends GetxService {
       loadContract(
         name: 'stakeContract',
         filePath: 'assets/files/stakeAbi.json',
-        // address: wtcStake,
-        address: wtcStake15min,
+        address: wtcStake,
+        // address: wtcStake15min,
+        // address: wtcStakeTest,
       ),
     ]);
     tokenContract = futures[0];

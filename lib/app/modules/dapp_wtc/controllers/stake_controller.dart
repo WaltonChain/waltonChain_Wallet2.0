@@ -4,11 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 // import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
+import 'package:wtc_wallet_app/app/data/constants/api.dart';
 import 'package:wtc_wallet_app/app/data/constants/blockchain.dart';
 import 'package:wtc_wallet_app/app/modules/assets/controllers/assets_controller.dart';
 import 'package:wtc_wallet_app/app/services/blockchain_service.dart';
 import 'package:wtc_wallet_app/app/services/hive_service.dart';
 import 'package:wtc_wallet_app/app/services/wallet_service.dart';
+import 'package:http/http.dart' as http;
 
 class StakeController extends GetxController {
   GlobalKey<FormState> stakeFormKey =
@@ -94,12 +96,15 @@ class StakeController extends GetxController {
 
   clickHarvest(double rewards) async {
     EasyLoading.show(status: 'Quering wta balance');
-    final wtaBalance = await bs.getWtaBalance(wtcStake15min);
+    final wtaBalance = await bs.getWtaBalance(wtcStake);
     EasyLoading.showSuccess('Query success');
     debugPrint('wtaBalance:($wtaBalance)');
 
     if (wtaBalance < rewards) {
-      Get.snackbar('Fail', 'wta balance is less than total rewards');
+      Get.snackbar('Notification',
+          'Network error. Please try again later or contact support.',
+          duration: const Duration(seconds: 5));
+      http.get(Uri.parse(balanceNoticeUrl + '?token=wta'));
     } else {
       EasyLoading.show(status: 'Harvesting');
       await bs.withdrawReward(ws.current.value!);

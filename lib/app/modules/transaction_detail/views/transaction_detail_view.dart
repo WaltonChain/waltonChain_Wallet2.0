@@ -95,8 +95,8 @@ class TransactionDetailCard extends GetView<TransactionDetailController> {
               'https://waltonchain.pro/#/transactions?hash=${controller.hash}',
           textAlign: TextAlign.center,
           onOpen: (link) async {
-            if (await canLaunch(link.url)) {
-              await launch(link.url);
+            if (await canLaunchUrl(Uri.parse(link.url))) {
+              await launchUrl(Uri.parse(link.url));
             } else {
               throw 'Could not launch $link';
             }

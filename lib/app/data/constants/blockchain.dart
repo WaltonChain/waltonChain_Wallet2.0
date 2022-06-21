@@ -8,5 +8,8 @@ const wtcSwap = '0x27659890663fCa7275b7F3636928e05F54249883';
 // const wtcStake = '0xEDdCB053da5b7E73c8B7288fAdC8a777BEc6DE65';
 const wtcStake = '0x9bcDE5A85F4D0082CA7FE20cb71E650Cd1726dcF';
 
+// otc
+const otcAddressTest = '0xa5dcd85bDB4DeC449Fc54f6B8B511B73598f8e7B';
+
 const chainId = 15;
 const maxGas = 100000;

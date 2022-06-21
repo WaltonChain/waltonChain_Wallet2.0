@@ -69,7 +69,11 @@ class BuyForm extends GetView<PlaceOrderController> {
               validator: (value) => Validator.amount(value, 99.9),
             ),
             const Text('Price'),
-            FullWidthButton(onPressed: () {}, text: 'Place')
+            FullWidthButton(
+                onPressed: () {
+                  controller.clickPlace();
+                },
+                text: 'Place')
           ],
         ),
       ),
@@ -99,7 +103,11 @@ class SellForm extends GetView<PlaceOrderController> {
               validator: (value) => Validator.amount(value, 99.9),
             ),
             const Text('Price'),
-            FullWidthButton(onPressed: () {}, text: 'Approve')
+            FullWidthButton(
+                onPressed: () {
+                  controller.clickSell();
+                },
+                text: 'Approve')
           ],
         ),
       ),

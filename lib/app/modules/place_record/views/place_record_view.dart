@@ -9,16 +9,14 @@ class PlaceRecordView extends GetView<PlaceRecordController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('PlaceRecordView'),
-        centerTitle: true,
-      ),
-      body: const Center(
-        child: Text(
-          'PlaceRecordView is working',
-          style: TextStyle(fontSize: 20),
+        appBar: AppBar(
+          title: const Text('PlaceRecordView'),
+          centerTitle: true,
         ),
-      ),
-    );
+        body: ListView.builder(
+            itemCount: controller.records.length,
+            itemBuilder: (context, index) {
+              return Text(controller.records[index][0]);
+            }));
   }
 }

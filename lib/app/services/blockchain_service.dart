@@ -357,14 +357,14 @@ class BlockchainService extends GetxService {
   // otc
   Future createBuyOrder(
       {required my_wallet.Wallet wallet,
-      required double price,
-      required double amount}) async {
+      required double wtcAmount,
+      required double wtaAmount}) async {
     final response = await submitByContract(
       wallet: wallet,
       contract: otcContract,
       functionName: 'createBuyOrder',
-      weiAmount: Utils.bigIntFromDouble(price),
-      args: [Utils.bigIntFromDouble(amount)],
+      weiAmount: Utils.bigIntFromDouble(wtcAmount),
+      args: [Utils.bigIntFromDouble(wtaAmount)],
     );
     // print('createBuyOrder response:($response)');
     return response;
@@ -372,15 +372,15 @@ class BlockchainService extends GetxService {
 
   Future createSellOrder(
       {required my_wallet.Wallet wallet,
-      required double price,
-      required double amount}) async {
-    final a = Utils.bigIntFromDouble(amount);
-    final p = Utils.bigIntFromDouble(price);
+      required double wtcAmount,
+      required double wtaAmount}) async {
+    final a = Utils.bigIntFromDouble(wtaAmount);
+    final c = Utils.bigIntFromDouble(wtcAmount);
     final response = await submitByContract(
       wallet: wallet,
       contract: otcContract,
       functionName: 'createSellOrder',
-      args: [a, p],
+      args: [a, c],
     );
     // print('createSellOrder response:($response), a:($a) p:($p)');
     return response;
@@ -399,6 +399,64 @@ class BlockchainService extends GetxService {
     // print('getorder response:($response)');
     final r2 = await queryByContract(
         contract: otcContract, functionName: 'getList', args: [userLists]);
-    return r2;
+    return [userLists, r2[0]];
+  }
+
+  Future buyList() async {
+    // final ea = EthereumAddress.fromHex(wallet.address ?? '');
+    final r1 = await queryByContract(
+      contract: otcContract,
+      functionName: 'getBuyListId',
+    );
+    final ids = r1[0];
+    // print('buyList ids:($ids)');
+    final r2 = await queryByContract(
+        contract: otcContract, functionName: 'getList', args: [ids]);
+    // print('buyList r2:($r2)');
+    return [ids, r2];
+  }
+
+  Future sellList() async {
+    // final ea = EthereumAddress.fromHex(wallet.address ?? '');
+    final r1 = await queryByContract(
+      contract: otcContract,
+      functionName: 'getSellListId',
+    );
+    final ids = r1[0];
+    // print('sellList ids:($ids)');
+    final r2 = await queryByContract(
+        contract: otcContract, functionName: 'getList', args: [ids]);
+    // print('sellList r2:($r2)');
+    return [ids, r2];
+  }
+
+  Future buy(
+      {required my_wallet.Wallet wallet,
+      required int id,
+      required BigInt amount}) async {
+    final response = await submitByContract(
+        wallet: wallet,
+        contract: otcContract,
+        functionName: 'buy',
+        args: [BigInt.from(id)],
+        weiAmount: amount);
+    print('buy args:(${BigInt.from(id)} amount:($amount)');
+    print('buy response:($response)');
+    return response;
+  }
+
+  Future sell({
+    required my_wallet.Wallet wallet,
+    required int id,
+  }) async {
+    final response = await submitByContract(
+      wallet: wallet,
+      contract: otcContract,
+      functionName: 'sell',
+      args: [BigInt.from(id)],
+    );
+    print('sell args:(${BigInt.from(id)}');
+    print('sell response:($response)');
+    return response;
   }
 }

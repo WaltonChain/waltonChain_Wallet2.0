@@ -4,7 +4,9 @@ import 'package:get/get.dart';
 import 'package:wtc_wallet_app/app/component/full_width_button.dart';
 import 'package:wtc_wallet_app/app/component/input_number.dart';
 import 'package:wtc_wallet_app/app/data/models/validator.dart';
+import 'package:wtc_wallet_app/app/modules/assets/controllers/assets_controller.dart';
 import 'package:wtc_wallet_app/app/routes/app_pages.dart';
+import 'package:wtc_wallet_app/app/services/wallet_service.dart';
 
 import '../controllers/place_order_controller.dart';
 
@@ -36,7 +38,7 @@ class PlaceOrderView extends GetView<PlaceOrderController> {
             Expanded(
               child: TabBarView(
                 controller: controller.tc,
-                children: const [
+                children: [
                   BuyForm(),
                   SellForm(),
                 ],
@@ -48,7 +50,9 @@ class PlaceOrderView extends GetView<PlaceOrderController> {
 }
 
 class BuyForm extends GetView<PlaceOrderController> {
-  const BuyForm({Key? key}) : super(key: key);
+  BuyForm({Key? key}) : super(key: key);
+
+  final AssetsController ac = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -61,14 +65,23 @@ class BuyForm extends GetView<PlaceOrderController> {
             const Text('Buy total price WTC'),
             InputNumber(
               controller: controller.buyWtcPrice,
-              validator: (value) => Validator.amount(value, 99.9),
+              validator: (value) =>
+                  Validator.amount(value, ac.wtcBalance.value),
             ),
             const Text('Buy total amount WTA'),
             InputNumber(
               controller: controller.buyWtaAmount,
-              validator: (value) => Validator.amount(value, 99.9),
+              validator: (value) => Validator.toAmount(value),
             ),
-            const Text('Price'),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text('Price'),
+                Obx(() => Text(
+                      '1 WTC ≈ ${controller.buyPrice.toStringAsFixed(4)}',
+                    )),
+              ],
+            ),
             FullWidthButton(
                 onPressed: () {
                   controller.clickPlace();
@@ -82,7 +95,9 @@ class BuyForm extends GetView<PlaceOrderController> {
 }
 
 class SellForm extends GetView<PlaceOrderController> {
-  const SellForm({Key? key}) : super(key: key);
+  SellForm({Key? key}) : super(key: key);
+
+  final AssetsController ac = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -95,14 +110,22 @@ class SellForm extends GetView<PlaceOrderController> {
             const Text('Sell total price WTC'),
             InputNumber(
               controller: controller.sellWtcPrice,
-              validator: (value) => Validator.amount(value, 99.9),
+              validator: (value) => Validator.toAmount(value),
             ),
             const Text('Sell total amount WTA'),
             InputNumber(
               controller: controller.sellWtaAmount,
-              validator: (value) => Validator.amount(value, 99.9),
+              validator: (value) => Validator.amount(value, ac.wtaAmount.value),
             ),
-            const Text('Price'),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text('Price'),
+                Obx(() => Text(
+                      '1 WTC ≈ ${controller.sellPrice.toStringAsFixed(4)}',
+                    )),
+              ],
+            ),
             FullWidthButton(
                 onPressed: () {
                   controller.clickSell();

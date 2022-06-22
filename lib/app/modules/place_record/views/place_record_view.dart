@@ -15,21 +15,25 @@ class PlaceRecordView extends GetView<PlaceRecordController> {
         title: const Text('Place Records'),
         centerTitle: true,
       ),
-      body: Obx(() => ListView.builder(
-            itemCount: controller.records.length,
-            itemBuilder: (context, index) {
-              final record = controller.records[index];
-              final obj = {
-                'id': controller.ids[index].toInt(),
-                'type': record[4].toInt() == 1 ? 'Sell' : 'Buy',
-                'address': record[0].toString(),
-                'wtaAmount': Utils.doubleFromWeiAmount(record[1]),
-                'wtcAmount': Utils.doubleFromWeiAmount(record[2])
-              };
-              return Record(
-                order: OtcOrder.fromJson(obj),
-              );
-            },
+      body: Obx(() => Container(
+            padding:
+                const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
+            child: ListView.builder(
+              itemCount: controller.records.length,
+              itemBuilder: (context, index) {
+                final record = controller.records[index];
+                final obj = {
+                  'id': controller.ids[index].toInt(),
+                  'type': record[4].toInt() == 1 ? 'Sell' : 'Buy',
+                  'address': record[0].toString(),
+                  'wtaAmount': Utils.doubleFromWeiAmount(record[1]),
+                  'wtcAmount': Utils.doubleFromWeiAmount(record[2])
+                };
+                return Record(
+                  order: OtcOrder.fromJson(obj),
+                );
+              },
+            ),
           )),
     );
   }
@@ -45,34 +49,52 @@ class Record extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 16.0),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Flexible(
                 child: Text(
-                  order.address,
-                  overflow: TextOverflow.ellipsis,
-                  softWrap: true,
+                  Utils.ellipsisedHash(order.address),
+                  style: const TextStyle(fontSize: 16.0),
                 ),
               ),
-              Text('1 WTA ≈ ${order.wtcAmount / order.wtaAmount} WTC')
+              Text(
+                '1 WTA ≈ ${(order.wtcAmount / order.wtaAmount).toStringAsFixed(4)} WTC',
+                style: const TextStyle(fontSize: 16.0),
+              )
             ],
+          ),
+          const SizedBox(height: 16.0),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                'Amount ${order.wtcAmount} WTC',
+                style: const TextStyle(fontSize: 16.0),
+              ),
+              const Text(
+                'Price',
+                style: TextStyle(fontSize: 16.0),
+              )
+            ],
+          ),
+          const SizedBox(height: 8.0),
+          Text(
+            'Limit ${order.wtaAmount} WTA',
+            style: const TextStyle(fontSize: 16.0),
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('Amount ${order.wtcAmount} WTC'),
-              const Text('Price')
+              Text(
+                'Guaranteed Amount ${order.wtaAmount} WTA',
+                style: const TextStyle(fontSize: 14.0),
+              ),
             ],
           ),
-          Text('Limit ${order.wtaAmount} WTA'),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text('Guaranteed Amount ${order.wtaAmount} WTA'),
-            ],
-          )
+          const Divider(),
         ],
       ),
     );

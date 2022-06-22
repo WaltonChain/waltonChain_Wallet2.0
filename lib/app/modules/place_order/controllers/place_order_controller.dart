@@ -79,7 +79,7 @@ class PlaceOrderController extends GetxController
   //   super.onClose();
   // }
 
-  void clickPlace() async {
+  void clickPlaceBuy() async {
     final valid = buyFormKey.currentState?.validate();
     if (valid == true) {
       await bs.createBuyOrder(
@@ -92,50 +92,36 @@ class PlaceOrderController extends GetxController
     }
   }
 
-  void clickSell() async {
+  void clickPlaceSell() async {
     final valid = sellFormKey.currentState?.validate();
     if (valid == true) {
       final wallet = ws.current.value!;
-      // final amount = double.tryParse(sellWtaAmount.text) ?? 0.00;
-      const amount = 100.0;
+      final amount = double.tryParse(sellWtaAmount.text) ?? 0.00;
 
-      EasyLoading.show(status: 'Checking Approve');
       final needApprove = await bs.sellNeedApprove(wallet, amount);
-      EasyLoading.dismiss();
 
       if (needApprove) {
         Get.defaultDialog(
           title: 'Approve',
           content: const Text('Need Approve'),
           onConfirm: () async {
-            EasyLoading.show(status: 'Approving...');
             await bs.approveSell(wallet: wallet, amount: amount);
-            EasyLoading.showSuccess('Approved');
-
-            EasyLoading.show(status: 'swapping...');
-            // await bs.wtaToWtc(wallet: wallet, amount: amount);
             await bs.createSellOrder(
               wallet: wallet,
               wtaAmount: double.parse(sellWtaAmount.text),
               wtcAmount: double.parse(sellWtcPrice.text),
             );
-
-            EasyLoading.showSuccess('swapped');
           },
           onCancel: () {
             Get.back();
           },
         );
       } else {
-        // EasyLoading.show(status: 'swapping...');
-        // await bs.wtaToWtc(wallet: wallet, amount: amount);
         await bs.createSellOrder(
           wallet: wallet,
           wtaAmount: double.parse(sellWtaAmount.text),
           wtcAmount: double.parse(sellWtcPrice.text),
         );
-
-        // EasyLoading.showSuccess('swapped');
       }
     } else {
       Get.snackbar('Fail', 'Validate Fail');

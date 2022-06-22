@@ -62,29 +62,44 @@ class BuyForm extends GetView<PlaceOrderController> {
         key: controller.buyFormKey,
         child: ListView(
           children: [
-            const Text('Buy total price WTC'),
+            const Text(
+              'Buy total price WTC',
+              style: TextStyle(fontSize: 16.0),
+            ),
+            const SizedBox(height: 4.0),
             InputNumber(
               controller: controller.buyWtcPrice,
               validator: (value) =>
                   Validator.amount(value, ac.wtcBalance.value),
             ),
-            const Text('Buy total amount WTA'),
+            const SizedBox(height: 16.0),
+            const Text(
+              'Buy total amount WTA',
+              style: TextStyle(fontSize: 16.0),
+            ),
+            const SizedBox(height: 4.0),
             InputNumber(
               controller: controller.buyWtaAmount,
               validator: (value) => Validator.toAmount(value),
             ),
+            const SizedBox(height: 16.0),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text('Price'),
+                const Text(
+                  'Price',
+                  style: TextStyle(fontSize: 16.0),
+                ),
                 Obx(() => Text(
                       '1 WTC ≈ ${controller.buyPrice.toStringAsFixed(4)}',
+                      style: const TextStyle(fontSize: 16.0),
                     )),
               ],
             ),
+            const SizedBox(height: 16.0),
             FullWidthButton(
                 onPressed: () {
-                  controller.clickPlace();
+                  controller.clickPlaceBuy();
                 },
                 text: 'Place')
           ],
@@ -107,30 +122,41 @@ class SellForm extends GetView<PlaceOrderController> {
         key: controller.sellFormKey,
         child: ListView(
           children: [
-            const Text('Sell total price WTC'),
+            const Text(
+              'Sell total price WTC',
+              style: TextStyle(fontSize: 16.0),
+            ),
+            const SizedBox(height: 4.0),
             InputNumber(
               controller: controller.sellWtcPrice,
               validator: (value) => Validator.toAmount(value),
             ),
-            const Text('Sell total amount WTA'),
+            const SizedBox(height: 16.0),
+            const Text(
+              'Sell total amount WTA',
+              style: TextStyle(fontSize: 16.0),
+            ),
             InputNumber(
               controller: controller.sellWtaAmount,
               validator: (value) => Validator.amount(value, ac.wtaAmount.value),
             ),
+            const SizedBox(height: 16.0),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 const Text('Price'),
                 Obx(() => Text(
                       '1 WTC ≈ ${controller.sellPrice.toStringAsFixed(4)}',
+                      style: const TextStyle(fontSize: 16.0),
                     )),
               ],
             ),
+            const SizedBox(height: 16.0),
             FullWidthButton(
                 onPressed: () {
-                  controller.clickSell();
+                  controller.clickPlaceSell();
                 },
-                text: 'Approve')
+                text: 'Place')
           ],
         ),
       ),

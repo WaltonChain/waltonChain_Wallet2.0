@@ -12,44 +12,57 @@ class OtcView extends GetView<OtcController> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              ElevatedButton.icon(
-                onPressed: () {
-                  Get.toNamed(Routes.PLACE_ORDER);
-                },
-                icon: const Icon(Icons.abc),
-                label: const Text('Place Order'),
-              ),
-              const Text('OTC'),
-              ElevatedButton.icon(
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                ElevatedButton.icon(
                   onPressed: () {
-                    Get.toNamed(Routes.PLACE_RECORD);
+                    Get.toNamed(Routes.PLACE_ORDER);
                   },
-                  icon: const Icon(Icons.abc),
-                  label: const Text('My Orders'))
-            ],
-          ),
-          TabBar(
-            controller: controller.tc,
-            tabs: controller.myTabs,
-            labelColor: Colors.black,
-            indicatorSize: TabBarIndicatorSize.label,
-            labelStyle: const TextStyle(fontSize: 24.0),
-          ),
-          Expanded(
-            child: TabBarView(
-              controller: controller.tc,
-              children: const [
-                BuyOrders(),
-                SellOrders(),
+                  icon: const Icon(
+                    Icons.border_color,
+                    size: 16.0,
+                  ),
+                  label: const Text('Place Order'),
+                ),
+                const Text(
+                  'OTC',
+                  style: TextStyle(fontSize: 24.0),
+                ),
+                ElevatedButton.icon(
+                    onPressed: () {
+                      Get.toNamed(Routes.PLACE_RECORD);
+                    },
+                    icon: const Icon(
+                      Icons.format_list_bulleted,
+                      size: 16.0,
+                    ),
+                    label: const Text('My Orders'))
               ],
             ),
-          ),
-        ],
+            TabBar(
+              controller: controller.tc,
+              tabs: controller.myTabs,
+              labelColor: Colors.black,
+              indicatorSize: TabBarIndicatorSize.label,
+              labelStyle: const TextStyle(fontSize: 24.0),
+            ),
+            const Divider(),
+            Expanded(
+              child: TabBarView(
+                controller: controller.tc,
+                children: const [
+                  BuyOrders(),
+                  SellOrders(),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -61,7 +74,6 @@ class BuyOrders extends GetView<OtcController> {
   @override
   Widget build(BuildContext context) {
     return Obx(() => ListView.builder(
-          padding: const EdgeInsets.symmetric(horizontal: 12.0),
           itemBuilder: (context, index) {
             final order = controller.sellOrders[index];
             final obj = {
@@ -84,7 +96,6 @@ class SellOrders extends GetView<OtcController> {
   @override
   Widget build(BuildContext context) {
     return Obx(() => ListView.builder(
-          padding: const EdgeInsets.symmetric(horizontal: 12.0),
           itemBuilder: (context, index) {
             final order = controller.buyOrders[index];
             final obj = {
@@ -114,39 +125,68 @@ class Order extends GetView<OtcController> {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 16.0),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Flexible(
                 child: Text(
-                  order.address,
-                  overflow: TextOverflow.ellipsis,
-                  softWrap: true,
+                  Utils.ellipsisedHash(order.address),
+                  style: const TextStyle(fontSize: 16.0),
                 ),
               ),
-              const Text('1 WTA ≈ 0.08 WTC')
+              Text(
+                '1 WTA ≈ ${(order.wtcAmount / order.wtaAmount).toStringAsFixed(4)} WTC',
+                style: const TextStyle(fontSize: 16.0),
+              )
             ],
           ),
+          const SizedBox(height: 16.0),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('Amount ${order.wtcAmount} WTC'),
-              const Text('Price')
+              Text(
+                'Amount ${order.wtcAmount} WTC',
+                style: const TextStyle(fontSize: 16.0),
+              ),
+              const Text(
+                'Price',
+                style: TextStyle(fontSize: 16.0),
+              )
             ],
           ),
-          Text('Limit ${order.wtaAmount} WTA'),
+          const SizedBox(height: 8.0),
+          Text(
+            'Limit ${order.wtaAmount} WTA',
+            style: const TextStyle(fontSize: 16.0),
+          ),
+          // const SizedBox(height: 8.0),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              Text('Guaranteed Amount ${order.wtaAmount} WTA'),
+              Text(
+                'Guaranteed Amount ${order.wtaAmount} WTA',
+                style: const TextStyle(fontSize: 14.0),
+              ),
               ElevatedButton(
-                  onPressed: () {
-                    controller.clickBuy(order.id, BigInt.from(order.wtaAmount));
-                  },
-                  child: Text(order.type == 'buy' ? 'sell' : 'buy'))
+                onPressed: () {
+                  controller.clickDeal(order);
+                },
+                child: Text(order.type == 'buy' ? 'sell' : 'buy'),
+                style: ElevatedButton.styleFrom(
+                  primary: const Color.fromRGBO(130, 0, 255, 1),
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 32.0, vertical: 4.0),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                ),
+              ),
             ],
-          )
+          ),
+          const Divider(),
         ],
       ),
     );

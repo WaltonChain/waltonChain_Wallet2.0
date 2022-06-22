@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:math';
 
 import 'package:flutter/services.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:web3dart/web3dart.dart';
 import 'package:wtc_wallet_app/app/data/constants/blockchain.dart';
@@ -172,11 +173,12 @@ class BlockchainService extends GetxService {
   Future<bool> sellNeedApprove(my_wallet.Wallet wallet, double amount) async {
     final ea = EthereumAddress.fromHex(wallet.address ?? '');
     final wtcSwapEa = EthereumAddress.fromHex(otcAddressTest);
+    EasyLoading.show(status: 'Checking approve');
     final response = await queryByContract(
         contract: tokenContract,
         functionName: 'allowance',
         args: [ea, wtcSwapEa]);
-    print('sellNeedApprove response:($response)');
+    EasyLoading.showSuccess('Checked');
     final allowanceWei =
         EtherAmount.fromUnitAndValue(EtherUnit.wei, response[0]);
     final result = allowanceWei.getValueInUnit(EtherUnit.ether) < amount;
@@ -205,12 +207,13 @@ class BlockchainService extends GetxService {
     final maxApproveWei =
         EtherAmount.fromUnitAndValue(EtherUnit.ether, 999999999999999999)
             .getInWei;
+    EasyLoading.show(status: 'Approving');
     final response = await submitByContract(
         wallet: wallet,
         contract: tokenContract,
         functionName: 'approve',
         args: [wtcSwapEa, maxApproveWei]);
-    print('approveSell response:($response)');
+    EasyLoading.showSuccess('Approved');
     return response;
   }
 
@@ -359,6 +362,7 @@ class BlockchainService extends GetxService {
       {required my_wallet.Wallet wallet,
       required double wtcAmount,
       required double wtaAmount}) async {
+    EasyLoading.show(status: 'Placing buy order');
     final response = await submitByContract(
       wallet: wallet,
       contract: otcContract,
@@ -366,6 +370,7 @@ class BlockchainService extends GetxService {
       weiAmount: Utils.bigIntFromDouble(wtcAmount),
       args: [Utils.bigIntFromDouble(wtaAmount)],
     );
+    EasyLoading.showSuccess('Finish');
     // print('createBuyOrder response:($response)');
     return response;
   }
@@ -376,12 +381,14 @@ class BlockchainService extends GetxService {
       required double wtaAmount}) async {
     final a = Utils.bigIntFromDouble(wtaAmount);
     final c = Utils.bigIntFromDouble(wtcAmount);
+    EasyLoading.show(status: 'Placing sell order');
     final response = await submitByContract(
       wallet: wallet,
       contract: otcContract,
       functionName: 'createSellOrder',
       args: [a, c],
     );
+    EasyLoading.showSuccess('Finish');
     // print('createSellOrder response:($response), a:($a) p:($p)');
     return response;
   }
@@ -434,14 +441,14 @@ class BlockchainService extends GetxService {
       {required my_wallet.Wallet wallet,
       required int id,
       required BigInt amount}) async {
+    EasyLoading.show(status: 'Buying');
     final response = await submitByContract(
         wallet: wallet,
         contract: otcContract,
         functionName: 'buy',
         args: [BigInt.from(id)],
         weiAmount: amount);
-    print('buy args:(${BigInt.from(id)} amount:($amount)');
-    print('buy response:($response)');
+    EasyLoading.showSuccess('Finish');
     return response;
   }
 
@@ -449,14 +456,14 @@ class BlockchainService extends GetxService {
     required my_wallet.Wallet wallet,
     required int id,
   }) async {
+    EasyLoading.show(status: 'Selling');
     final response = await submitByContract(
       wallet: wallet,
       contract: otcContract,
       functionName: 'sell',
       args: [BigInt.from(id)],
     );
-    print('sell args:(${BigInt.from(id)}');
-    print('sell response:($response)');
+    EasyLoading.showSuccess('Finish');
     return response;
   }
 }

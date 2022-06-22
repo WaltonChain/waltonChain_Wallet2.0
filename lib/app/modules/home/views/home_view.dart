@@ -48,6 +48,7 @@ class HomeView extends GetView<HomeController> {
             onTap: (index) {
               controller.setIndex(index);
             },
+            unselectedItemColor: Colors.black,
           )),
     );
   }

@@ -37,6 +37,8 @@ class SplashController extends GetxController {
       final res = await http.get(Uri.parse(url));
       latest = jsonDecode(res.body);
       needUpdate = Utils.compareVersion(packageInfo.version, latest['version']);
+      debugPrint(
+          "packageInfo.version:(${packageInfo.version}), latest['version']:(${latest['version']}), needUpdate:($needUpdate)");
     } catch (e) {
       Get.snackbar('Error', 'Failed to get version info');
     }

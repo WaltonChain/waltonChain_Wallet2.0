@@ -6,7 +6,6 @@ import 'package:wtc_wallet_app/app/component/input_number.dart';
 import 'package:wtc_wallet_app/app/data/models/validator.dart';
 import 'package:wtc_wallet_app/app/modules/assets/controllers/assets_controller.dart';
 import 'package:wtc_wallet_app/app/routes/app_pages.dart';
-import 'package:wtc_wallet_app/app/services/wallet_service.dart';
 
 import '../controllers/place_order_controller.dart';
 

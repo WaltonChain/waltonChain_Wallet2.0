@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:web3dart/web3dart.dart';
 import 'package:wtc_wallet_app/app/data/constants/blockchain.dart';
@@ -15,6 +16,7 @@ class BlockchainService extends GetxService {
   late DeployedContract tokenContract;
   late DeployedContract swapContract;
   late DeployedContract stakeContract;
+  late DeployedContract otcContract;
 
   Future<BlockchainService> init() async {
     final futures = await Future.wait([
@@ -36,10 +38,16 @@ class BlockchainService extends GetxService {
         // address: wtcStake15min,
         // address: wtcStakeTest,
       ),
+      loadContract(
+        name: 'otcContract',
+        filePath: 'assets/files/otcAbi.json',
+        address: otcAddressTest,
+      ),
     ]);
     tokenContract = futures[0];
     swapContract = futures[1];
     stakeContract = futures[2];
+    otcContract = futures[3];
     return this;
   }
 
@@ -165,6 +173,22 @@ class BlockchainService extends GetxService {
     return result;
   }
 
+  Future<bool> sellNeedApprove(my_wallet.Wallet wallet, double amount) async {
+    final ea = EthereumAddress.fromHex(wallet.address ?? '');
+    final wtcSwapEa = EthereumAddress.fromHex(otcAddressTest);
+    EasyLoading.show(status: 'Checking approve');
+    final response = await queryByContract(
+        contract: tokenContract,
+        functionName: 'allowance',
+        args: [ea, wtcSwapEa]);
+    EasyLoading.showSuccess('Checked');
+    final allowanceWei =
+        EtherAmount.fromUnitAndValue(EtherUnit.wei, response[0]);
+    final result = allowanceWei.getValueInUnit(EtherUnit.ether) < amount;
+    // print('sellNeedApprove result:($result)');
+    return result;
+  }
+
   Future approveSwap(
       {required my_wallet.Wallet wallet, required double amount}) async {
     final wtcSwapEa = EthereumAddress.fromHex(wtcSwap);
@@ -177,6 +201,22 @@ class BlockchainService extends GetxService {
         functionName: 'approve',
         args: [wtcSwapEa, maxApproveWei]);
     // print('approveSwap response:($response)');
+    return response;
+  }
+
+  Future approveSell(
+      {required my_wallet.Wallet wallet, required double amount}) async {
+    final wtcSwapEa = EthereumAddress.fromHex(otcAddressTest);
+    final maxApproveWei =
+        EtherAmount.fromUnitAndValue(EtherUnit.ether, 999999999999999999)
+            .getInWei;
+    EasyLoading.show(status: 'Approving');
+    final response = await submitByContract(
+        wallet: wallet,
+        contract: tokenContract,
+        functionName: 'approve',
+        args: [wtcSwapEa, maxApproveWei]);
+    EasyLoading.showSuccess('Approved');
     return response;
   }
 
@@ -211,46 +251,6 @@ class BlockchainService extends GetxService {
     // print('wtaToWtc after response:($response)');
     return response;
   }
-
-  // Future<double> getTotalSupply() async {
-  //   final response = await queryByContract(
-  //     contract: stakeContract,
-  //     functionName: 'totalSupply',
-  //   );
-  //   final totalSupply = Utils.doubleFromWeiAmount(response[0]);
-  //   return totalSupply;
-  // }
-
-  // Future<double> getTvl(double wtcPrice) async {
-  //   final response = await queryByContract(
-  //     contract: stakeContract,
-  //     functionName: 'totalSupply',
-  //   );
-  //   final totalSupply = Utils.doubleFromWeiAmount(response[0]);
-  //   final tvl = totalSupply * wtcPrice;
-  //   return tvl;
-  // }
-
-  // Future<double> getApr() async {
-  //   final response = await queryByContract(
-  //     contract: stakeContract,
-  //     functionName: 'totalSupply',
-  //   );
-  //   final totalSupply = Utils.doubleFromWeiAmount(response[0]);
-  //   final apr = 2000 * 365 / totalSupply * 100;
-  //   return apr;
-  // }
-
-  // Future<double> getStaked(my_wallet.Wallet wallet) async {
-  //   final ea = EthereumAddress.fromHex(wallet.address ?? '');
-  //   final response = await queryByContract(
-  //     contract: stakeContract,
-  //     functionName: 'balanceOf',
-  //     args: [ea],
-  //   );
-  //   final staked = Utils.doubleFromWeiAmount(response[0]);
-  //   return staked;
-  // }
 
   Future<String> stake(
       {required my_wallet.Wallet wallet, required double amount}) async {
@@ -357,6 +357,116 @@ class BlockchainService extends GetxService {
       args: [orderId],
     );
     // print('getorder response:($response)');
+    return response;
+  }
+
+  // otc
+  Future createBuyOrder(
+      {required my_wallet.Wallet wallet,
+      required double wtcAmount,
+      required double wtaAmount}) async {
+    EasyLoading.show(status: 'Placing buy order');
+    final response = await submitByContract(
+      wallet: wallet,
+      contract: otcContract,
+      functionName: 'createBuyOrder',
+      weiAmount: Utils.bigIntFromDouble(wtcAmount),
+      args: [Utils.bigIntFromDouble(wtaAmount)],
+    );
+    EasyLoading.showSuccess('Finish');
+    // print('createBuyOrder response:($response)');
+    return response;
+  }
+
+  Future createSellOrder(
+      {required my_wallet.Wallet wallet,
+      required double wtcAmount,
+      required double wtaAmount}) async {
+    final a = Utils.bigIntFromDouble(wtaAmount);
+    final c = Utils.bigIntFromDouble(wtcAmount);
+    EasyLoading.show(status: 'Placing sell order');
+    final response = await submitByContract(
+      wallet: wallet,
+      contract: otcContract,
+      functionName: 'createSellOrder',
+      args: [a, c],
+    );
+    EasyLoading.showSuccess('Finish');
+    // print('createSellOrder response:($response), a:($a) p:($p)');
+    return response;
+  }
+
+  Future orderList({
+    required my_wallet.Wallet wallet,
+  }) async {
+    final ea = EthereumAddress.fromHex(wallet.address ?? '');
+    final r1 = await queryByContract(
+      contract: otcContract,
+      functionName: 'getUserList',
+      args: [ea],
+    );
+    final userLists = r1[0];
+    // print('getorder response:($response)');
+    final r2 = await queryByContract(
+        contract: otcContract, functionName: 'getList', args: [userLists]);
+    return [userLists, r2[0]];
+  }
+
+  Future buyList() async {
+    // final ea = EthereumAddress.fromHex(wallet.address ?? '');
+    final r1 = await queryByContract(
+      contract: otcContract,
+      functionName: 'getBuyListId',
+    );
+    final ids = r1[0];
+    // print('buyList ids:($ids)');
+    final r2 = await queryByContract(
+        contract: otcContract, functionName: 'getList', args: [ids]);
+    // print('buyList r2:($r2)');
+    return [ids, r2];
+  }
+
+  Future sellList() async {
+    // final ea = EthereumAddress.fromHex(wallet.address ?? '');
+    final r1 = await queryByContract(
+      contract: otcContract,
+      functionName: 'getSellListId',
+    );
+    final ids = r1[0];
+    // print('sellList ids:($ids)');
+    final r2 = await queryByContract(
+        contract: otcContract, functionName: 'getList', args: [ids]);
+    // print('sellList r2:($r2)');
+    return [ids, r2];
+  }
+
+  Future buy(
+      {required my_wallet.Wallet wallet,
+      required int id,
+      required BigInt amount}) async {
+    EasyLoading.show(status: 'Buying');
+    final response = await submitByContract(
+        wallet: wallet,
+        contract: otcContract,
+        functionName: 'buy',
+        args: [BigInt.from(id)],
+        weiAmount: amount);
+    EasyLoading.showSuccess('Finish');
+    return response;
+  }
+
+  Future sell({
+    required my_wallet.Wallet wallet,
+    required int id,
+  }) async {
+    EasyLoading.show(status: 'Selling');
+    final response = await submitByContract(
+      wallet: wallet,
+      contract: otcContract,
+      functionName: 'sell',
+      args: [BigInt.from(id)],
+    );
+    EasyLoading.showSuccess('Finish');
     return response;
   }
 }

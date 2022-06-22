@@ -46,13 +46,13 @@ class DenpendencyInjection {
         AndroidServiceWorkerController serviceWorkerController =
             AndroidServiceWorkerController.instance();
 
-        serviceWorkerController.serviceWorkerClient =
-            AndroidServiceWorkerClient(
+        serviceWorkerController
+            .setServiceWorkerClient(AndroidServiceWorkerClient(
           shouldInterceptRequest: (request) async {
             // print(request);
             return null;
           },
-        );
+        ));
       }
     }
   }

@@ -24,6 +24,10 @@ abstract class Routes {
   static const TRANSACTION_DETAIL = _Paths.TRANSACTION_DETAIL;
   static const STAKING = _Paths.STAKING;
   static const STAKING_LIST = _Paths.STAKING_LIST;
+  static const OTC = _Paths.OTC;
+  static const PLACE_ORDER = _Paths.PLACE_ORDER;
+  static const PLACE_RECORD = _Paths.PLACE_RECORD;
+  static const MY_ORDERS = _Paths.MY_ORDERS;
 }
 
 abstract class _Paths {
@@ -47,4 +51,8 @@ abstract class _Paths {
   static const TRANSACTION_DETAIL = '/transaction-detail';
   static const STAKING = '/staking';
   static const STAKING_LIST = '/staking-list';
+  static const OTC = '/otc';
+  static const PLACE_ORDER = '/place-order';
+  static const PLACE_RECORD = '/place-record';
+  static const MY_ORDERS = '/my-orders';
 }

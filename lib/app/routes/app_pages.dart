@@ -20,6 +20,14 @@ import '../modules/manage_wallet/bindings/manage_wallet_binding.dart';
 import '../modules/manage_wallet/views/manage_wallet_view.dart';
 import '../modules/me/bindings/me_binding.dart';
 import '../modules/me/views/me_view.dart';
+import '../modules/my_orders/bindings/my_orders_binding.dart';
+import '../modules/my_orders/views/my_orders_view.dart';
+import '../modules/otc/bindings/otc_binding.dart';
+import '../modules/otc/views/otc_view.dart';
+import '../modules/place_order/bindings/place_order_binding.dart';
+import '../modules/place_order/views/place_order_view.dart';
+import '../modules/place_record/bindings/place_record_binding.dart';
+import '../modules/place_record/views/place_record_view.dart';
 import '../modules/receive/bindings/receive_binding.dart';
 import '../modules/receive/views/receive_view.dart';
 import '../modules/send/bindings/send_binding.dart';
@@ -145,6 +153,26 @@ class AppPages {
       name: _Paths.STAKING_LIST,
       page: () => const StakingListView(),
       binding: StakingListBinding(),
+    ),
+    GetPage(
+      name: _Paths.OTC,
+      page: () => const OtcView(),
+      binding: OtcBinding(),
+    ),
+    GetPage(
+      name: _Paths.PLACE_ORDER,
+      page: () => const PlaceOrderView(),
+      binding: PlaceOrderBinding(),
+    ),
+    GetPage(
+      name: _Paths.PLACE_RECORD,
+      page: () => const PlaceRecordView(),
+      binding: PlaceRecordBinding(),
+    ),
+    GetPage(
+      name: _Paths.MY_ORDERS,
+      page: () => const MyOrdersView(),
+      binding: MyOrdersBinding(),
     ),
   ];
 }

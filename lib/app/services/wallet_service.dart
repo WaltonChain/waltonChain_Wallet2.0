@@ -30,6 +30,7 @@ class WalletService extends GetxService {
     });
 
     ever(wallets, (callback) {
+      // ignore: invalid_use_of_protected_member
       hs.saveWallets(wallets.value);
     });
     ever(selectedIndex, (callback) {

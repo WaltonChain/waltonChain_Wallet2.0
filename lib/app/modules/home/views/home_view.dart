@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:wtc_wallet_app/app/modules/assets/views/assets_view.dart';
 import 'package:wtc_wallet_app/app/modules/dapp/views/dapp_view.dart';
 import 'package:wtc_wallet_app/app/modules/me/views/me_view.dart';
+import 'package:wtc_wallet_app/app/modules/otc/views/otc_view.dart';
 
 import '../controllers/home_controller.dart';
 
@@ -13,7 +14,8 @@ class HomeView extends GetView<HomeController> {
   static final _widgetOptions = [
     const AssetsView(),
     const DappView(),
-    const MeView()
+    const OtcView(),
+    const MeView(),
   ];
 
   @override
@@ -31,6 +33,10 @@ class HomeView extends GetView<HomeController> {
               BottomNavigationBarItem(
                 icon: Icon(Icons.grid_view),
                 label: 'Dapp',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.paid),
+                label: 'OTC',
               ),
               BottomNavigationBarItem(
                 icon: Icon(Icons.person),

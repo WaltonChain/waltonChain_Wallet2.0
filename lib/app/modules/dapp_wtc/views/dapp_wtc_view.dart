@@ -286,7 +286,7 @@ class StakingEntry extends GetView<StakeController> {
               style: TextStyle(fontSize: 24.0),
             ),
             subtitle:
-                const Text('May 15, 2022', style: TextStyle(fontSize: 14.0)),
+                const Text('May 25, 2022', style: TextStyle(fontSize: 14.0)),
           ),
           const SizedBox(height: 16.0),
           const Text('Staking', style: TextStyle(fontSize: 18.0)),

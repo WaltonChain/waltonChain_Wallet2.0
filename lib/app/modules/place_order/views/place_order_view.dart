@@ -137,7 +137,8 @@ class SellForm extends GetView<PlaceOrderController> {
             ),
             InputNumber(
               controller: controller.sellWtaAmount,
-              validator: (value) => Validator.amount(value, ac.wtaAmount.value),
+              validator: (value) =>
+                  Validator.amount(value, ac.wtaBalance.value),
             ),
             const SizedBox(height: 16.0),
             Row(

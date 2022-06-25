@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-import 'package:wtc_wallet_app/app/component/full_width_button.dart';
-import 'package:wtc_wallet_app/app/component/input_number.dart';
+import 'package:wtc_wallet_app/app/widgets/full_width_button.dart';
+import 'package:wtc_wallet_app/app/widgets/input_number.dart';
 import 'package:wtc_wallet_app/app/data/models/validator.dart';
 import 'package:wtc_wallet_app/app/modules/assets/controllers/assets_controller.dart';
 import 'package:wtc_wallet_app/app/routes/app_pages.dart';

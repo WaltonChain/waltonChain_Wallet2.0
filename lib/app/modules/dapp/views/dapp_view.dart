@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-import 'package:wtc_wallet_app/app/component/icon_scan.dart';
-import 'package:wtc_wallet_app/app/component/search.dart';
-import 'package:wtc_wallet_app/app/component/wtc_icon.dart';
+import 'package:wtc_wallet_app/app/widgets/icon_scan.dart';
+import 'package:wtc_wallet_app/app/widgets/search.dart';
+import 'package:wtc_wallet_app/app/widgets/wtc_icon.dart';
 
 import '../controllers/dapp_controller.dart';
 

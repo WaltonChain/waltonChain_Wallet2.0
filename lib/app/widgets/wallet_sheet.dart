@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:wtc_wallet_app/app/component/wallet_card.dart';
+import 'package:wtc_wallet_app/app/widgets/wallet_card.dart';
 import 'package:wtc_wallet_app/app/routes/app_pages.dart';
 import 'package:wtc_wallet_app/app/services/wallet_service.dart';
 

@@ -3,7 +3,7 @@ import 'package:flutter_linkify/flutter_linkify.dart';
 
 import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:wtc_wallet_app/app/component/back_bar.dart';
+import 'package:wtc_wallet_app/app/widgets/back_bar.dart';
 import 'package:wtc_wallet_app/app/data/models/utils.dart';
 
 import '../controllers/transaction_detail_controller.dart';

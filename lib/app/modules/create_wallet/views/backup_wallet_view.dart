@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 // import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
-import 'package:wtc_wallet_app/app/component/back_bar.dart';
-import 'package:wtc_wallet_app/app/component/bullet_text.dart';
+import 'package:wtc_wallet_app/app/widgets/back_bar.dart';
+import 'package:wtc_wallet_app/app/widgets/bullet_text.dart';
 import '../controllers/create_wallet_controller.dart';
 
 class BackupTips extends StatelessWidget {

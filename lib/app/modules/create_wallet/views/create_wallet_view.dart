@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-import 'package:wtc_wallet_app/app/component/back_bar.dart';
-import 'package:wtc_wallet_app/app/component/full_width_button.dart';
-import 'package:wtc_wallet_app/app/component/input_text.dart';
+import 'package:wtc_wallet_app/app/widgets/back_bar.dart';
+import 'package:wtc_wallet_app/app/widgets/full_width_button.dart';
+import 'package:wtc_wallet_app/app/widgets/input_text.dart';
 import 'package:wtc_wallet_app/app/data/models/validator.dart';
 import 'package:wtc_wallet_app/app/routes/app_pages.dart';
 

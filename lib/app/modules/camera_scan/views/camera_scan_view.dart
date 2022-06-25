@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:scan/scan.dart';
-import 'package:wtc_wallet_app/app/component/back_bar.dart';
+import 'package:wtc_wallet_app/app/widgets/back_bar.dart';
 
 import '../controllers/camera_scan_controller.dart';
 

@@ -3,9 +3,9 @@ import 'dart:io';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
-import 'package:wtc_wallet_app/app/services/blockchain_service.dart';
-import 'package:wtc_wallet_app/app/services/hive_service.dart';
-import 'package:wtc_wallet_app/app/services/wallet_service.dart';
+import 'package:wtc_wallet_app/app/data/services/blockchain_service.dart';
+import 'package:wtc_wallet_app/app/data/services/storage/services.dart';
+import 'package:wtc_wallet_app/app/data/services/wallet_service.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 
 class DenpendencyInjection {

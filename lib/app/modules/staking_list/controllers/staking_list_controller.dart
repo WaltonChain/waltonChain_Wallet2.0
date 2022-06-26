@@ -1,7 +1,7 @@
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
-import 'package:wtc_wallet_app/app/services/blockchain_service.dart';
-import 'package:wtc_wallet_app/app/services/wallet_service.dart';
+import 'package:wtc_wallet_app/app/data/services/blockchain_service.dart';
+import 'package:wtc_wallet_app/app/data/services/wallet_service.dart';
 
 class StakingListController extends GetxController {
   final orders = [].obs;

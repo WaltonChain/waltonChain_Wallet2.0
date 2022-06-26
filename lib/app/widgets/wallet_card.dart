@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:wtc_wallet_app/app/data/models/utils.dart';
 import 'package:wtc_wallet_app/app/data/models/wallet.dart';
-import 'package:wtc_wallet_app/app/services/wallet_service.dart';
+import 'package:wtc_wallet_app/app/data/services/wallet_service.dart';
 
 class WalletCard extends StatelessWidget {
   WalletCard({

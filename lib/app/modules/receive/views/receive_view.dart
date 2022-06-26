@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:wtc_wallet_app/app/widgets/back_bar.dart';
 import 'package:wtc_wallet_app/app/widgets/full_width_button.dart';
-import 'package:wtc_wallet_app/app/services/wallet_service.dart';
+import 'package:wtc_wallet_app/app/data/services/wallet_service.dart';
 
 import '../controllers/receive_controller.dart';
 

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:wtc_wallet_app/app/services/di.dart';
+import 'package:wtc_wallet_app/app/data/services/di.dart';
 
 import 'app/routes/app_pages.dart';
 

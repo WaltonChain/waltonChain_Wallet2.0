@@ -1,8 +1,8 @@
 import 'package:get/get.dart';
-// import 'package:wtc_wallet_app/app/data/constants/blockchain.dart';
+// import 'package:wtc_wallet_app/app/data/enums/blockchain.dart';
 import 'package:wtc_wallet_app/app/routes/app_pages.dart';
-import 'package:wtc_wallet_app/app/services/blockchain_service.dart';
-import 'package:wtc_wallet_app/app/services/wallet_service.dart';
+import 'package:wtc_wallet_app/app/data/services/blockchain_service.dart';
+import 'package:wtc_wallet_app/app/data/services/wallet_service.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 class AssetsController extends GetxController {

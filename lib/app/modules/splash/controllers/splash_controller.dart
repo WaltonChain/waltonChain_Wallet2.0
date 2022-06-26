@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:wtc_wallet_app/app/data/models/utils.dart';
 import 'package:wtc_wallet_app/app/routes/app_pages.dart';
-import 'package:wtc_wallet_app/app/services/wallet_service.dart';
+import 'package:wtc_wallet_app/app/data/services/wallet_service.dart';
 import 'package:ota_update/ota_update.dart';
 import 'package:http/http.dart' as http;
 import 'package:version/version.dart';

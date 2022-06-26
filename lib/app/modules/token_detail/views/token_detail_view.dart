@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:wtc_wallet_app/app/widgets/back_bar.dart';
 import 'package:wtc_wallet_app/app/data/models/utils.dart';
 import 'package:wtc_wallet_app/app/routes/app_pages.dart';
-import 'package:wtc_wallet_app/app/services/wallet_service.dart';
+import 'package:wtc_wallet_app/app/data/services/wallet_service.dart';
 
 import '../controllers/token_detail_controller.dart';
 

@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:wtc_wallet_app/app/services/hive_service.dart';
+import 'package:wtc_wallet_app/app/data/services/storage/services.dart';
 
 class TransactionRecordController extends GetxController {
   final records = [].obs;

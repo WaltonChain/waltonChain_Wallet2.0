@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:wtc_wallet_app/app/modules/assets/controllers/assets_controller.dart';
-import 'package:wtc_wallet_app/app/services/blockchain_service.dart';
-import 'package:wtc_wallet_app/app/services/hive_service.dart';
-import 'package:wtc_wallet_app/app/services/wallet_service.dart';
+import 'package:wtc_wallet_app/app/data/services/blockchain_service.dart';
+import 'package:wtc_wallet_app/app/data/services/storage/services.dart';
+import 'package:wtc_wallet_app/app/data/services/wallet_service.dart';
 
 class SwapController extends GetxController
     with GetSingleTickerProviderStateMixin {

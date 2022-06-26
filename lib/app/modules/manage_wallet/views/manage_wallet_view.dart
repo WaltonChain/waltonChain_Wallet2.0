@@ -5,7 +5,7 @@ import 'package:wtc_wallet_app/app/widgets/back_bar.dart';
 import 'package:wtc_wallet_app/app/widgets/wallet_card.dart';
 import 'package:wtc_wallet_app/app/widgets/wtc_icon.dart';
 import 'package:wtc_wallet_app/app/routes/app_pages.dart';
-import 'package:wtc_wallet_app/app/services/wallet_service.dart';
+import 'package:wtc_wallet_app/app/data/services/wallet_service.dart';
 
 import '../controllers/manage_wallet_controller.dart';
 

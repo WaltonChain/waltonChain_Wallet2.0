@@ -6,7 +6,7 @@ import 'package:wtc_wallet_app/app/data/models/wallet.dart';
 import 'package:wtc_wallet_app/app/modules/create_wallet/views/backup_wallet_view.dart';
 import 'package:wtc_wallet_app/app/modules/create_wallet/views/backup_words_view.dart';
 import 'package:wtc_wallet_app/app/routes/app_pages.dart';
-import 'package:wtc_wallet_app/app/services/wallet_service.dart';
+import 'package:wtc_wallet_app/app/data/services/wallet_service.dart';
 
 class CreateWalletController extends GetxController {
   GlobalKey<FormState> formKey = GlobalKey<FormState>();

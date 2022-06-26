@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 import 'package:wtc_wallet_app/app/data/models/utils.dart';
-import 'package:wtc_wallet_app/app/services/wallet_service.dart';
+import 'package:wtc_wallet_app/app/data/services/wallet_service.dart';
 
 class ReceiveController extends GetxController {
   final count = 0.obs;

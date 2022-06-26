@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:wtc_wallet_app/app/data/models/wallet.dart';
 import 'package:wtc_wallet_app/app/routes/app_pages.dart';
-import 'package:wtc_wallet_app/app/services/hive_service.dart';
+import 'package:wtc_wallet_app/app/data/services/storage/services.dart';
 
 class WalletService extends GetxService {
   final wallets = [].obs;

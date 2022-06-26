@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
-import 'package:wtc_wallet_app/app/data/constants/api.dart';
-import 'package:wtc_wallet_app/app/data/constants/blockchain.dart';
-import 'package:wtc_wallet_app/app/services/blockchain_service.dart';
-import 'package:wtc_wallet_app/app/services/wallet_service.dart';
+import 'package:wtc_wallet_app/app/data/enums/api.dart';
+import 'package:wtc_wallet_app/app/data/enums/blockchain.dart';
+import 'package:wtc_wallet_app/app/data/services/blockchain_service.dart';
+import 'package:wtc_wallet_app/app/data/services/wallet_service.dart';
 import 'package:http/http.dart' as http;
 
 class StakingController extends GetxController {

@@ -90,7 +90,7 @@ class BuyForm extends GetView<PlaceOrderController> {
                   style: TextStyle(fontSize: 16.0),
                 ),
                 Obx(() => Text(
-                      '1 WTC ≈ ${controller.buyPrice.toStringAsFixed(4)}',
+                      '1 WTC ≈ ${controller.buyPrice.toStringAsFixed(4)} WTA',
                       style: const TextStyle(fontSize: 16.0),
                     )),
               ],
@@ -146,7 +146,7 @@ class SellForm extends GetView<PlaceOrderController> {
               children: [
                 const Text('Price'),
                 Obx(() => Text(
-                      '1 WTC ≈ ${controller.sellPrice.toStringAsFixed(4)}',
+                      '1 WTC ≈ ${controller.sellPrice.toStringAsFixed(4)} WTA',
                       style: const TextStyle(fontSize: 16.0),
                     )),
               ],

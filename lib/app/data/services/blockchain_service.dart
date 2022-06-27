@@ -447,6 +447,7 @@ class BlockchainService extends GetxService {
       required int id,
       required BigInt amount}) async {
     EasyLoading.show(status: 'Buying');
+    // debugPrint('buy wallet:($wallet) id:($id) amount:($amount)');
     final response = await submitByContract(
         wallet: wallet,
         contract: otcContract,

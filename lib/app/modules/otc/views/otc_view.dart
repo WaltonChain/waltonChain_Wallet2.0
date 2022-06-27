@@ -178,7 +178,14 @@ class Order extends GetView<OtcController> {
               ),
               ElevatedButton(
                 onPressed: () {
-                  controller.clickDeal(order);
+                  Get.defaultDialog(
+                      title: 'Confirm',
+                      content: const Text('Are you sure to deal this order?'),
+                      onCancel: () {},
+                      onConfirm: () {
+                        Get.back();
+                        controller.clickDeal(order);
+                      });
                 },
                 child: Text(order.type == 'buy' ? 'sell' : 'buy'),
                 style: ElevatedButton.styleFrom(

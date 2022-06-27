@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:wtc_wallet_app/app/data/models/otc_order.dart';
+import 'package:wtc_wallet_app/app/data/models/utils.dart';
 import 'package:wtc_wallet_app/app/data/services/blockchain_service.dart';
 import 'package:wtc_wallet_app/app/data/services/wallet_service.dart';
 
@@ -52,7 +53,10 @@ class OtcController extends GetxController
     final w = ws.current.value!;
     if (order.type == 'sell') {
       await bs.buy(
-          wallet: w, id: order.id, amount: BigInt.from(order.wtaAmount));
+        wallet: w,
+        id: order.id,
+        amount: Utils.bigIntFromDouble(order.wtcAmount),
+      );
     } else if (order.type == 'buy') {
       await bs.sell(wallet: w, id: order.id);
     }

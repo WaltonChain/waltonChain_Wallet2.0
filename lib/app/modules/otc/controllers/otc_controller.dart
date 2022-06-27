@@ -25,13 +25,7 @@ class OtcController extends GetxController
   void onInit() async {
     super.onInit();
     tc = TabController(vsync: this, length: myTabs.length);
-    final bl = await bs.buyList();
-    buyIds.value = bl[0];
-    buyOrders.value = bl[1][0].where((i) => i[4].toInt() == 0).toList();
-    // print('OtcController buyOrders.value:($buyOrders)');
-    final sl = await bs.sellList();
-    sellIds.value = sl[0];
-    sellOrders.value = sl[1][0].where((i) => i[4].toInt() == 0).toList();
+    getOrders();
   }
 
   // @override
@@ -44,6 +38,16 @@ class OtcController extends GetxController
   //   super.onClose();
   // }
 
+  Future<void> getOrders() async {
+    final bl = await bs.buyList();
+    buyIds.value = bl[0];
+    buyOrders.value = bl[1][0].where((i) => i[4].toInt() == 0).toList();
+    // print('OtcController buyOrders.value:($buyOrders)');
+    final sl = await bs.sellList();
+    sellIds.value = sl[0];
+    sellOrders.value = sl[1][0].where((i) => i[4].toInt() == 0).toList();
+  }
+
   void clickDeal(OtcOrder order) async {
     final w = ws.current.value!;
     if (order.type == 'sell') {
@@ -52,5 +56,9 @@ class OtcController extends GetxController
     } else if (order.type == 'buy') {
       await bs.sell(wallet: w, id: order.id);
     }
+  }
+
+  Future<void> refreshOrders() async {
+    await getOrders();
   }
 }

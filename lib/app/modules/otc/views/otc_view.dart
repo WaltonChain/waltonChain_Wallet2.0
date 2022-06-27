@@ -73,20 +73,23 @@ class BuyOrders extends GetView<OtcController> {
 
   @override
   Widget build(BuildContext context) {
-    return Obx(() => ListView.builder(
-          itemBuilder: (context, index) {
-            final order = controller.sellOrders[index];
-            final obj = {
-              'type': 'sell',
-              'id': controller.sellIds[index].toInt(),
-              'address': order[0].toString(),
-              'wtaAmount': Utils.doubleFromWeiAmount(order[1]),
-              'wtcAmount': Utils.doubleFromWeiAmount(order[2]),
-            };
-            return Order(order: OtcOrder.fromJson(obj));
-          },
-          itemCount: controller.sellOrders.length,
-        ));
+    return RefreshIndicator(
+      onRefresh: controller.refreshOrders,
+      child: Obx(() => ListView.builder(
+            itemBuilder: (context, index) {
+              final order = controller.sellOrders[index];
+              final obj = {
+                'type': 'sell',
+                'id': controller.sellIds[index].toInt(),
+                'address': order[0].toString(),
+                'wtaAmount': Utils.doubleFromWeiAmount(order[1]),
+                'wtcAmount': Utils.doubleFromWeiAmount(order[2]),
+              };
+              return Order(order: OtcOrder.fromJson(obj));
+            },
+            itemCount: controller.sellOrders.length,
+          )),
+    );
   }
 }
 
@@ -95,20 +98,23 @@ class SellOrders extends GetView<OtcController> {
 
   @override
   Widget build(BuildContext context) {
-    return Obx(() => ListView.builder(
-          itemBuilder: (context, index) {
-            final order = controller.buyOrders[index];
-            final obj = {
-              'type': 'buy',
-              'id': controller.buyIds[index].toInt(),
-              'address': order[0].toString(),
-              'wtaAmount': Utils.doubleFromWeiAmount(order[1]),
-              'wtcAmount': Utils.doubleFromWeiAmount(order[2]),
-            };
-            return Order(order: OtcOrder.fromJson(obj));
-          },
-          itemCount: controller.buyOrders.length,
-        ));
+    return RefreshIndicator(
+      onRefresh: controller.refreshOrders,
+      child: Obx(() => ListView.builder(
+            itemBuilder: (context, index) {
+              final order = controller.buyOrders[index];
+              final obj = {
+                'type': 'buy',
+                'id': controller.buyIds[index].toInt(),
+                'address': order[0].toString(),
+                'wtaAmount': Utils.doubleFromWeiAmount(order[1]),
+                'wtcAmount': Utils.doubleFromWeiAmount(order[2]),
+              };
+              return Order(order: OtcOrder.fromJson(obj));
+            },
+            itemCount: controller.buyOrders.length,
+          )),
+    );
   }
 }
 

@@ -105,14 +105,15 @@ class PlaceOrderController extends GetxController
           content: const Text('Need Approve'),
           onConfirm: () async {
             await bs.approveSell(wallet: wallet, amount: amount);
-            await bs.createSellOrder(
-              wallet: wallet,
-              wtaAmount: double.parse(sellWtaAmount.text),
-              wtcAmount: double.parse(sellWtcPrice.text),
-            );
+            // await bs.createSellOrder(
+            //   wallet: wallet,
+            //   wtaAmount: double.parse(sellWtaAmount.text),
+            //   wtcAmount: double.parse(sellWtcPrice.text),
+            // );
+            Get.back();
           },
           onCancel: () {
-            Get.back();
+            // Get.back();
           },
         );
       } else {

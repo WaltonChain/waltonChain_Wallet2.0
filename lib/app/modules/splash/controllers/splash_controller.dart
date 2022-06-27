@@ -5,6 +5,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:wtc_wallet_app/app/data/models/utils.dart';
+// import 'package:wtc_wallet_app/app/data/services/storage/repository.dart';
 import 'package:wtc_wallet_app/app/routes/app_pages.dart';
 import 'package:wtc_wallet_app/app/data/services/wallet_service.dart';
 import 'package:ota_update/ota_update.dart';
@@ -12,6 +13,9 @@ import 'package:http/http.dart' as http;
 import 'package:version/version.dart';
 
 class SplashController extends GetxController {
+  // WalletRepository walletRepository;
+  // SplashController({required this.walletRepository});
+
   final wc = Get.find<WalletService>();
 
   // @override
@@ -26,8 +30,10 @@ class SplashController extends GetxController {
     // toOtherPage();
   }
 
-  @override
-  void onClose() {}
+  // @override
+  // void onClose() {
+  //   super.onClose();
+  // }
 
   Future<void> checkVersion() async {
     PackageInfo packageInfo = await PackageInfo.fromPlatform();

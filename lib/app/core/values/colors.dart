@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+const splashBackground = Color.fromRGBO(248, 244, 244, 1);
+
 const purple = Color(0xFF756BFC);
 const pink = Color(0xFFF1A39A);
 const deepPink = Color(0xFFFA63C6);

@@ -217,6 +217,8 @@ class BlockchainService extends GetxService {
         functionName: 'approve',
         args: [wtcSwapEa, maxApproveWei]);
     EasyLoading.showSuccess('Approved');
+    // final receipt = await eth.getTransactionReceipt(response);
+    // debugPrint('approveSell response:($response) receipt:($receipt)');
     return response;
   }
 
@@ -413,7 +415,7 @@ class BlockchainService extends GetxService {
   }
 
   Future buyList() async {
-    // final ea = EthereumAddress.fromHex(wallet.address ?? '');
+    EasyLoading.show(status: 'Getting buy orders');
     final r1 = await queryByContract(
       contract: otcContract,
       functionName: 'getBuyListId',
@@ -422,12 +424,12 @@ class BlockchainService extends GetxService {
     // print('buyList ids:($ids)');
     final r2 = await queryByContract(
         contract: otcContract, functionName: 'getList', args: [ids]);
-    // print('buyList r2:($r2)');
+    EasyLoading.showSuccess('Success');
     return [ids, r2];
   }
 
   Future sellList() async {
-    // final ea = EthereumAddress.fromHex(wallet.address ?? '');
+    EasyLoading.show(status: 'Getting sell orders');
     final r1 = await queryByContract(
       contract: otcContract,
       functionName: 'getSellListId',
@@ -436,7 +438,7 @@ class BlockchainService extends GetxService {
     // print('sellList ids:($ids)');
     final r2 = await queryByContract(
         contract: otcContract, functionName: 'getList', args: [ids]);
-    // print('sellList r2:($r2)');
+    EasyLoading.showSuccess('Success');
     return [ids, r2];
   }
 

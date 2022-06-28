@@ -13,7 +13,7 @@ class OtcController extends GetxController
   ];
   late TabController tc;
 
-  dynamic buyIds = [].obs;
+  var buyIds = [].obs;
   dynamic buyOrders = [].obs;
 
   dynamic sellIds = [].obs;
@@ -40,13 +40,36 @@ class OtcController extends GetxController
   // }
 
   Future<void> getOrders() async {
+    // buy orders
     final bl = await bs.buyList();
-    buyIds.value = bl[0];
+    final buyStatus = bl[1][0].map((i) => i[4].toInt() == 0).toList();
+    debugPrint('bl[0] type:(${bl[0].runtimeType}) bl[0]:(${bl[0]}) ');
+    buyIds.value = (bl[0] as List)
+        .asMap()
+        .entries
+        .where((entry) {
+          final i = entry.key;
+          return buyStatus[i];
+        })
+        .map((i) => i.value)
+        .toList();
     buyOrders.value = bl[1][0].where((i) => i[4].toInt() == 0).toList();
-    // print('OtcController buyOrders.value:($buyOrders)');
+    // debugPrint('getOrders buyIds:($buyIds) buyOrders:($buyOrders)');
+    // sell orders
     final sl = await bs.sellList();
-    sellIds.value = sl[0];
+    final sellStatus = sl[1][0].map((i) => i[4].toInt() == 0).toList();
+
+    sellIds.value = (sl[0] as List)
+        .asMap()
+        .entries
+        .where((entry) {
+          final i = entry.key;
+          return sellStatus[i];
+        })
+        .map((i) => i.value)
+        .toList();
     sellOrders.value = sl[1][0].where((i) => i[4].toInt() == 0).toList();
+    debugPrint('getOrders sellIds:($sellIds) sellOrders:($sellOrders)');
   }
 
   void clickDeal(OtcOrder order) async {

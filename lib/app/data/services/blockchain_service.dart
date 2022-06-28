@@ -425,6 +425,7 @@ class BlockchainService extends GetxService {
     final r2 = await queryByContract(
         contract: otcContract, functionName: 'getList', args: [ids]);
     EasyLoading.showSuccess('Success');
+    debugPrint('buyList ids:($ids) r2:($r2)');
     return [ids, r2];
   }
 
@@ -439,6 +440,7 @@ class BlockchainService extends GetxService {
     final r2 = await queryByContract(
         contract: otcContract, functionName: 'getList', args: [ids]);
     EasyLoading.showSuccess('Success');
+    debugPrint('sellList ids:($ids) r2:($r2)');
     return [ids, r2];
   }
 
@@ -447,13 +449,15 @@ class BlockchainService extends GetxService {
       required int id,
       required BigInt amount}) async {
     EasyLoading.show(status: 'Buying');
-    // debugPrint('buy wallet:($wallet) id:($id) amount:($amount)');
+    debugPrint('buy wallet:($wallet) id:($id) amount:($amount)');
     final response = await submitByContract(
         wallet: wallet,
         contract: otcContract,
         functionName: 'buy',
         args: [BigInt.from(id)],
         weiAmount: amount);
+    debugPrint('buy response:($response)');
+
     EasyLoading.showSuccess('Finish');
     return response;
   }
@@ -463,12 +467,15 @@ class BlockchainService extends GetxService {
     required int id,
   }) async {
     EasyLoading.show(status: 'Selling');
+    debugPrint('sell wallet:($wallet) id:($id)');
+
     final response = await submitByContract(
       wallet: wallet,
       contract: otcContract,
       functionName: 'sell',
       args: [BigInt.from(id)],
     );
+    debugPrint('sell response:($response)');
     EasyLoading.showSuccess('Finish');
     return response;
   }

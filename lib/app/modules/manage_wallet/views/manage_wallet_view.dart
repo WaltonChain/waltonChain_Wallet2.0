@@ -34,7 +34,7 @@ class ManageWalletView extends GetView<ManageWalletController> {
                 Expanded(
                   flex: 2,
                   child: Container(
-                    color: const Color.fromRGBO(248, 250, 251, 1),
+                    color: Colors.white,
                     child: ListView(
                       children: [
                         const SizedBox(height: 12.0),

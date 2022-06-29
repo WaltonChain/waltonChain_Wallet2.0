@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:wtc_wallet_app/app/core/values/colors.dart';
 import 'package:wtc_wallet_app/app/data/models/otc_order.dart';
 import 'package:wtc_wallet_app/app/data/models/utils.dart';
 import 'package:wtc_wallet_app/app/routes/app_pages.dart';
@@ -189,7 +190,7 @@ class Order extends GetView<OtcController> {
                 },
                 child: Text(order.type == 'buy' ? 'sell' : 'buy'),
                 style: ElevatedButton.styleFrom(
-                  primary: const Color.fromRGBO(130, 0, 255, 1),
+                  primary: purple,
                   padding: const EdgeInsets.symmetric(
                       horizontal: 32.0, vertical: 4.0),
                   shape: RoundedRectangleBorder(

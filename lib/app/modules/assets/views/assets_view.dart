@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:wtc_wallet_app/app/core/values/colors.dart';
 import 'package:wtc_wallet_app/app/widgets/account_sheet.dart';
 import 'package:wtc_wallet_app/app/widgets/icon_scan.dart';
 import 'package:wtc_wallet_app/app/widgets/wallet_sheet.dart';
@@ -48,7 +49,7 @@ class TopBar extends GetView<AssetsController> {
       decoration: const BoxDecoration(
         border: Border(
           bottom: BorderSide(
-            color: Color.fromRGBO(0, 0, 0, 0.1),
+            color: Colors.black12,
             width: 2.0,
           ),
         ),
@@ -212,7 +213,7 @@ class Buttons extends GetView<AssetsController> {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           MyButton(
-            bgColor: const Color.fromRGBO(255, 188, 235, 1),
+            bgColor: pink,
             icon: Icons.arrow_upward,
             label: 'Send',
             onPressed: () {
@@ -220,7 +221,7 @@ class Buttons extends GetView<AssetsController> {
             },
           ),
           MyButton(
-            bgColor: const Color.fromRGBO(157, 255, 226, 1),
+            bgColor: green,
             icon: Icons.arrow_downward,
             label: 'Receive',
             onPressed: () {

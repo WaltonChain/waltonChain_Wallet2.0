@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:wtc_wallet_app/app/core/values/colors.dart';
 import 'package:wtc_wallet_app/app/widgets/wallet_card.dart';
 import 'package:wtc_wallet_app/app/routes/app_pages.dart';
 import 'package:wtc_wallet_app/app/data/services/wallet_service.dart';
@@ -38,7 +39,7 @@ class WalletSheet extends StatelessWidget {
                   child: const Text(
                     'Manage',
                     style: TextStyle(
-                      color: Color.fromRGBO(130, 0, 255, 1),
+                      color: purple,
                     ),
                   )),
             ],

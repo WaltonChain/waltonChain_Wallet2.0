@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:wtc_wallet_app/app/core/values/colors.dart';
 import 'package:wtc_wallet_app/app/data/models/utils.dart';
 import 'package:wtc_wallet_app/app/data/models/wallet.dart';
 import 'package:wtc_wallet_app/app/data/services/wallet_service.dart';
@@ -31,7 +32,7 @@ class WalletCard extends StatelessWidget {
         margin: const EdgeInsets.all(8.0),
         padding: const EdgeInsets.all(8.0),
         decoration: BoxDecoration(
-          color: const Color.fromRGBO(105, 0, 217, 1),
+          color: purple,
           borderRadius: BorderRadius.circular(8.0),
         ),
         child: Row(
@@ -53,8 +54,7 @@ class WalletCard extends StatelessWidget {
                       Utils.ellipsisedHash(wallet.address ??
                           '0x0000000000000000000000000000000000000000'),
                       style: const TextStyle(
-                          fontSize: 12.0,
-                          color: Color.fromRGBO(255, 255, 255, 0.65)),
+                          fontSize: 12.0, color: Colors.white60),
                     ),
                     const SizedBox(
                       width: 12.0,

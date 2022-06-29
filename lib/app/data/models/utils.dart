@@ -11,6 +11,7 @@ import "package:hex/hex.dart";
 import 'package:convert/convert.dart';
 import 'package:web3dart/crypto.dart';
 import 'package:web3dart/web3dart.dart';
+import 'package:wtc_wallet_app/app/core/values/colors.dart';
 
 class Utils {
   static String hash(String text) {
@@ -106,8 +107,7 @@ class Utils {
       titlePadding: const EdgeInsets.symmetric(vertical: 18.0),
       contentPadding: EdgeInsets.zero,
       content: content,
-      backgroundColor:
-          backgroundColor ?? const Color.fromRGBO(248, 250, 251, 1),
+      backgroundColor: backgroundColor ?? Colors.white,
       cancel: OutlinedButton(
           onPressed: () {
             if (onCancel == null) {
@@ -118,8 +118,7 @@ class Utils {
           },
           child: const Padding(
             padding: EdgeInsets.symmetric(horizontal: 20.0),
-            child: Text('Cancel',
-                style: TextStyle(color: Color.fromRGBO(0, 0, 0, 0.2))),
+            child: Text('Cancel', style: TextStyle(color: Colors.black26)),
           )),
       confirm: OutlinedButton(
         onPressed: onConfirm,
@@ -127,7 +126,7 @@ class Utils {
           padding: EdgeInsets.symmetric(horizontal: 20.0),
           child: Text(
             'Confirm',
-            style: TextStyle(color: Color.fromRGBO(130, 0, 255, 1)),
+            style: TextStyle(color: purple),
           ),
         ),
       ),

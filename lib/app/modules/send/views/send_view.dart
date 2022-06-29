@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:wtc_wallet_app/app/core/values/colors.dart';
 import 'package:wtc_wallet_app/app/widgets/back_bar.dart';
 import 'package:wtc_wallet_app/app/widgets/input_number.dart';
 import 'package:wtc_wallet_app/app/widgets/input_text.dart';
@@ -69,7 +70,7 @@ class SendView extends GetView<SendController> {
                           style: const TextStyle(fontSize: 16.0),
                         )),
                     style: ElevatedButton.styleFrom(
-                        primary: const Color.fromRGBO(130, 0, 255, 1),
+                        primary: purple,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(50),
                         ),
@@ -90,8 +91,7 @@ class SendView extends GetView<SendController> {
                     child: const Text('Next'),
                   ),
                   style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all(
-                          const Color.fromRGBO(130, 0, 255, 1))),
+                      backgroundColor: MaterialStateProperty.all(purple)),
                 ),
               ],
             ),

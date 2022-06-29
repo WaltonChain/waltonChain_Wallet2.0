@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wtc_wallet_app/app/core/values/colors.dart';
 
 class FullWidthButton extends StatelessWidget {
   const FullWidthButton({
@@ -6,7 +7,7 @@ class FullWidthButton extends StatelessWidget {
     this.height = 40,
     required this.onPressed,
     required this.text,
-    this.bgColor = const Color.fromRGBO(130, 0, 255, 1),
+    this.bgColor = purple,
   }) : super(key: key);
 
   final double height;

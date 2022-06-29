@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:wtc_wallet_app/app/core/values/colors.dart';
 import 'package:wtc_wallet_app/app/widgets/back_bar.dart';
 import 'package:wtc_wallet_app/app/widgets/full_width_button.dart';
 import 'package:wtc_wallet_app/app/widgets/input_number.dart';
@@ -100,7 +101,7 @@ class StakingView extends GetView<StakingController> {
                           child: Obx(() => Container(
                                 decoration: BoxDecoration(
                                   color: index == controller.index.value
-                                      ? const Color.fromRGBO(130, 0, 255, 1)
+                                      ? purple
                                       : Colors.white,
                                   borderRadius: BorderRadius.circular(99),
                                 ),

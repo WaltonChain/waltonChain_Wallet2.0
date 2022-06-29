@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:wtc_wallet_app/app/core/values/colors.dart';
 import 'package:wtc_wallet_app/app/widgets/back_bar.dart';
 import 'package:wtc_wallet_app/app/modules/staking/controllers/staking_controller.dart';
 
@@ -65,16 +66,14 @@ class OrderCard extends StatelessWidget {
                 },
                 child: const Text('Withdraw', style: TextStyle(fontSize: 12.0)),
                 style: ElevatedButton.styleFrom(
-                    primary: disable
-                        ? Colors.grey
-                        : const Color.fromRGBO(130, 0, 255, 1)),
+                    primary: disable ? Colors.grey : purple),
               ),
             ],
           ),
           const SizedBox(height: 8.0),
           const Divider(
             thickness: 4.0,
-            color: Color.fromRGBO(130, 0, 255, 1),
+            color: purple,
           ),
           const SizedBox(height: 8.0),
           Row(

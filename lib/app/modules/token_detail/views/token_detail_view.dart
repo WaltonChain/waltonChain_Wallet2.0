@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:wtc_wallet_app/app/core/values/colors.dart';
 import 'package:wtc_wallet_app/app/widgets/back_bar.dart';
 import 'package:wtc_wallet_app/app/data/models/utils.dart';
 import 'package:wtc_wallet_app/app/routes/app_pages.dart';
@@ -192,8 +193,7 @@ class TokenDetailView extends GetView<TokenDetailController> {
                       child: const Text('Transfer'),
                     ),
                     style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all(
-                            const Color.fromRGBO(87, 212, 170, 1))),
+                        backgroundColor: MaterialStateProperty.all(green)),
                   ),
                   ElevatedButton(
                     onPressed: () {
@@ -206,8 +206,7 @@ class TokenDetailView extends GetView<TokenDetailController> {
                       child: const Text('Receive'),
                     ),
                     style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all(
-                            const Color.fromRGBO(130, 0, 255, 1))),
+                        backgroundColor: MaterialStateProperty.all(purple)),
                   ),
                 ],
               ),

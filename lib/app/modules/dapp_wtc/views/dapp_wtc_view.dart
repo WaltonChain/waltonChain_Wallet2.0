@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:wtc_wallet_app/app/core/values/colors.dart';
 import 'package:wtc_wallet_app/app/widgets/back_bar.dart';
 import 'package:wtc_wallet_app/app/widgets/full_width_button.dart';
 import 'package:wtc_wallet_app/app/widgets/input_number.dart';
@@ -106,8 +107,7 @@ class TopButton extends GetView<SwapController> {
     return ElevatedButton(
       style: ButtonStyle(
         minimumSize: MaterialStateProperty.all(const Size.fromHeight(40)),
-        backgroundColor:
-            MaterialStateProperty.all(const Color.fromRGBO(130, 0, 255, 1)),
+        backgroundColor: MaterialStateProperty.all(purple),
       ),
       onPressed: () {
         controller.clickSwap();
@@ -125,8 +125,7 @@ class BottomButton extends GetView<SwapController> {
     return ElevatedButton(
       style: ButtonStyle(
         minimumSize: MaterialStateProperty.all(const Size.fromHeight(40)),
-        backgroundColor:
-            MaterialStateProperty.all(const Color.fromRGBO(130, 0, 255, 1)),
+        backgroundColor: MaterialStateProperty.all(purple),
       ),
       onPressed: () {
         // controller.swap();

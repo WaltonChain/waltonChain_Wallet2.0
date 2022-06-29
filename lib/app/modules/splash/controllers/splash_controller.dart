@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -50,7 +51,7 @@ class SplashController extends GetxController {
       Get.snackbar('Error', 'Failed to get version info');
     }
 
-    if (needUpdate) {
+    if (needUpdate && Platform.isAndroid) {
       Utils.customDialog(
           title: 'Found New Version',
           content: const Text('Please update to the latest version'),

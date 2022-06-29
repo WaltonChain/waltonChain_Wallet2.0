@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:wtc_wallet_app/app/core/utils/extensions.dart';
 import 'package:wtc_wallet_app/app/core/values/colors.dart';
 import 'package:wtc_wallet_app/app/data/models/otc_order.dart';
 import 'package:wtc_wallet_app/app/data/models/utils.dart';
@@ -14,7 +15,7 @@ class OtcView extends GetView<OtcController> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+        padding: EdgeInsets.symmetric(horizontal: 4.0.wp),
         child: Column(
           children: [
             Row(
@@ -24,23 +25,23 @@ class OtcView extends GetView<OtcController> {
                   onPressed: () {
                     Get.toNamed(Routes.PLACE_ORDER);
                   },
-                  icon: const Icon(
+                  icon: Icon(
                     Icons.border_color,
-                    size: 16.0,
+                    size: 16.0.sp,
                   ),
                   label: const Text('Place Order'),
                 ),
-                const Text(
+                Text(
                   'OTC',
-                  style: TextStyle(fontSize: 24.0),
+                  style: TextStyle(fontSize: 20.0.sp),
                 ),
                 ElevatedButton.icon(
                     onPressed: () {
                       Get.toNamed(Routes.PLACE_RECORD);
                     },
-                    icon: const Icon(
+                    icon: Icon(
                       Icons.format_list_bulleted,
-                      size: 16.0,
+                      size: 16.0.sp,
                     ),
                     label: const Text('My Orders'))
               ],
@@ -50,7 +51,7 @@ class OtcView extends GetView<OtcController> {
               tabs: controller.myTabs,
               labelColor: Colors.black,
               indicatorSize: TabBarIndicatorSize.label,
-              labelStyle: const TextStyle(fontSize: 24.0),
+              labelStyle: TextStyle(fontSize: 16.0.sp),
             ),
             const Divider(),
             Expanded(
@@ -130,7 +131,7 @@ class Order extends GetView<OtcController> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 16.0),
+      padding: EdgeInsets.symmetric(vertical: 4.0.wp),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -140,12 +141,12 @@ class Order extends GetView<OtcController> {
               Flexible(
                 child: Text(
                   Utils.ellipsisedHash(order.address),
-                  style: const TextStyle(fontSize: 16.0),
+                  style: TextStyle(fontSize: 12.0.sp),
                 ),
               ),
               Text(
                 '1 WTA ≈ ${(order.wtcAmount / order.wtaAmount).toStringAsFixed(4)} WTC',
-                style: const TextStyle(fontSize: 16.0),
+                style: TextStyle(fontSize: 12.0.sp),
               )
             ],
           ),
@@ -155,18 +156,18 @@ class Order extends GetView<OtcController> {
             children: [
               Text(
                 'Amount ${order.wtcAmount} WTC',
-                style: const TextStyle(fontSize: 16.0),
+                style: TextStyle(fontSize: 12.0.sp),
               ),
-              const Text(
+              Text(
                 'Price',
-                style: TextStyle(fontSize: 16.0),
+                style: TextStyle(fontSize: 12.0.sp),
               )
             ],
           ),
           const SizedBox(height: 8.0),
           Text(
             'Limit ${order.wtaAmount} WTA',
-            style: const TextStyle(fontSize: 16.0),
+            style: TextStyle(fontSize: 12.0.sp),
           ),
           // const SizedBox(height: 8.0),
           Row(
@@ -175,24 +176,25 @@ class Order extends GetView<OtcController> {
             children: [
               Text(
                 'Guaranteed Amount ${order.wtaAmount} WTA',
-                style: const TextStyle(fontSize: 14.0),
+                style: TextStyle(fontSize: 12.0.sp),
               ),
               ElevatedButton(
                 onPressed: () {
                   Get.defaultDialog(
-                      title: 'Confirm',
-                      content: const Text('Are you sure to deal this order?'),
-                      onCancel: () {},
-                      onConfirm: () {
-                        Get.back();
-                        controller.clickDeal(order);
-                      });
+                    title: 'Confirm',
+                    content: const Text('Are you sure to deal this order?'),
+                    onCancel: () {},
+                    onConfirm: () {
+                      Get.back();
+                      controller.clickDeal(order);
+                    },
+                  );
                 },
                 child: Text(order.type == 'buy' ? 'sell' : 'buy'),
                 style: ElevatedButton.styleFrom(
                   primary: purple,
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 32.0, vertical: 4.0),
+                  padding: EdgeInsets.symmetric(
+                      horizontal: 8.0.wp, vertical: 2.0.wp),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30),
                   ),

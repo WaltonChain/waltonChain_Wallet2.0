@@ -29,7 +29,7 @@ class TransactionDetailCard extends GetView<TransactionDetailController> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text('${controller.amount} WTC'),
+            Text('${controller.amount} ${controller.token}'),
             const Text('Successful '),
           ],
         ),

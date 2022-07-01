@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
+// import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:wtc_wallet_app/app/data/models/transaction.dart';
@@ -62,33 +62,40 @@ class SendController extends GetxController {
     // final pk = hs.getPrivateKey(ws.current.value?.address ?? '');
     if (valid == true) {
       final amount = double.parse(balanceInput.text);
-      EasyLoading.show(status: 'sending...');
+      dynamic hash;
       if (token.value == 'wtc') {
-        final hash = await bs.transferWTC(
+        hash = await bs.transferWTC(
             wallet: ws.current.value!, to: addressInput.text, amount: amount);
         final time = DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now());
+        await Future.delayed(const Duration(minutes: 10));
+        final r = await bs.getReceipt(hash);
         final transaction = Transaction(
-            from: ws.current.value?.address ?? '',
-            to: addressInput.text,
-            hash: hash,
-            time: time,
-            amount: amount,
-            token: 'wtc');
+          from: ws.current.value?.address ?? '',
+          to: addressInput.text,
+          hash: hash,
+          time: time,
+          amount: amount,
+          token: 'wtc',
+          status: r == null ? false : r.status,
+        );
         hs.saveTransaction(transaction);
       } else if (token.value == 'wta') {
-        final hash = await bs.transferWTA(
+        hash = await bs.transferWTA(
             wallet: ws.current.value!, to: addressInput.text, amount: amount);
         final time = DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now());
+        await Future.delayed(const Duration(minutes: 10));
+        final r = await bs.getReceipt(hash);
         final transaction = Transaction(
             from: ws.current.value?.address ?? '',
             to: addressInput.text,
             hash: hash,
             time: time,
             amount: amount,
-            token: 'wta');
+            token: 'wta',
+            status: r == null ? false : r.status);
         hs.saveTransaction(transaction);
       }
-      EasyLoading.dismiss();
+
       Get.back();
     } else {
       Get.snackbar('validate false', 'please check your input');

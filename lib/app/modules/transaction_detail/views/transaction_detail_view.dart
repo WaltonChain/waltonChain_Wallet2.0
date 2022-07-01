@@ -23,14 +23,18 @@ class TransactionDetailCard extends GetView<TransactionDetailController> {
       ),
       child: Column(children: [
         Image.asset(
-          'assets/images/successful.png',
+          controller.status == true || controller.status == null
+              ? 'assets/images/successful.png'
+              : 'assets/images/fail.png',
           width: 110,
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text('${controller.amount} ${controller.token}'),
-            const Text('Successful '),
+            Text(controller.status == true || controller.status == null
+                ? 'Successful'
+                : 'Fail'),
           ],
         ),
         const SizedBox(height: 10.0),

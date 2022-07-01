@@ -8,6 +8,7 @@ class TransactionDetailController extends GetxController {
   final hash = Get.arguments['hash'];
   final time = Get.arguments['time'];
   final token = Get.arguments['token'];
+  final status = Get.arguments['status'];
 
   // @override
   // void onInit() {

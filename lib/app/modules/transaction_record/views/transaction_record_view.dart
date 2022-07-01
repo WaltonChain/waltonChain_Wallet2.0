@@ -16,6 +16,7 @@ class Record extends StatelessWidget {
     required this.to,
     required this.hash,
     required this.time,
+    this.status,
   }) : super(key: key);
 
   final double amount;
@@ -24,6 +25,7 @@ class Record extends StatelessWidget {
   final String to;
   final String hash;
   final String time;
+  final bool? status;
 
   @override
   Widget build(BuildContext context) {
@@ -38,6 +40,7 @@ class Record extends StatelessWidget {
             'to': to,
             'hash': hash,
             'time': time,
+            'status': status,
           });
         },
         behavior: HitTestBehavior.opaque,
@@ -96,6 +99,7 @@ class TransactionRecordView extends GetView<TransactionRecordController> {
                   to: record.to,
                   hash: record.hash,
                   time: record.time,
+                  status: record.status,
                 );
               },
             ),

@@ -18,6 +18,7 @@ class TokenDetailRow extends StatelessWidget {
     required this.time,
     required this.amount,
     required this.token,
+    required this.status,
   }) : super(key: key);
 
   final String from;
@@ -26,6 +27,7 @@ class TokenDetailRow extends StatelessWidget {
   final String time;
   final double amount;
   final String token;
+  final bool? status;
 
   final ws = Get.find<WalletService>();
 
@@ -42,6 +44,7 @@ class TokenDetailRow extends StatelessWidget {
             'time': time,
             'amount': amount,
             'token': token,
+            'status': status,
           },
         ),
       },
@@ -175,10 +178,11 @@ class TokenDetailView extends GetView<TokenDetailController> {
                         time: controller.transactions[index].time,
                         amount: controller.transactions[index].amount,
                         token: controller.transactions[index].token,
+                        status: controller.transactions[index].status,
                       );
                     })),
               ),
-              const Expanded(child: SizedBox()),
+              // const Expanded(child: SizedBox()),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [

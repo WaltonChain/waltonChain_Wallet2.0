@@ -128,6 +128,7 @@ class BlockchainService extends GetxService {
       required String to,
       required double amount}) async {
     final weiAmount = Utils.bigIntFromDouble(amount);
+    EasyLoading.show(status: 'transfering');
     final response = await eth.sendTransaction(
       wallet.getCredentials(),
       Transaction(
@@ -138,8 +139,8 @@ class BlockchainService extends GetxService {
       ),
       chainId: chainId,
     );
-    // print('response:($response)');
     await eth.dispose();
+    EasyLoading.dismiss();
     return response;
   }
 
@@ -149,12 +150,13 @@ class BlockchainService extends GetxService {
       required double amount}) async {
     final ea = EthereumAddress.fromHex(to);
     final weiAmount = Utils.bigIntFromDouble(amount);
-
+    EasyLoading.show(status: 'transfering');
     final response = await submitByContract(
         wallet: wallet,
         contract: tokenContract,
         functionName: 'transfer',
         args: [ea, weiAmount]);
+    EasyLoading.dismiss();
     return response;
   }
 
@@ -478,5 +480,11 @@ class BlockchainService extends GetxService {
     debugPrint('sell response:($response)');
     EasyLoading.showSuccess('Finish');
     return response;
+  }
+
+  getReceipt(hash) async {
+    final r = await eth.getTransactionReceipt(hash);
+    debugPrint('getReceipt r:($r)');
+    return r;
   }
 }

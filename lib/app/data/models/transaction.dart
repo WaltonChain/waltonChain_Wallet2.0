@@ -18,6 +18,8 @@ class Transaction {
   String token;
   @HiveField(7)
   String? id;
+  @HiveField(8)
+  bool? status;
 
   Transaction({
     required this.from,
@@ -26,6 +28,8 @@ class Transaction {
     required this.time,
     required this.amount,
     required this.token,
+    this.id,
+    this.status = true,
   });
 
   Transaction.fromJson(Map json)
@@ -35,7 +39,8 @@ class Transaction {
         time = json['time'],
         amount = json['amount'],
         token = json['token'],
-        id = json['id'];
+        id = json['id'],
+        status = json['status'];
 
   toJson() {
     return {
@@ -46,6 +51,7 @@ class Transaction {
       'amount': amount,
       'token': token,
       'id': id,
+      'status': status,
     };
   }
 
@@ -58,7 +64,8 @@ class Transaction {
       time: $time
       amount: $amount
       token: $token
-      id: $id}
+      id: $id
+      status: $status}
     ''';
   }
 }

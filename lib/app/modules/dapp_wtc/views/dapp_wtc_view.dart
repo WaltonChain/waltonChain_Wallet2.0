@@ -397,7 +397,7 @@ class DappWtcView extends GetView<SwapController> {
                       child: TabBarView(
                         controller: controller.tc,
                         children: const [
-                          SwapForm(),
+                          // SwapForm(),
                           // StakingForm(),
                           StakingEntry(),
                         ],

@@ -8,7 +8,7 @@ import 'package:wtc_wallet_app/app/data/services/wallet_service.dart';
 class SwapController extends GetxController
     with GetSingleTickerProviderStateMixin {
   final List<Tab> myTabs = <Tab>[
-    const Tab(text: 'Swap'),
+    // const Tab(text: 'Swap'),
     const Tab(text: 'Staking'),
   ];
   late TabController tc;

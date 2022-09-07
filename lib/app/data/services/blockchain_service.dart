@@ -41,7 +41,8 @@ class BlockchainService extends GetxService {
       loadContract(
         name: 'otcContract',
         filePath: 'assets/files/otcAbi.json',
-        address: otcAddressTest,
+        // address: otcAddressTest,
+        address: otcAddress,
       ),
     ]);
     tokenContract = futures[0];
@@ -177,7 +178,8 @@ class BlockchainService extends GetxService {
 
   Future<bool> sellNeedApprove(my_wallet.Wallet wallet, double amount) async {
     final ea = EthereumAddress.fromHex(wallet.address ?? '');
-    final wtcSwapEa = EthereumAddress.fromHex(otcAddressTest);
+    // final wtcSwapEa = EthereumAddress.fromHex(otcAddressTest);
+    final wtcSwapEa = EthereumAddress.fromHex(otcAddress);
     EasyLoading.show(status: 'Checking approve');
     final response = await queryByContract(
         contract: tokenContract,
@@ -208,7 +210,8 @@ class BlockchainService extends GetxService {
 
   Future approveSell(
       {required my_wallet.Wallet wallet, required double amount}) async {
-    final wtcSwapEa = EthereumAddress.fromHex(otcAddressTest);
+    // final wtcSwapEa = EthereumAddress.fromHex(otcAddressTest);
+    final wtcSwapEa = EthereumAddress.fromHex(otcAddress);
     final maxApproveWei =
         EtherAmount.fromUnitAndValue(EtherUnit.ether, 999999999999999999)
             .getInWei;

@@ -26,28 +26,34 @@ class TokenDetailController extends GetxController {
   void onClose() {}
 
   showTotal() {
-    transactions.value = hs
+    final r = hs
         .getTransactions()
         .where((tx) =>
             tx?.token == token &&
             (tx?.from == ws.current.value?.address ||
                 tx?.to == ws.current.value?.address))
         .toList();
+    r.sort((a, b) => DateTime.parse(b.time).compareTo(DateTime.parse(a.time)));
+    transactions.value = r;
   }
 
   showIn() {
-    transactions.value = hs
+    final r = hs
         .getTransactions()
         .where(
             (tx) => tx?.token == token && (tx?.to == ws.current.value?.address))
         .toList();
+    r.sort((a, b) => DateTime.parse(b.time).compareTo(DateTime.parse(a.time)));
+    transactions.value = r;
   }
 
   showOut() {
-    transactions.value = hs
+    final r = hs
         .getTransactions()
         .where((tx) =>
             tx?.token == token && (tx?.from == ws.current.value?.address))
         .toList();
+    r.sort((a, b) => DateTime.parse(b.time).compareTo(DateTime.parse(a.time)));
+    transactions.value = r;
   }
 }

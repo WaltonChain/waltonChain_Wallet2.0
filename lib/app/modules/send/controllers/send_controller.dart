@@ -67,14 +67,13 @@ class SendController extends GetxController {
       if (token.value == 'wtc') {
         hash = await bs.transferWTC(
             wallet: ws.current.value!, to: addressInput.text, amount: amount);
-        final time = DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now());
         await Future.delayed(const Duration(minutes: 10));
         final r = await bs.getReceipt(hash);
         final transaction = Transaction(
           from: ws.current.value?.address ?? '',
           to: addressInput.text,
           hash: hash,
-          time: time,
+          time: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
           amount: amount,
           token: 'wtc',
           status: r == null ? false : r.status,
@@ -83,14 +82,13 @@ class SendController extends GetxController {
       } else if (token.value == 'wta') {
         hash = await bs.transferWTA(
             wallet: ws.current.value!, to: addressInput.text, amount: amount);
-        final time = DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now());
         await Future.delayed(const Duration(minutes: 10));
         final r = await bs.getReceipt(hash);
         final transaction = Transaction(
             from: ws.current.value?.address ?? '',
             to: addressInput.text,
             hash: hash,
-            time: time,
+            time: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
             amount: amount,
             token: 'wta',
             status: r == null ? false : r.status);

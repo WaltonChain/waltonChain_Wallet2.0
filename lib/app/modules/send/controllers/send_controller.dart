@@ -14,7 +14,7 @@ class SendController extends GetxController {
   TextEditingController addressInput = TextEditingController();
   TextEditingController balanceInput = TextEditingController();
 
-  final token = 'wtc'.obs;
+  final token = Get.arguments?['token'] == 'wta' ? 'wta'.obs : 'wtc'.obs;
   final balance = 0.00.obs;
   final to = Get.arguments?['to'] ?? '';
 
@@ -26,7 +26,8 @@ class SendController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    balance.value = ac.wtcBalance.value;
+    balance.value =
+        token.value == 'wta' ? ac.wtaBalance.value : ac.wtcBalance.value;
     addressInput.text = to;
 
     ever(token, (newToken) {

@@ -188,7 +188,8 @@ class TokenDetailView extends GetView<TokenDetailController> {
                 children: [
                   ElevatedButton(
                     onPressed: () {
-                      Get.toNamed(Routes.SEND);
+                      Get.toNamed(Routes.SEND,
+                          arguments: {'token': controller.token});
                     },
                     child: Container(
                       width: 130,

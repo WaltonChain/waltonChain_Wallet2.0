@@ -377,7 +377,7 @@ class DappWtcView extends GetView<SwapController> {
           children: [
             const Padding(
               padding: EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 0.0),
-              child: BackBar(title: 'WTSwap'),
+              child: BackBar(title: 'Staking'),
             ),
             Expanded(
               child: Container(

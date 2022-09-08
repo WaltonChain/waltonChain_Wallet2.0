@@ -180,15 +180,24 @@ class Order extends GetView<OtcController> {
               ),
               ElevatedButton(
                 onPressed: () {
-                  Get.defaultDialog(
-                    title: 'Confirm',
-                    content: const Text('Are you sure to deal this order?'),
-                    onCancel: () {},
-                    onConfirm: () {
-                      Get.back();
-                      controller.clickDeal(order);
-                    },
-                  );
+                  final rule1 = order.type == 'buy' &&
+                      order.wtcAmount > controller.ac.wtcAmount.value;
+                  final rule2 = order.type == 'sell' &&
+                      order.wtaAmount > controller.ac.wtaAmount.value;
+
+                  if (rule1 || rule2) {
+                    Get.snackbar('Reject', 'Insufficient balance');
+                  } else {
+                    Get.defaultDialog(
+                      title: 'Confirm',
+                      content: const Text('Are you sure to deal this order?'),
+                      onCancel: () {},
+                      onConfirm: () {
+                        Get.back();
+                        controller.clickDeal(order);
+                      },
+                    );
+                  }
                 },
                 child: Text(order.type == 'buy' ? 'sell' : 'buy'),
                 style: ElevatedButton.styleFrom(

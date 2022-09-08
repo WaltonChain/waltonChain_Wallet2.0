@@ -4,6 +4,7 @@ import 'package:wtc_wallet_app/app/data/models/otc_order.dart';
 import 'package:wtc_wallet_app/app/data/models/utils.dart';
 import 'package:wtc_wallet_app/app/data/services/blockchain_service.dart';
 import 'package:wtc_wallet_app/app/data/services/wallet_service.dart';
+import 'package:wtc_wallet_app/app/modules/assets/controllers/assets_controller.dart';
 
 class OtcController extends GetxController
     with GetSingleTickerProviderStateMixin {
@@ -21,6 +22,7 @@ class OtcController extends GetxController
 
   final WalletService ws = Get.find();
   final BlockchainService bs = Get.find();
+  final ac = Get.find<AssetsController>();
 
   @override
   void onInit() async {

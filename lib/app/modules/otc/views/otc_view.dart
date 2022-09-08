@@ -181,9 +181,9 @@ class Order extends GetView<OtcController> {
               ElevatedButton(
                 onPressed: () {
                   final rule1 = order.type == 'buy' &&
-                      order.wtcAmount > controller.ac.wtcAmount.value;
+                      order.wtcAmount > controller.ac.wtcBalance.value;
                   final rule2 = order.type == 'sell' &&
-                      order.wtaAmount > controller.ac.wtaAmount.value;
+                      order.wtaAmount > controller.ac.wtaBalance.value;
 
                   if (rule1 || rule2) {
                     Get.snackbar('Reject', 'Insufficient balance',

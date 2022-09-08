@@ -27,7 +27,8 @@ class PlaceRecordView extends GetView<PlaceRecordController> {
                   'type': record[4].toInt() == 1 ? 'Sell' : 'Buy',
                   'address': record[0].toString(),
                   'wtaAmount': Utils.doubleFromWeiAmount(record[1]),
-                  'wtcAmount': Utils.doubleFromWeiAmount(record[2])
+                  'wtcAmount': Utils.doubleFromWeiAmount(record[2]),
+                  'status': record[5].toInt() == 1 ? 'Dealed' : 'Undeal'
                 };
                 return Record(
                   order: OtcOrder.fromJson(obj),
@@ -81,9 +82,17 @@ class Record extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 8.0),
-          Text(
-            'Limit ${order.wtaAmount} WTA',
-            style: const TextStyle(fontSize: 16.0),
+          Row(
+            children: [
+              Text(
+                'Limit ${order.wtaAmount} WTA',
+                style: const TextStyle(fontSize: 16.0),
+              ),
+              Text(
+                order.status,
+                style: const TextStyle(fontSize: 16.0),
+              ),
+            ],
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,

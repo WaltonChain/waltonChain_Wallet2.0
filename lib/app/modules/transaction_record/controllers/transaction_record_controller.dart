@@ -19,7 +19,10 @@ class TransactionRecordController extends GetxController {
     //     records.add(txs[key]);
     //   }
     // });
-    records.value = hs.getTransactions();
+    final list = hs.getTransactions();
+    list.sort(
+        (a, b) => DateTime.parse(b.time).compareTo(DateTime.parse(a.time)));
+    records.value = list;
   }
 
   // @override

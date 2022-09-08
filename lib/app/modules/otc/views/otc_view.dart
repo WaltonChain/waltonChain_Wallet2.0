@@ -86,6 +86,7 @@ class BuyOrders extends GetView<OtcController> {
                 'address': order[0].toString(),
                 'wtaAmount': Utils.doubleFromWeiAmount(order[1]),
                 'wtcAmount': Utils.doubleFromWeiAmount(order[2]),
+                'status': order[5].toInt() == 1 ? 'Dealed' : 'Undeal'
               };
               return Order(order: OtcOrder.fromJson(obj));
             },
@@ -111,6 +112,7 @@ class SellOrders extends GetView<OtcController> {
                 'address': order[0].toString(),
                 'wtaAmount': Utils.doubleFromWeiAmount(order[1]),
                 'wtcAmount': Utils.doubleFromWeiAmount(order[2]),
+                'status': order[5].toInt() == 1 ? 'Dealed' : 'Undeal'
               };
               return Order(order: OtcOrder.fromJson(obj));
             },

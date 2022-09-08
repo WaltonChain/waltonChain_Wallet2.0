@@ -1,6 +1,9 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:wtc_wallet_app/app/core/values/colors.dart';
 import 'package:wtc_wallet_app/app/widgets/back_bar.dart';
 import 'package:wtc_wallet_app/app/data/models/utils.dart';
@@ -169,16 +172,31 @@ class TokenDetailView extends GetView<TokenDetailController> {
               const Divider(),
               Expanded(
                 child: Obx(() => ListView.builder(
-                    itemCount: controller.transactions.length,
+                    // itemCount: controller.transactions.length,
+                    itemCount: controller.filtered.length,
                     itemBuilder: (context, index) {
+                      // return TokenDetailRow(
+                      //   from: controller.transactions[index].from,
+                      //   to: controller.transactions[index].to,
+                      //   hash: controller.transactions[index].hash,
+                      //   time: controller.transactions[index].time,
+                      //   amount: controller.transactions[index].amount,
+                      //   token: controller.transactions[index].token,
+                      //   status: controller.transactions[index].status,
+                      // );
+                      final row = controller.filtered[index];
+                      final t = DateTime.fromMillisecondsSinceEpoch(
+                          row['block_time'].toInt() * 1000);
+                      final time = DateFormat('yyyy-MM-dd HH:mm:ss').format(t);
+                      final amount = row['transaction_value'] * pow(10, -9);
                       return TokenDetailRow(
-                        from: controller.transactions[index].from,
-                        to: controller.transactions[index].to,
-                        hash: controller.transactions[index].hash,
-                        time: controller.transactions[index].time,
-                        amount: controller.transactions[index].amount,
-                        token: controller.transactions[index].token,
-                        status: controller.transactions[index].status,
+                        from: row['transaction_from'],
+                        to: row['transaction_to'],
+                        hash: row['transaction_hash'],
+                        time: time,
+                        amount: amount,
+                        token: controller.token,
+                        status: true,
                       );
                     })),
               ),

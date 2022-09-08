@@ -18,9 +18,9 @@ class Validator {
     if (value == null || value.isEmpty) {
       return 'password is empty';
     } else if (value.length < 6) {
-      return 'password is too short';
+      return 'password is too short(6-32)';
     } else if (value.length > 32) {
-      return 'password is too long';
+      return 'password is too long(6-32)';
     } else {
       return null;
     }

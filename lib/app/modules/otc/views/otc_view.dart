@@ -180,7 +180,8 @@ class Order extends GetView<OtcController> {
               ),
               ElevatedButton(
                 onPressed: () {
-                  final rule1 = order.type == 'sell' && order.wtcAmount > cb;
+                  final rule1 = order.type == 'sell' &&
+                      order.wtcAmount > controller.ac.wtcBalance.value;
                   final rule2 = order.type == 'buy' &&
                       order.wtaAmount > controller.ac.wtaBalance.value;
 

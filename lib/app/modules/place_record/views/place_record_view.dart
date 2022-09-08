@@ -92,6 +92,10 @@ class Record extends StatelessWidget {
                 'Guaranteed Amount ${order.wtaAmount} WTA',
                 style: const TextStyle(fontSize: 14.0),
               ),
+              Text(
+                '${order.type} order',
+                style: const TextStyle(fontSize: 12.0),
+              ),
             ],
           ),
           const Divider(),

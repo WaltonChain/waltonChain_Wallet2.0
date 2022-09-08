@@ -83,6 +83,7 @@ class Record extends StatelessWidget {
           ),
           const SizedBox(height: 8.0),
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
                 'Limit ${order.wtaAmount} WTA',

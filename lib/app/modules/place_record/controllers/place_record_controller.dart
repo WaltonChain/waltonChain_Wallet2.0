@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:wtc_wallet_app/app/data/services/blockchain_service.dart';
 import 'package:wtc_wallet_app/app/data/services/wallet_service.dart';
@@ -15,7 +16,7 @@ class PlaceRecordController extends GetxController {
     final list = await bs.orderList(wallet: ws.current.value!);
     ids.value = list[0];
     records.value = list[1];
-    // print('PlaceRecordController onInit records:($records)');
+    debugPrint('PlaceRecordController onInit records:($records)');
   }
 
   // @override

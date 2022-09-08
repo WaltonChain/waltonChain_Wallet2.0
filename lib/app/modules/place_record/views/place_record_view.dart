@@ -24,11 +24,11 @@ class PlaceRecordView extends GetView<PlaceRecordController> {
                 final record = controller.records[index];
                 final obj = {
                   'id': controller.ids[index].toInt(),
-                  'type': record[4].toInt() == 1 ? 'Sell' : 'Buy',
+                  'type': record[3].toInt() == 1 ? 'Sell' : 'Buy',
                   'address': record[0].toString(),
                   'wtaAmount': Utils.doubleFromWeiAmount(record[1]),
                   'wtcAmount': Utils.doubleFromWeiAmount(record[2]),
-                  'status': record[5].toInt() == 1 ? 'Completed' : 'Pending'
+                  'status': record[4].toInt() == 1 ? 'Completed' : 'Pending'
                 };
                 return Record(
                   order: OtcOrder.fromJson(obj),

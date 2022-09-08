@@ -28,7 +28,7 @@ class PlaceRecordView extends GetView<PlaceRecordController> {
                   'address': record[0].toString(),
                   'wtaAmount': Utils.doubleFromWeiAmount(record[1]),
                   'wtcAmount': Utils.doubleFromWeiAmount(record[2]),
-                  'status': record[5].toInt() == 1 ? 'Dealed' : 'Undeal'
+                  'status': record[5].toInt() == 1 ? 'Completed' : 'Pending'
                 };
                 return Record(
                   order: OtcOrder.fromJson(obj),

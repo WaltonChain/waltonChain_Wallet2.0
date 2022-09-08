@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:wtc_wallet_app/app/core/utils/extensions.dart';
 import 'package:wtc_wallet_app/app/data/services/blockchain_service.dart';
 import 'package:wtc_wallet_app/app/data/services/wallet_service.dart';
+import 'package:wtc_wallet_app/app/modules/assets/controllers/assets_controller.dart';
 
 class PlaceOrderController extends GetxController
     with GetSingleTickerProviderStateMixin {
@@ -22,6 +24,7 @@ class PlaceOrderController extends GetxController
 
   final WalletService ws = Get.find();
   final BlockchainService bs = Get.find();
+  final AssetsController ac = Get.find();
 
   final buyPrice = 0.0.obs;
   final sellPrice = 0.0.obs;
@@ -79,6 +82,13 @@ class PlaceOrderController extends GetxController
   // }
 
   void clickPlaceBuy() async {
+    final cb = ac.wtcBalance.value;
+    if (cb < 0.01) {
+      Get.snackbar('Reject', 'Insufficient WTC',
+          margin: EdgeInsets.only(top: 8.0.hp));
+      return;
+    }
+
     final valid = buyFormKey.currentState?.validate();
     if (valid == true) {
       await bs.createBuyOrder(

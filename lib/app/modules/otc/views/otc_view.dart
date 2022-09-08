@@ -180,16 +180,13 @@ class Order extends GetView<OtcController> {
               ),
               ElevatedButton(
                 onPressed: () {
-                  final cb = controller.ac.wtcBalance.value;
                   final rule1 = order.type == 'sell' && order.wtcAmount > cb;
                   final rule2 = order.type == 'buy' &&
                       order.wtaAmount > controller.ac.wtaBalance.value;
 
-                  if (cb < 0.01) {
-                    Get.snackbar('Reject', 'Insufficient WTC',
-                        margin: EdgeInsets.only(top: 8.0.hp));
-                  } else if (rule1 || rule2) {
-                    Get.snackbar('Reject', 'Insufficient balance',
+                  if (rule1 || rule2) {
+                    Get.snackbar('Reject',
+                        'Insufficient ${order.type == 'sell' ? 'WTC' : 'WTA'} balance',
                         margin: EdgeInsets.only(top: 8.0.hp));
                   } else {
                     Get.defaultDialog(

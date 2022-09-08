@@ -186,7 +186,8 @@ class Order extends GetView<OtcController> {
                       order.wtaAmount > controller.ac.wtaAmount.value;
 
                   if (rule1 || rule2) {
-                    Get.snackbar('Reject', 'Insufficient balance');
+                    Get.snackbar('Reject', 'Insufficient balance',
+                        margin: EdgeInsets.only(top: 8.0.hp));
                   } else {
                     Get.defaultDialog(
                       title: 'Confirm',

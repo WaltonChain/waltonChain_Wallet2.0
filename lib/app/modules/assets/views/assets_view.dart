@@ -1,7 +1,10 @@
+import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:wtc_wallet_app/app/core/values/colors.dart';
+import 'package:wtc_wallet_app/app/data/enums/blockchain.dart';
+import 'package:wtc_wallet_app/app/data/services/blockchain_service.dart';
 import 'package:wtc_wallet_app/app/widgets/account_sheet.dart';
 import 'package:wtc_wallet_app/app/widgets/icon_scan.dart';
 import 'package:wtc_wallet_app/app/widgets/wallet_sheet.dart';
@@ -26,9 +29,10 @@ class AssetsView extends GetView<AssetsController> {
                 vertical: 13.0,
               ),
               children: [
+                SwitchChain(),
                 AssetCard(),
                 const Buttons(),
-                const Tokens(),
+                Tokens(),
               ],
             ),
           ),
@@ -92,6 +96,104 @@ class TopBar extends GetView<AssetsController> {
           const IconScan(),
         ],
       ),
+    );
+  }
+}
+
+class SwitchChain extends GetView<AssetsController> {
+  SwitchChain({Key? key}) : super(key: key);
+
+  final BlockchainService bs = Get.find();
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        const Text('Current Chain'),
+        DropdownButtonHideUnderline(
+          child: DropdownButton2(
+            isExpanded: true,
+            hint: Row(
+              children: const [
+                Icon(
+                  Icons.list,
+                  size: 16,
+                  color: Colors.yellow,
+                ),
+                SizedBox(
+                  width: 4,
+                ),
+                Expanded(
+                  child: Text(
+                    'Select Item',
+                    style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.yellow,
+                    ),
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+              ],
+            ),
+            items: [baseUrl, baseUrl2]
+                .map((item) => DropdownMenuItem<String>(
+                      value: item,
+                      child: Text(
+                        item,
+                        style: const TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ))
+                .toList(),
+            // value: bs.url.value,
+            onChanged: (value) {
+              debugPrint('value:$value');
+              // setState(() {
+              //   selectedValue = value as String;
+              // });
+              bs.switchUrl(value.toString());
+            },
+            icon: const Icon(
+              Icons.arrow_forward_ios_outlined,
+            ),
+            iconSize: 14,
+            iconEnabledColor: Colors.yellow,
+            iconDisabledColor: Colors.grey,
+            buttonHeight: 50,
+            buttonWidth: 160,
+            buttonPadding: const EdgeInsets.only(left: 14, right: 14),
+            buttonDecoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(14),
+              border: Border.all(
+                color: Colors.black26,
+              ),
+              color: Colors.redAccent,
+            ),
+            buttonElevation: 2,
+            itemHeight: 40,
+            itemPadding: const EdgeInsets.only(left: 14, right: 14),
+            dropdownMaxHeight: 200,
+            dropdownWidth: 200,
+            dropdownPadding: null,
+            dropdownDecoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(14),
+              color: Colors.redAccent,
+            ),
+            dropdownElevation: 8,
+            scrollbarRadius: const Radius.circular(40),
+            scrollbarThickness: 6,
+            scrollbarAlwaysShow: true,
+            offset: const Offset(-20, 0),
+          ),
+        ),
+      ],
     );
   }
 }
@@ -337,12 +439,24 @@ class WTAToken extends GetView<AssetsController> {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Obx(() => Text(
-                      controller.wtaBalance.toStringAsFixed(2) + ' WTA',
+                      controller.bs.url.value == baseUrl
+                          ? controller.wtaBalance.toStringAsFixed(2)
+                          : controller.wtcBalance.toStringAsFixed(2) + ' WTA',
                       style: const TextStyle(color: Colors.black87),
                     )),
-                Obx(() => Text(r'$' + controller.wtaAmount.toStringAsFixed(2),
-                    style: const TextStyle(
-                        fontSize: 12.0, color: Colors.black54))),
+                Obx(() => controller.bs.url.value == baseUrl
+                    ? Text(
+                        r'$' + controller.wtaAmount.value.toStringAsFixed(2),
+                        style: const TextStyle(
+                            fontSize: 12.0, color: Colors.black54),
+                      )
+                    : Text(
+                        r'$' +
+                            (controller.wtcAmount.value / 10)
+                                .toStringAsFixed(2),
+                        style: const TextStyle(
+                            fontSize: 12.0, color: Colors.black54),
+                      )),
               ],
             ),
           ],
@@ -352,9 +466,10 @@ class WTAToken extends GetView<AssetsController> {
   }
 }
 
-class Tokens extends StatelessWidget {
-  const Tokens({Key? key}) : super(key: key);
+class Tokens extends GetView {
+  Tokens({Key? key}) : super(key: key);
 
+  final BlockchainService bs = Get.find();
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -372,7 +487,7 @@ class Tokens extends StatelessWidget {
             // Icon(Icons.add_circle_outline),
           ],
         ),
-        const WTCToken(),
+        Obx(() => bs.url.value == baseUrl ? const WTCToken() : const Text('')),
         const WTAToken(),
       ],
     );

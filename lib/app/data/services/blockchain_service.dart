@@ -12,13 +12,22 @@ import 'package:wtc_wallet_app/app/data/models/utils.dart';
 import 'package:wtc_wallet_app/app/data/models/wallet.dart' as my_wallet;
 
 class BlockchainService extends GetxService {
-  final Web3Client eth = Web3Client(baseUrl, Client());
+  final url = ''.obs;
+
+  late Web3Client eth = Web3Client(baseUrl, Client());
+  // late Web3Client eth;
   late DeployedContract tokenContract;
   late DeployedContract swapContract;
   late DeployedContract stakeContract;
   late DeployedContract otcContract;
 
+  switchUrl(String newUrl) {
+    url.value = newUrl;
+  }
+
   Future<BlockchainService> init() async {
+    ever(url, (callback) => {eth = Web3Client(url.value, Client())});
+
     final futures = await Future.wait([
       loadContract(
         name: 'tokenContract',

@@ -1,4 +1,6 @@
+// import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
+import 'package:wtc_wallet_app/app/data/enums/blockchain.dart';
 // import 'package:wtc_wallet_app/app/data/enums/blockchain.dart';
 import 'package:wtc_wallet_app/app/routes/app_pages.dart';
 import 'package:wtc_wallet_app/app/data/services/blockchain_service.dart';
@@ -14,6 +16,9 @@ class AssetsController extends GetxController {
   // var wtaPrice = 0.0.obs;
   var wtaAmount = 0.0.obs;
 
+  // current chain url
+  final chainUrl = baseUrl.obs;
+
   final wc = Get.find<WalletService>();
   final bs = Get.find<BlockchainService>();
 
@@ -22,6 +27,13 @@ class AssetsController extends GetxController {
     super.onInit();
     ever(wc.current, (wallet) async {
       await getBalances(wallet);
+    });
+    ever(bs.url, (wallet) async {
+      if (bs.url.value == baseUrl) {
+        await getBalances(wallet);
+      } else {
+        await getWtcBalance(wallet);
+      }
     });
     getBalances(wc.current.value);
     // test
@@ -44,19 +56,42 @@ class AssetsController extends GetxController {
   getBalances(wallet) async {
     if (wallet != null) {
       EasyLoading.show(status: 'Loading...');
+      await getWtcBalance(wallet);
+      await getWtaBalance(wallet);
+      EasyLoading.showSuccess('Loading Success');
+    }
+  }
+
+  getWtcBalance(wallet) async {
+    if (wallet != null) {
+      EasyLoading.show(status: 'Loading...');
       var values = await Future.wait([
         bs.getWtcBalance(wc.current.value?.address),
-        bs.getWtaBalance(wc.current.value?.address),
         bs.getWtcPrice(),
       ]);
       EasyLoading.showSuccess('Loading Success');
 
       wtcBalance.value = values[0];
-      wtaBalance.value = values[1];
-      wtcPrice.value = values[2];
-      // wtaPrice.value = wtcPrice.value / 10;
+      wtcPrice.value = values[1];
       wtcAmount.value = wtcBalance.value * wtcPrice.value;
-      wtaAmount.value = wtaBalance.value * wtcPrice.value / 10;
+    }
+  }
+
+  getWtaBalance(wallet) async {
+    if (wallet != null) {
+      EasyLoading.show(status: 'Loading...');
+      var value = await Future.wait([
+        bs.getWtaBalance(wc.current.value?.address),
+        bs.getWtcPrice(),
+      ]);
+      EasyLoading.showSuccess('Loading Success');
+
+      wtaBalance.value = value[0];
+      final wtaPrice = value[1] / 10;
+      // wtcAmount.value = wtcBalance.value * wtcPrice.value;
+      wtaAmount.value = wtaBalance.value * wtaPrice;
+      // debugPrint(
+      //     'wtaAmout.value:${wtaAmount.value}, wtaBalance.value:${wtaBalance.value}, wtaPrice:$wtaPrice');
     }
   }
 

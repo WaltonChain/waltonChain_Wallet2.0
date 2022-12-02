@@ -177,7 +177,7 @@ class Order extends GetView<OtcController> {
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               Text(
-                'Guaranteed Amount ${order.wtaAmount} WTA',
+                'Guaranteed Amount ${order.wtaAmount.toStringAsFixed(4)} WTA',
                 style: TextStyle(fontSize: 12.0.sp),
               ),
               ElevatedButton(

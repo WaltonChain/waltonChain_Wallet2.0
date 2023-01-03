@@ -14,7 +14,7 @@ class AssetsController extends GetxController {
   var wtcPrice = 0.0.obs;
   var wtcAmount = 0.0.obs;
   // var wtaPrice = 0.0.obs;
-  var wtaAmount = 0.0.obs;
+  // var wtaAmount = 0.0;
 
   // current chain url
   final chainUrl = baseUrls['WTC'].obs;
@@ -91,9 +91,9 @@ class AssetsController extends GetxController {
       EasyLoading.showSuccess('Loading Success');
 
       wtaBalance.value = value[0];
-      final wtaPrice = value[1] / 10;
+      // final wtaPrice = value[1] / 10;
       // wtcAmount.value = wtcBalance.value * wtcPrice.value;
-      wtaAmount.value = wtaBalance.value * wtaPrice;
+      // wtaAmount.value = wtaBalance.value * wtaPrice;
       // debugPrint(
       //     'wtaAmout.value:${wtaAmount.value}, wtaBalance.value:${wtaBalance.value}, wtaPrice:$wtaPrice');
     }

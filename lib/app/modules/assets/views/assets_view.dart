@@ -234,9 +234,7 @@ class AssetCard extends GetView<AssetsController> {
               subtitle: Row(
                 children: [
                   Obx(() => Text(
-                        (controller.wtcAmount.value +
-                                controller.wtaAmount.value)
-                            .toStringAsFixed(2),
+                        (controller.wtcAmount.value).toStringAsFixed(2),
                         style: const TextStyle(
                             fontSize: 24.0, color: Colors.white),
                       )),
@@ -411,16 +409,14 @@ class WTAToken extends GetView<AssetsController> {
                 ),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(
+                  children: const [
+                    Text(
                       'WTA',
                       style: TextStyle(color: Colors.black87),
                     ),
-                    Obx(() => Text(
-                        r'$' +
-                            (controller.wtcPrice.value / 10).toStringAsFixed(2),
-                        style: const TextStyle(
-                            fontSize: 12.0, color: Colors.black54))),
+                    Text(r'$0.00',
+                        style:
+                            TextStyle(fontSize: 12.0, color: Colors.black54)),
                   ],
                 ),
               ],
@@ -435,10 +431,9 @@ class WTAToken extends GetView<AssetsController> {
                       style: const TextStyle(color: Colors.black87),
                     )),
                 Obx(() => controller.bs.url.value == baseUrls['WTC']
-                    ? Text(
-                        r'$' + controller.wtaAmount.value.toStringAsFixed(2),
-                        style: const TextStyle(
-                            fontSize: 12.0, color: Colors.black54),
+                    ? const Text(
+                        r'$0.00',
+                        style: TextStyle(fontSize: 12.0, color: Colors.black54),
                       )
                     : Text(
                         r'$' +

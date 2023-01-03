@@ -9,7 +9,7 @@ class AssetsOverviewController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    totalBalance.value = ac.wtcAmount.value + ac.wtaAmount.value;
+    totalBalance.value = ac.wtcAmount.value;
   }
 
   // @override

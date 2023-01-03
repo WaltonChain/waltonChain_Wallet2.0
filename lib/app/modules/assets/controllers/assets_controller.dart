@@ -17,7 +17,7 @@ class AssetsController extends GetxController {
   var wtaAmount = 0.0.obs;
 
   // current chain url
-  final chainUrl = baseUrl.obs;
+  final chainUrl = baseUrls['WTC'].obs;
 
   final wc = Get.find<WalletService>();
   final bs = Get.find<BlockchainService>();
@@ -26,10 +26,14 @@ class AssetsController extends GetxController {
   void onInit() async {
     super.onInit();
     ever(wc.current, (wallet) async {
-      await getBalances(wallet);
+      if (bs.url.value == baseUrls['WTC']) {
+        await getBalances(wallet);
+      } else {
+        await getWtcBalance(wallet);
+      }
     });
     ever(bs.url, (wallet) async {
-      if (bs.url.value == baseUrl) {
+      if (bs.url.value == baseUrls['WTC']) {
         await getBalances(wallet);
       } else {
         await getWtcBalance(wallet);
@@ -112,18 +116,26 @@ class AssetsController extends GetxController {
   }
 
   clickSend() {
-    if (wc.current.value == null) {
-      Get.snackbar('No Wallet', 'Please Create or Import a Wallet');
+    if (bs.url.value == baseUrls['WTA']) {
+      Get.snackbar('Not Support', 'Current chain is not support this');
     } else {
-      Get.toNamed(Routes.SEND);
+      if (wc.current.value == null) {
+        Get.snackbar('No Wallet', 'Please Create or Import a Wallet');
+      } else {
+        Get.toNamed(Routes.SEND);
+      }
     }
   }
 
   clickReceive() {
-    if (wc.current.value == null) {
-      Get.snackbar('No Wallet', 'Please Create or Import a Wallet');
+    if (bs.url.value == baseUrls['WTA']) {
+      Get.snackbar('Not Support', 'Current chain is not support this');
     } else {
-      Get.toNamed(Routes.RECEIVE, arguments: wc.current.value);
+      if (wc.current.value == null) {
+        Get.snackbar('No Wallet', 'Please Create or Import a Wallet');
+      } else {
+        Get.toNamed(Routes.RECEIVE, arguments: wc.current.value);
+      }
     }
   }
 

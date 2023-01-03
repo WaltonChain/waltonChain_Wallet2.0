@@ -12,9 +12,9 @@ import 'package:wtc_wallet_app/app/data/models/utils.dart';
 import 'package:wtc_wallet_app/app/data/models/wallet.dart' as my_wallet;
 
 class BlockchainService extends GetxService {
-  final url = ''.obs;
+  final url = baseUrls['WTC']!.obs;
 
-  late Web3Client eth = Web3Client(baseUrl, Client());
+  late Web3Client eth = Web3Client(baseUrls['WTC']!, Client());
   // late Web3Client eth;
   late DeployedContract tokenContract;
   late DeployedContract swapContract;

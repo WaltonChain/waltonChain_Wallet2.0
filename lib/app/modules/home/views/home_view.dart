@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:wtc_wallet_app/app/data/enums/blockchain.dart';
+import 'package:wtc_wallet_app/app/data/services/blockchain_service.dart';
 import 'package:wtc_wallet_app/app/modules/assets/views/assets_view.dart';
 import 'package:wtc_wallet_app/app/modules/dapp/views/dapp_view.dart';
 import 'package:wtc_wallet_app/app/modules/me/views/me_view.dart';
@@ -9,7 +11,7 @@ import 'package:wtc_wallet_app/app/modules/otc/views/otc_view.dart';
 import '../controllers/home_controller.dart';
 
 class HomeView extends GetView<HomeController> {
-  const HomeView({Key? key}) : super(key: key);
+  HomeView({Key? key}) : super(key: key);
 
   static final _widgetOptions = [
     const AssetsView(),
@@ -17,6 +19,8 @@ class HomeView extends GetView<HomeController> {
     const OtcView(),
     const MeView(),
   ];
+
+  final BlockchainService bs = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +50,15 @@ class HomeView extends GetView<HomeController> {
             currentIndex: controller.index.value,
             selectedItemColor: Colors.purple[700],
             onTap: (index) {
-              controller.setIndex(index);
+              debugPrint('bs.url.value ${bs.url.value}');
+              debugPrint('index $index');
+              if ((bs.url.value == baseUrls['WTA']) &&
+                  (index == 1 || index == 2)) {
+                Get.snackbar(
+                    'Not Support', 'Current chain is not support this');
+              } else {
+                controller.setIndex(index);
+              }
             },
             unselectedItemColor: Colors.black,
           )),

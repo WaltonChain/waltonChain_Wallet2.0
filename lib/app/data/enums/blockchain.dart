@@ -1,5 +1,7 @@
-const baseUrl = 'https://node.waltonchain.pro';
-const baseUrl2 = 'http://18.167.114.85:8645';
+const baseUrls = {
+  "WTC": 'https://node.waltonchain.pro',
+  "WTA": 'http://18.167.114.85:8645',
+};
 const wtcPriceUrl = 'https://www.waltonchain.pro:3001/price';
 
 const wtaToken = '0x668df218d073f413Ed2FCEa0D48CfbFd59C030Ae';

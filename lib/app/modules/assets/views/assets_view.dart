@@ -111,7 +111,8 @@ class SwitchChain extends GetView<AssetsController> {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        const Text('Current Chain'),
+        Obx(() => Text(
+            'Current Chain: ${controller.bs.url.value == baseUrls['WTC'] ? 'WTC' : 'WTA'}')),
         DropdownButtonHideUnderline(
           child: DropdownButton2(
             isExpanded: true,
@@ -120,25 +121,24 @@ class SwitchChain extends GetView<AssetsController> {
                 Icon(
                   Icons.list,
                   size: 16,
-                  color: Colors.yellow,
                 ),
                 SizedBox(
                   width: 4,
                 ),
                 Expanded(
                   child: Text(
-                    'Select Item',
+                    'Select Chain',
                     style: TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.bold,
-                      color: Colors.yellow,
+                      // color: Colors.yellow,
                     ),
                     overflow: TextOverflow.ellipsis,
                   ),
                 ),
               ],
             ),
-            items: [baseUrl, baseUrl2]
+            items: baseUrls.keys
                 .map((item) => DropdownMenuItem<String>(
                       value: item,
                       child: Text(
@@ -146,7 +146,7 @@ class SwitchChain extends GetView<AssetsController> {
                         style: const TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.bold,
-                          color: Colors.white,
+                          color: Colors.black,
                         ),
                         overflow: TextOverflow.ellipsis,
                       ),
@@ -158,34 +158,24 @@ class SwitchChain extends GetView<AssetsController> {
               // setState(() {
               //   selectedValue = value as String;
               // });
-              bs.switchUrl(value.toString());
+              bs.switchUrl(baseUrls[value].toString());
             },
             icon: const Icon(
               Icons.arrow_forward_ios_outlined,
             ),
             iconSize: 14,
-            iconEnabledColor: Colors.yellow,
             iconDisabledColor: Colors.grey,
             buttonHeight: 50,
             buttonWidth: 160,
             buttonPadding: const EdgeInsets.only(left: 14, right: 14),
-            buttonDecoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(14),
-              border: Border.all(
-                color: Colors.black26,
-              ),
-              color: Colors.redAccent,
-            ),
+
             buttonElevation: 2,
             itemHeight: 40,
             itemPadding: const EdgeInsets.only(left: 14, right: 14),
             dropdownMaxHeight: 200,
             dropdownWidth: 200,
             dropdownPadding: null,
-            dropdownDecoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(14),
-              color: Colors.redAccent,
-            ),
+
             dropdownElevation: 8,
             scrollbarRadius: const Radius.circular(40),
             scrollbarThickness: 6,
@@ -439,12 +429,12 @@ class WTAToken extends GetView<AssetsController> {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Obx(() => Text(
-                      controller.bs.url.value == baseUrl
+                      controller.bs.url.value == baseUrls['WTC']
                           ? controller.wtaBalance.toStringAsFixed(2)
                           : controller.wtcBalance.toStringAsFixed(2) + ' WTA',
                       style: const TextStyle(color: Colors.black87),
                     )),
-                Obx(() => controller.bs.url.value == baseUrl
+                Obx(() => controller.bs.url.value == baseUrls['WTC']
                     ? Text(
                         r'$' + controller.wtaAmount.value.toStringAsFixed(2),
                         style: const TextStyle(
@@ -487,7 +477,9 @@ class Tokens extends GetView {
             // Icon(Icons.add_circle_outline),
           ],
         ),
-        Obx(() => bs.url.value == baseUrl ? const WTCToken() : const Text('')),
+        Obx(() => bs.url.value == baseUrls['WTC']
+            ? const WTCToken()
+            : const Text('')),
         const WTAToken(),
       ],
     );
